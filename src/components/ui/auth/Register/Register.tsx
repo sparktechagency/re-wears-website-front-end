@@ -24,35 +24,30 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-[25px] font-semibold mb-2">Register Now</h1>
-        <p className="text-[#11D279]">
-          To proceed with your application, we first need some information from
-          you
-        </p>
-      </div>
+    <div className="w-2/3">
+      <p className='text-lg font-normal text-center pb-4 '> or Register with your Email </p>
       <ConfigProvider
         theme={{
           token: {
             borderRadius: 0,
           },
           components: {
-            Input: {
-            //   borderColor: "#d9d9d9",  
+            Input: {  
               hoverBorderColor: "#d9d9d9",
             },
           },
         }}
       >
-        <Form onFinish={onFinish} layout="vertical">
+        <Form onFinish={onFinish} layout="vertical"> 
+          <div className="grid grid-cols-2 gap-3"> 
           <TextInput name="name" label="Full Name" />
-          <TextInput name="email" label="Email" />
-          <TextInput name="contact" label="Contact Number" />
+          <TextInput name="lastName" label="Last Name" />
+          </div> 
 
+          <div>
+          <TextInput name="email" label="Email" />
           <Form.Item
             name="password"
-            label="Password"
             rules={[
               {
                 required: true,
@@ -63,38 +58,12 @@ const Register: React.FC = () => {
           >
             <Input.Password
               placeholder="Enter password"
-              className="border border-gray-300 h-[50px] bg-white rounded-lg"
+              className="border border-gray-300 h-[50px] bg-white rounded-full" 
+              style={{ height: 50, border: "1px solid #d9d9d9", outline: "none", boxShadow: "none", backgroundColor: "white", borderRadius: "40px"}}
             />
           </Form.Item>
+          </div>
 
-          <Form.Item
-            name="confirm_password"
-            label="Confirm Password"
-            dependencies={["password"]}
-            hasFeedback
-            rules={[
-              {
-                required: true,
-                message: "Please confirm your password!",
-              },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue("password") === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error("The passwords do not match!")
-                  );
-                },
-              }),
-            ]}
-            className="mb-10"
-          >
-            <Input.Password
-              placeholder="Confirm password"
-              className="border border-gray-300 h-[50px] bg-white rounded-lg"
-            />
-          </Form.Item>
 
           <Form.Item
             name="agree"
@@ -107,17 +76,19 @@ const Register: React.FC = () => {
                     : Promise.reject(new Error("You must agree to continue!"));
                 },
               },
-            ]}
+            ]} 
+
+            className="w-full"
           >
-            <Checkbox>
-              I agree with terms of service and privacy policy
+            <Checkbox className="text-[#000000] text-xs " >
+            By clicking CREATE ACCOUNT, I hereby agree and consent to <Link href="/terms-and-conditions" className="text-[#000000] font-medium underline underline-offset-2">  re-wears Terms & Conditions </Link>; I confirm that I have read  re-wears <Link href="/terms-and-conditions" className="text-[#000000] font-medium underline underline-offset-2"> Privacy Policy </Link> ; and I certify that I am 18 years or older. 
             </Checkbox>
           </Form.Item>
 
           <Form.Item>
             <button
               type="submit"
-              className="w-full h-[45px] text-white font-medium text-lg bg-primary rounded-lg flex items-center justify-center mt-4"
+              className="w-full h-[55px] rounded-full text-white font-medium text-lg bg-primary  flex items-center justify-center mt-4"
             >
               Sign up
             </button>
@@ -125,7 +96,7 @@ const Register: React.FC = () => {
         </Form>
       </ConfigProvider>
 
-      <div className="flex items-center justify-center gap-1 py-4">
+      <div className="flex items-center justify-center gap-1 py-4 ">
         <p className="text-[#636363]">Have an account?</p>
         <Link href="/login" className="text-[#1854F9] font-semibold">
           Log in

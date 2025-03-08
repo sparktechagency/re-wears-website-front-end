@@ -10,6 +10,7 @@ import {  FaTshirt } from 'react-icons/fa';
 import { TbGridDots } from 'react-icons/tb';
 import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from 'react-icons/gi';
 import { SlHandbag } from 'react-icons/sl';
+import { useRouter } from 'next/navigation';
 
 
 const categories = {
@@ -24,7 +25,8 @@ const categories = {
 
 const Navbar = () => {
     const [selectedKey, setSelectedKey] = useState('women'); 
-    const [selectedCategory, setSelectedCategory] = useState<string | null>("All"); 
+    const [selectedCategory, setSelectedCategory] = useState<string | null>("All");  
+    const router = useRouter(); 
 
     const menuItems = (
         <Menu style={{ width: '100%', padding: '25px' }}>
@@ -106,7 +108,7 @@ const Navbar = () => {
 
                     {/* Right section - User actions */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
-                        <p className=' flex items-center gap-1 cursor-pointer'> <span><UserOutlined size={16} /> </span> <span className='text-[14px]'> Log in</span> </p>
+                        <p className=' flex items-center gap-1 cursor-pointer' onClick={() => router.push('/login')}> <span><UserOutlined size={16} /> </span> <span className='text-[14px]'> Log in</span> </p>
                         <p className=' flex items-center gap-1 cursor-pointer'> <span><HeartOutlined size={16} /> </span> <span className='text-[14px]'> Wishlist (0)</span> </p>
 
                         <CmnButton className='w-[118px] h-[44px]'>    SELL NOW</CmnButton>

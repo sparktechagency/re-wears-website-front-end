@@ -1,9 +1,9 @@
 "use client"
-import {  Form, Input } from "antd";
+import {  Form, Input, Modal } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const ForgetPassword = () => { 
+const ForgetPassword = ({open , setOpen}:{open:boolean , setOpen:(open:boolean)=>void}) => { 
     const router  = useRouter()
 
     const onFinish = async(values:{email:string}) => { 
@@ -14,7 +14,7 @@ const ForgetPassword = () => {
     };
   
     return (
-        <div>
+        <Modal open={open} onCancel={() => setOpen(false)} footer={null} width={400} centered>
 
         <div className="text-center mb-4">
           <h1 className="text-[25px] font-semibold ">Forgot Password ?</h1>
@@ -64,7 +64,7 @@ const ForgetPassword = () => {
             </button>
           </Form.Item>
         </Form>
-    </div>
+    </Modal>
     );
 };
 

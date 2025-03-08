@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.ant-segmented .ant-segmented-item-selected { 
+    border-radius: 60px !important;
+ }
+
+ 
+.ant-segmented .ant-segmented-item-label:hover { 
+    border-radius: 60px !important;
+ }
+
