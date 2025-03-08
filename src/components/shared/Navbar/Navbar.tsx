@@ -1,4 +1,3 @@
-//@ts-ignore
 'use client';
 
 import { useState } from 'react';
@@ -13,8 +12,16 @@ import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from 'react-icons/gi';
 import { SlHandbag } from 'react-icons/sl';
 import { useRouter } from 'next/navigation';
 
+interface Category {
+  icon: JSX.Element;
+  items: string[];
+}
 
-const categories = {
+interface Categories {
+  [key: string]: Category;
+}
+
+const categories: Categories = {
     'All': { icon: <TbGridDots color=' #9d977a' className="text-lg" />, items: ['Jeans', 'Tops & T-Shirts', 'Sweaters & Sweatshirts', 'Shorts', 'Sleepwear', "Skirts" , "Suits & blazers" ,"Activewear", "Other men's clothing" , "Jumpsuits & rompers"] },
     'Clothing': { icon: <FaTshirt color=' #9d977a' className="text-lg" />, items: ['Jackets', 'Coats', 'Parkas'] },
     'Shoes': { icon: <GiConverseShoe color=' #9d977a' className="text-lg" />, items: ['Formal Suits', 'Casual Blazers'] },

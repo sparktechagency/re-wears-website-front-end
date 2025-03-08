@@ -12,10 +12,12 @@ const ResetPassword = () => {
     }; 
 
     return (
-        <div>
+        <div className="  w-[600px]">
 
-        <div className=" mb-6">
-          <h1 className="text-[25px] font-semibold text-primary ">Reset Password</h1>
+        <div className=" mb-8">
+          <h1 className=" text-secondary text-[25px] font-bold  pb-2 text-center ">Reset Password</h1> 
+          <p className=" text-[#797979] text-[16px] ">Create a new password. Ensure it differs from
+          previous ones for security</p>
         </div>
 
         <Form
@@ -50,7 +52,7 @@ const ResetPassword = () => {
                   border: "1px solid #E0E4EC",
                   height: "52px",
                   background: "white",
-                  borderRadius: "8px",
+                  borderRadius: "60px",
                   outline: "none",
                 }} 
                 className="mb-6"
@@ -95,7 +97,7 @@ const ResetPassword = () => {
                   border: "1px solid #E0E4EC",
                   height: "52px",
                   background: "white",
-                  borderRadius: "8px",
+                  borderRadius: "60px",
                   outline: "none",
                 }} 
                 className="mb-6"
@@ -108,12 +110,13 @@ const ResetPassword = () => {
               htmlType="submit"
               style={{
                 width: '100%',
-                height: 45,
+                height: 55,
                 color: "white",
                 fontWeight: "400px",
                 fontSize: "18px",
-                background: "#0a2369",
-                marginTop: 20
+                background: "#9D977A",
+                marginTop: 20 , 
+                borderRadius: "60px",
               }}
             >
              Update

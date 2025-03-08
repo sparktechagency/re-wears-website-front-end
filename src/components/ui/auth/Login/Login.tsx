@@ -2,7 +2,6 @@
 
 import TextInput from "@/components/shared/TextInput";
 import { Checkbox, Form, Input } from "antd";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
@@ -82,11 +81,6 @@ const [open , setOpen] = useState(false)
 
 
       </Form>
-
-      <div className=" flex items-center justify-center gap-1 py-4">
-        <p className="text-[#636363]">Don’t have any account?</p>
-        <Link href="/register" className="text-[#1854F9] font-semibold" > Sign Up</Link>
-      </div> 
       <ForgetPassword open={open} setOpen={setOpen} />
     </div>
   );
