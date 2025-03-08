@@ -9,7 +9,7 @@ const layout = ({children}: {children: React.ReactNode}) => {
     return (
         <div className=""> 
         <Navbar />
-        <div  className={` ${poppins.className}  `} >
+        <div  className={` ${poppins.className} min-h-[calc(100vh-140px)] flex items-center justify-center  `} >
            {children}
         </div> 
         <Footer />
