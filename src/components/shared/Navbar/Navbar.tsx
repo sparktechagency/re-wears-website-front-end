@@ -1,3 +1,4 @@
+//@ts-ignore
 'use client';
 
 import { useState } from 'react';
@@ -29,9 +30,8 @@ const Navbar = () => {
     const router = useRouter(); 
 
     const menuItems = (
-        <Menu style={{ width: '100%', padding: '25px' }}>
+      <Menu style={{ width: "100%", padding: "25px" }}>
         <div className="grid grid-cols-6 gap-3">
-          
           {/* Categories List */}
           <div className="col-span-2 border-e border-gray-300">
             {Object.entries(categories).map(([category, { icon }]) => (
@@ -39,7 +39,9 @@ const Navbar = () => {
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
-                  selectedCategory === category ? ' text-black font-bold' : 'text-primary'
+                  selectedCategory === category
+                    ? " text-black font-bold"
+                    : "text-primary"
                 }`}
               >
                 {icon}
@@ -47,21 +49,27 @@ const Navbar = () => {
               </div>
             ))}
           </div>
-  
+
           {/* Items List (Only visible if a category is selected) */}
           <div className="col-span-4 ps-2 pe-6">
-            {selectedCategory && categories[selectedCategory].items.length > 0 ? (
+            {selectedCategory &&
+            categories[selectedCategory]?.items?.length > 0 ? (
               <div className="grid grid-cols-2 gap-x-12 gap-y-3">
-                {categories[selectedCategory].items.map((item) => (
+                {categories[selectedCategory].items.map((item: string) => (
                   <div key={item} className="py-1">
-                    <Link href="#" className="text-[#797979] hover:text-primary ">
+                    <Link
+                      href="#"
+                      className="text-[#797979] hover:text-primary "
+                    >
                       {item}
                     </Link>
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="text-gray-400">Select a category to view items</div>
+              <div className="text-gray-400">
+                Select a category to view items
+              </div>
             )}
           </div>
         </div>
