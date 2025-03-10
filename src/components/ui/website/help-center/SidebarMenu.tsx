@@ -6,8 +6,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const SidebarMenu = () => {
-  const pathname = usePathname().split("/").filter(Boolean)[length + 1];
-  console.log(pathname);
+  const pathnameSegments = usePathname().split("/").filter(Boolean);
+  const pathname = pathnameSegments[pathnameSegments.length - 1];
 
   return (
     <>
