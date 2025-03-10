@@ -1,10 +1,11 @@
+import ProfileDetails from "@/components/ui/website/settings/profile-details/ProfileDetails";
 
 const ProfileDetailsPage = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+  return (
+    <div>
+      <ProfileDetails />
+    </div>
+  );
 };
 
 export default ProfileDetailsPage;
