@@ -13,7 +13,7 @@ const BuyingPage = () => {
           </p>
         </div>
         <div className="flex gap-2">
-          <span className="font-bold">1.</span>
+          <span className="font-bold">2.</span>
           <p>
             <span className="font-bold">Connect with the Seller: </span>
             Use the &quot;Message Seller&quot; feature to clarify any inquiries
