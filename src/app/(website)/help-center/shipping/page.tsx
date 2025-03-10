@@ -1,9 +1,14 @@
+import BackButton from "@/components/shared/BackButton";
+
 const ShippingPage = () => {
   return (
     <div>
-      <h1 className="text-2xl lg:text-3xl font-bold py-4">
-        How shipping works
-      </h1>
+      <section className="flex items-center gap-6">
+        <BackButton className="lg:hidden" />
+        <h1 className="text-2xl lg:text-3xl font-bold py-4">
+          How shipping works
+        </h1>
+      </section>
 
       {/* content section */}
       <section className="grid gap-6 py-4">

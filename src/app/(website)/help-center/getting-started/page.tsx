@@ -1,12 +1,14 @@
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import BackButton from "@/components/shared/BackButton";
 
 const GettingStartedPage = () => {
   return (
     <div>
-      <h1 className="text-2xl lg:text-3xl font-bold py-4 pb-1">
-        Getting Started
-      </h1>
+      <section className="flex items-center gap-6">
+        <BackButton className="lg:hidden" />
+        <h1 className="text-2xl lg:text-3xl font-bold py-4">Getting Started</h1>
+      </section>
       <p className="text-[#797979]">Pick a topic</p>
 
       {/* topics card container */}
