@@ -83,11 +83,10 @@ const Navbar = () => {
             <div
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
-                selectedCategory === category
+              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${selectedCategory === category
                   ? " text-black font-bold"
                   : "text-primary"
-              }`}
+                }`}
             >
               {icon}
               {category}
@@ -98,7 +97,7 @@ const Navbar = () => {
         {/* Items List (Only visible if a category is selected) */}
         <div className="col-span-4 ps-2 pe-6">
           {selectedCategory &&
-          categories[selectedCategory]?.items?.length > 0 ? (
+            categories[selectedCategory]?.items?.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
               {categories[selectedCategory].items.map((item: string) => (
                 <div key={item} className="py-1">
@@ -198,10 +197,14 @@ const Navbar = () => {
               </span>{" "}
             </p>
 
-            <CmnButton className="hidden lg:block w-[118px] h-[44px]">
-              {" "}
-              SELL NOW
-            </CmnButton>
+            <div onClick={() => router.push("/sell-now")}>
+
+              <CmnButton className="hidden lg:block w-[118px] h-[44px]">
+                {" "}
+                SELL NOW
+              </CmnButton>
+
+            </div>
           </div>
         </div>
 
