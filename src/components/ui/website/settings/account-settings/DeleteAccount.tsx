@@ -35,7 +35,7 @@ const DeleteAccount = () => {
       </section>
 
       <section className="flex justify-end">
-        <FillButton className="bg-[#D04555] hover:bg-[#a32937] uppercase">
+        <FillButton className="!bg-[#D04555] !hover:bg-[#a32937] uppercase">
           Delete account
         </FillButton>
       </section>

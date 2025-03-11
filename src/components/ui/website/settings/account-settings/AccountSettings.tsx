@@ -4,6 +4,7 @@ import OutlineButton from "@/components/shared/OutlineButton";
 import Select from "@/components/shared/Select";
 import { Switch } from "antd";
 import { Check, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 const AccountSettings = () => {
   return (
@@ -67,14 +68,19 @@ const AccountSettings = () => {
       {/* Change password */}
       <section className="card flex flex-col lg:flex-row justify-between items-center gap-2">
         <label className="font-bold py-2">Change password</label>
-        <OutlineButton>Change</OutlineButton>
+        <Link href={`/change-password`}>
+          <OutlineButton>Change</OutlineButton>
+        </Link>
       </section>
       {/* Delete my account */}
       <section className="card flex flex-col lg:flex-row justify-between items-center gap-2">
         <label className="font-bold py-2">Delete my account</label>
-        <button>
-          <ChevronRight />
-        </button>
+        <Link href={`/settings/account-settings/delete-account`}>
+          {" "}
+          <button>
+            <ChevronRight />
+          </button>
+        </Link>
       </section>
       {/* save button */}
       <section className="flex justify-end">
