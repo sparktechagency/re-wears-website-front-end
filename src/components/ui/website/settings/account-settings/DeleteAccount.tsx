@@ -1,10 +1,13 @@
+"use client"
 import FillButton from "@/components/shared/FillButton";
 import Label from "@/components/shared/Label";
 import TextArea from "@/components/shared/TextArea";
 import { Checkbox } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const DeleteAccount = () => {
+const DeleteAccount = () => { 
+  const router = useRouter()
   return (
     <div className="grid gap-5">
       <section className="card grid-between">
@@ -34,8 +37,8 @@ const DeleteAccount = () => {
         </p>
       </section>
 
-      <section className="flex justify-end">
-        <FillButton className="!bg-[#D04555] !hover:bg-[#a32937] uppercase">
+      <section className="flex justify-end" onClick={() => {router.push("/delete-confirm") }}>
+        <FillButton className="!bg-[#D04555] !hover:bg-[#a32937] uppercase" >
           Delete account
         </FillButton>
       </section>
