@@ -25,7 +25,7 @@ const ProfilePage = () => {
       </section>
 
       {/* profile content */}
-      <section className="card">
+      <section className="card font-poppins">
         <ConfigProvider
           theme={{
             components: {

@@ -12,7 +12,7 @@ const Reviews = () => {
   const [value, setValue] = useState(3);
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-6 font-poppins">
       <section className="flex flex-col lg:flex-row gap-6 items-center text-base py-4">
         <h1 className="text-7xl font-medium text-black">4.0</h1>
         <div className="">
