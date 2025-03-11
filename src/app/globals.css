@@ -19,4 +19,15 @@
     .shadow-smooth {
         @apply shadow-[0px_7px_29px_0px_rgba(100,100,111,0.2)];
     }
+    .card {
+        @apply bg-white p-8 rounded-xl shadow-smooth;
+    }
+
+    .grid-between {
+        @apply grid grid-cols-1 lg:grid-cols-2 gap-2 justify-between;
+    }
+
+    .link {
+        @apply font-bold text-primary underline;
+    }
 }

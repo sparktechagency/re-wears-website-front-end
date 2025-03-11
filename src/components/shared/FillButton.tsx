@@ -6,7 +6,7 @@ interface FillButtonProps {
 const FillButton = ({ children, className }: FillButtonProps) => {
   return (
     <button
-      className={`h-16 px-12 bg-primary text-white font-normal lg:text-lg rounded-full ${className}`}
+      className={`h-14 px-12 bg-primary text-white font-normal rounded-full hover:bg-primary-dark transition-all duration-300 ${className}`}
     >
       {children}
     </button>
