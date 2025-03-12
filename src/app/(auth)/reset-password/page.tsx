@@ -1,12 +1,11 @@
-import ResetPassword from '@/components/ui/auth/ResetPassword/ResetPassword';
-import React from 'react';
+import ResetPassword from "@/components/ui/auth/ResetPassword/ResetPassword";
 
 const ResetPasswordPage = () => {
-    return (
-        <div>
-           <ResetPassword /> 
-        </div>
-    );
+  return (
+    <div>
+      <ResetPassword />
+    </div>
+  );
 };
 
 export default ResetPasswordPage;

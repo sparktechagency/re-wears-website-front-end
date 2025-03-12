@@ -1,12 +1,11 @@
-import VerifyOtp from '@/components/ui/auth/VerifyOtp/VerifyOtp';
-import React from 'react';
+import VerifyOtp from "@/components/ui/auth/VerifyOtp/VerifyOtp";
 
 const VerifyOtpPage = () => {
-    return (
-        <div>
-            <VerifyOtp />
-        </div>
-    );
+  return (
+    <div>
+      <VerifyOtp />
+    </div>
+  );
 };
 
 export default VerifyOtpPage;
