@@ -1,12 +1,11 @@
-import Inbox from '@/components/ui/website/inbox/Inbox';
-import React from 'react';
+import Inbox from "@/components/ui/website/inbox/Inbox";
 
 const InboxPage = () => {
-    return (
-        <div>
-           <Inbox />
-        </div>
-    );
+  return (
+    <div>
+      <Inbox />
+    </div>
+  );
 };
 
 export default InboxPage;

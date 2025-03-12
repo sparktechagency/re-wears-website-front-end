@@ -10,6 +10,7 @@ const DeleteAccount = () => {
   const router = useRouter()
   return (
     <div className="grid gap-5">
+      <h1 className="md:hidden text-xl font-bold">Delete Account</h1>
       <section className="card grid-between">
         <div>
           <p className="text-[#797979] text-sm">Delete my account</p>
@@ -18,7 +19,7 @@ const DeleteAccount = () => {
         <TextArea placeholder="Tell us why you're closing your account" />
       </section>
 
-      <section className="card grid-between">
+      <section className="card flex justify-between items-center gap-4">
         <Label>I confirm that all my orders are completed</Label>
         <div className="flex lg:justify-end items-center">
           <Checkbox className="scale-150" />
@@ -37,8 +38,13 @@ const DeleteAccount = () => {
         </p>
       </section>
 
-      <section className="flex justify-end" onClick={() => {router.push("/delete-confirm") }}>
-        <FillButton className="!bg-[#D04555] !hover:bg-[#a32937] uppercase" >
+      <section
+        className="flex justify-end"
+        onClick={() => {
+          router.push("/delete-confirm");
+        }}
+      >
+        <FillButton className="!bg-[#D04555] !hover:bg-[#a32937] uppercase w-full md:w-auto">
           Delete account
         </FillButton>
       </section>

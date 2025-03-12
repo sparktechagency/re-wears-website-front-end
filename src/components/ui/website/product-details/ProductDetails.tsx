@@ -38,13 +38,14 @@ const ProductDetails = () => {
         </p>
       </section>
 
-      <section className="flex justify-between gap-6 pb-4">
+      <section className="flex flex-col lg:flex-row justify-between gap-6 pb-4">
         {/* left side content */}
         <section className="flex-1">
           <div className="card">
             <ImageGallery />
           </div>
         </section>
+
         {/* right side content */}
         <section className="max-w-md w-full grid gap-6">
           {/* product info */}
@@ -115,13 +116,15 @@ const ProductDetails = () => {
 
           {/* user info */}
           <div className="card !p-6 grid gap-4">
-            <div className="flex items-center justify-between gap-4">
-              <div className="size-16 flex justify-center items-center bg-[#465A63] text-white text-2xl font-bold rounded-full border">
-                M
-              </div>
-              <div>
-                <h1 className="text-lg font-bold">@mykola888</h1>
-                <p className="text-[#797979]">No reviews yet</p>
+            <div className="flex flex-col md:flex-row lg:items-center justify-between gap-4">
+              <div className="flex items-center gap-4">
+                <div className="size-16 flex justify-center items-center bg-[#465A63] text-white text-2xl font-bold rounded-full border">
+                  M
+                </div>
+                <div>
+                  <h1 className="text-lg font-bold">@mykola888</h1>
+                  <p className="text-[#797979] text-sm">No reviews yet</p>
+                </div>
               </div>
               <Link href={"/profile"}>
                 <OutlineButton>See profile</OutlineButton>

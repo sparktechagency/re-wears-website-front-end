@@ -24,7 +24,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="w-2/3">
+    <div className="w-full">
       <p className='text-lg font-normal text-center pb-4 '> or Register with your Email </p>
       <ConfigProvider
         theme={{

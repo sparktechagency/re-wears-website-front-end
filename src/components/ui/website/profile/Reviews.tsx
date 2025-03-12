@@ -13,7 +13,7 @@ const Reviews = () => {
 
   return (
     <div className="grid gap-6 font-poppins">
-      <section className="flex flex-col lg:flex-row gap-6 items-center text-base py-4">
+      <section className="flex gap-6 items-center text-base lg:py-4">
         <h1 className="text-7xl font-medium text-black">4.0</h1>
         <div className="">
           <Rate defaultValue={value} style={{ color: "#FDB11A" }} />
@@ -123,7 +123,9 @@ const Reviews = () => {
       </section>
 
       <section className="flex justify-center">
-        <OutlineButton className="uppercase">Load More</OutlineButton>
+        <OutlineButton className="uppercase w-full lg:w-auto">
+          Load More
+        </OutlineButton>
       </section>
     </div>
   );

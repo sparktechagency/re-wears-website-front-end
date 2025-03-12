@@ -19,6 +19,7 @@ const ProfileDetails = () => {
   return (
     <div className="">
       <form className="grid gap-6">
+        <h1 className="md:hidden text-xl font-bold">Profile Details</h1>
         <section className="bg-white p-8 rounded-xl shadow-smooth">
           {/* image input */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 justify-between">
@@ -83,7 +84,9 @@ const ProfileDetails = () => {
           </div>
         </section>
         <section className="flex justify-end">
-          <FillButton>Update profile</FillButton>
+          <FillButton className="w-full md:w-auto uppercase">
+            Update profile
+          </FillButton>
         </section>
       </form>
     </div>

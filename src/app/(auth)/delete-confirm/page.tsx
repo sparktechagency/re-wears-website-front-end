@@ -1,12 +1,11 @@
-import DeleteConfirm from '@/components/ui/website/settings/account-settings/DeleteConfirm';
-import React from 'react';
+import DeleteConfirm from "@/components/ui/website/settings/account-settings/DeleteConfirm";
 
 const DeleteConfirmPage = () => {
-    return (
-        <div>
-            <DeleteConfirm />
-        </div>
-    );
+  return (
+    <>
+      <DeleteConfirm />
+    </>
+  );
 };
 
 export default DeleteConfirmPage;

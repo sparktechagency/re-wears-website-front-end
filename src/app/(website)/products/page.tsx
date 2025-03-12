@@ -1,12 +1,11 @@
-import Products from '@/components/ui/website/products/Products';
-import React from 'react';
+import Products from "@/components/ui/website/products/Products";
 
 const ProductsPage = () => {
-    return (
-        <div>
-            <Products />
-        </div>
-    );
+  return (
+    <div>
+      <Products />
+    </div>
+  );
 };
 
 export default ProductsPage;

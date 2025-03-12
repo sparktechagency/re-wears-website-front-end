@@ -32,7 +32,7 @@ const Closet = () => {
       </section>
 
       {/* content body */}
-      <section className="grid justify-center gap-4 py-16">
+      <section className="grid justify-center gap-4 py-8 lg:py-16">
         <Image
           src={icon}
           alt="icon"
@@ -40,10 +40,10 @@ const Closet = () => {
           height={90}
           className="mx-auto"
         />
-        <Label className="text-2xl text-center">
+        <Label className="text-xl lg:text-2xl text-center">
           Upload items to start selling
         </Label>
-        <p className="text-[#797979]">
+        <p className="text-[#797979] text-center text-sm lg:text-base">
           Sell your used clothes effortlessly, earning cash without hidden fees.
         </p>
         <div className="flex justify-center ">

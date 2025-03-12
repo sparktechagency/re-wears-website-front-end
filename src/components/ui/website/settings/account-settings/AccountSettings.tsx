@@ -9,6 +9,7 @@ import Link from "next/link";
 const AccountSettings = () => {
   return (
     <div className="grid gap-5">
+      <h1 className="md:hidden text-xl font-bold">Account settings</h1>
       <section className="bg-white p-8 rounded-xl shadow-smooth flex flex-wrap justify-between items-center gap-4">
         <div className="">
           <p className="font-bold">mykola@gmail.com</p>
@@ -56,24 +57,24 @@ const AccountSettings = () => {
         </div>
       </section>
       {/* Vacation mode */}
-      <section className="card flex flex-col lg:flex-row justify-between items-center gap-2">
+      <section className="card flex justify-between items-center gap-2">
         <label className="font-bold py-2">Vacation mode</label>
         <Switch />
       </section>
       {/* Google */}
-      <section className="card flex flex-col lg:flex-row justify-between items-center gap-2">
+      <section className="card flex justify-between items-center gap-2">
         <label className="font-bold py-2">Google</label>
         <OutlineButton>Linked</OutlineButton>
       </section>
       {/* Change password */}
-      <section className="card flex flex-col lg:flex-row justify-between items-center gap-2">
+      <section className="card flex justify-between items-center gap-2">
         <label className="font-bold py-2">Change password</label>
         <Link href={`/change-password`}>
           <OutlineButton>Change</OutlineButton>
         </Link>
       </section>
       {/* Delete my account */}
-      <section className="card flex flex-col lg:flex-row justify-between items-center gap-2">
+      <section className="card flex justify-between items-center gap-2">
         <label className="font-bold py-2">Delete my account</label>
         <Link href={`/settings/account-settings/delete-account`}>
           {" "}
@@ -82,9 +83,10 @@ const AccountSettings = () => {
           </button>
         </Link>
       </section>
+
       {/* save button */}
       <section className="flex justify-end">
-        <FillButton>Save</FillButton>
+        <FillButton className="w-full md:w-auto uppercase">Save</FillButton>
       </section>
     </div>
   );
