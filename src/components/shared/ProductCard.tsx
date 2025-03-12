@@ -1,24 +1,35 @@
+/* eslint-disable @next/next/no-img-element */
+"use client"
 import { TProduct } from "@/types/TProduct";
 import { Heart, ShieldCheck } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { FaHeart } from "react-icons/fa";
 
 const ProductCard = ({ product }: { product: TProduct }) => {
+  const [isFavorite, setIsFavorite] = useState(false) 
+  const router = useRouter()
   return (
-    <div className="rounded-xl border">
+    <div className="rounded-xl border cursor-pointer " onClick={() => router.push(`/product-details`)}>
       <figure className="relative">
-        <button className="flex items-center gap-2 p-2 bg-[#9D977A] bg-opacity-60 text-white rounded-lg absolute top-3 left-3">
-          <Heart size={20} />
-          <span>8</span>
+        <button className={`flex items-center gap-2 p-2 bg-[#9D977A] bg-opacity-60 text-white rounded-lg absolute top-3 left-3`} onClick={() => setIsFavorite(!isFavorite)}>
+          {
+            isFavorite ? <FaHeart size={20} color="#ffffff" /> : <Heart size={20} />
+          }
+
+          <span> {
+            isFavorite  ? (8+1) : 8
+          }</span>
         </button>
-        <Image
+        <img
           src={product?.images[0]}
           alt="img"
-          width={210}
-          height={220}
-          className="rounded-t-xl w-full"
+
+          className="rounded-t-xl w-full h-[292px] object-fill"
         />
       </figure>
-      <div className="grid gap-1 p-4">
+      <div className="grid gap-1 p-4 ">
         <h3 className="font-bold">${product.price}</h3>
         <p className="flex items-center gap-1 text-primary text-sm">
           ${product.price + product.vat} incl. <ShieldCheck size={20} />
