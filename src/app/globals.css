@@ -24,7 +24,7 @@ body {
         @apply shadow-[0px_7px_29px_0px_rgba(100,100,111,0.2)];
     }
     .card {
-        @apply bg-white p-8 rounded-xl shadow-smooth;
+        @apply bg-white p-4 lg:p-8 rounded-xl shadow-smooth;
     }
 
     .grid-between {
