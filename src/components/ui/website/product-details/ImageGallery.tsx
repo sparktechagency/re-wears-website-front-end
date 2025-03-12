@@ -68,7 +68,7 @@ const ImageGallery = () => {
         >
           {productdata[0].images.map((item, idx) => (
             <SwiperSlide key={idx}>
-              <img src={item} className="rounded-xl" />
+              <img src={item} className="rounded-xl w-full" />
             </SwiperSlide>
           ))}
         </Swiper>
