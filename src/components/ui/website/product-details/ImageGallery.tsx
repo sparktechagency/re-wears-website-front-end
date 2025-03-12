@@ -25,7 +25,7 @@ const ImageGallery = () => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   return (
-    <div className="flex justify-between gap-4">
+    <div className="lg:flex justify-between gap-4">
       {/* left side slider controller */}
       <Swiper
         onSwiper={setThumbsSwiper}
@@ -36,17 +36,17 @@ const ImageGallery = () => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper max-w-[150px] flex flex-col gap-6"
+        className="mySwiper max-w-[150px] hidden lg:flex flex-col gap-6"
       >
         {productdata[0].images.map((item, idx) => (
           <SwiperSlide key={idx}>
-            <img src={item} className="rounded-xl" />
+            <img src={item} className="hidden lg:block rounded-xl" />
           </SwiperSlide>
         ))}
       </Swiper>
 
       {/* right side slide viewer */}
-      <div className="relative max-w-screen-sm">
+      <div className="relative w-full lg:max-w-screen-sm">
         <Swiper
           thumbs={{ swiper: thumbsSwiper ?? undefined }}
           loop={true}

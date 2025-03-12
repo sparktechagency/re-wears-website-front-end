@@ -69,7 +69,7 @@ const ProfileHeader = () => {
         </div>
 
         {/* action button */}
-        <div className="grid gap-y-2">
+        <div className="flex flex-row lg:flex-col gap-4">
           <OutlineButton className="flex justify-center items-center gap-2">
             <IoMail size={20} /> Message
           </OutlineButton>

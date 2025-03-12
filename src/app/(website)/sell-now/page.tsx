@@ -1,12 +1,11 @@
-import SellNow from '@/components/ui/website/sell-now/SellNow';
-import React from 'react';
+import SellNow from "@/components/ui/website/sell-now/SellNow";
 
 const SellNowPage = () => {
-    return (
-        <div>
-             <SellNow />
-        </div>
-    );
+  return (
+    <div>
+      <SellNow />
+    </div>
+  );
 };
 
 export default SellNowPage;
