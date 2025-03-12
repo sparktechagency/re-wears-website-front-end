@@ -3,7 +3,7 @@ import Label from "@/components/shared/Label";
 
 const ConfirmEmailChange = () => {
   return (
-    <section className="my-48 grid justify-center">
+    <section className="px-4 my-48 grid justify-center">
       <div className="flex flex-col justify-center gap-5 text-center max-w-[500px]">
         <Label className="text-xl font-bold">Confirm change</Label>
         <p className="text-[#797979]">

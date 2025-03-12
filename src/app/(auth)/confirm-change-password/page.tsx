@@ -1,12 +1,11 @@
-import ConfirmChangePassword from '@/components/ui/auth/ConfirmChangePassword/ConfirmChangePassword';
-import React from 'react';
+import ConfirmChangePassword from "@/components/ui/auth/ConfirmChangePassword/ConfirmChangePassword";
 
 const ConfirmChangePasswordPage = () => {
-    return (
-        <div>
-            <ConfirmChangePassword />
-        </div>
-    );
+  return (
+    <div>
+      <ConfirmChangePassword />
+    </div>
+  );
 };
 
 export default ConfirmChangePasswordPage;
