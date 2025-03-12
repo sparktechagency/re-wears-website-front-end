@@ -1,12 +1,11 @@
-import MarkAsSold from '@/components/ui/website/mark-as-sold/MarkAsSold';
-import React from 'react';
+import MarkAsSold from "@/components/ui/website/mark-as-sold/MarkAsSold";
 
 const MarkAsSoldPage = () => {
-    return (
-        <div>
-            <MarkAsSold />
-        </div>
-    );
+  return (
+    <div>
+      <MarkAsSold />
+    </div>
+  );
 };
 
 export default MarkAsSoldPage;
