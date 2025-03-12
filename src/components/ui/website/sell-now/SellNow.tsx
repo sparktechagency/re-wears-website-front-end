@@ -247,7 +247,6 @@ const SellNow = () => {
                                             }}
                                         >
                                             <Select 
-                                             mode="multiple"
                                                 placeholder="Please select a Material"
                                                 style={{ width: "100%", height: "55px", borderRadius: "60px", backgroundColor: "#f5f5f5" }}
                                                 options={[
