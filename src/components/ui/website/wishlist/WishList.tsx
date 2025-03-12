@@ -18,7 +18,7 @@ const WishList = () => {
             height={150}
             className="mx-auto"
           />
-          <Label className="text-center text-xl">Your wishlist</Label>
+          <Label className="text-center text-xl">Your wishlist </Label>
           <p className="text-[#797979]">
             All your favorites will be saved here.
           </p>
