@@ -1,13 +1,17 @@
 import { TProduct } from "@/types/TProduct";
-import { ShieldCheck } from "lucide-react";
+import { Heart, ShieldCheck } from "lucide-react";
 import Image from "next/image";
 
 const ProductCard = ({ product }: { product: TProduct }) => {
   return (
     <div className="rounded-xl border">
-      <figure>
+      <figure className="relative">
+        <button className="flex items-center gap-2 p-2 bg-[#9D977A] bg-opacity-60 text-white rounded-lg absolute top-3 left-3">
+          <Heart size={20} />
+          <span>8</span>
+        </button>
         <Image
-          src={product?.image}
+          src={product?.images[0]}
           alt="img"
           width={210}
           height={220}

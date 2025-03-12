@@ -7,7 +7,7 @@ type TUser = {
 export type TProduct = {
   id: number;
   title: string;
-  image: string;
+  images: string[];
   size: string;
   price: number;
   vat: number;
