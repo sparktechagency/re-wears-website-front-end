@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+import { FaTiktok } from "react-icons/fa";
 import { FiInstagram } from "react-icons/fi";
 import { LiaFacebookF } from "react-icons/lia";
 
@@ -16,16 +17,33 @@ const Footer = () => {
             to closet clutter and say hello to conscious consumerism.
           </p>
           <div className="flex gap-3 mt-4">
-            <div className="w-12 h-12 flex items-center justify-center bg-white/20 rounded-full ">
+            <Link
+              href={""}
+              className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full "
+            >
               {/* Instagram Icon */}
-              <FiInstagram size={22} color="#ffffff" />
-            </div>
-            <div className="w-12 h-12 flex items-center justify-center bg-white/20 rounded-full ">
+              <FiInstagram
+                size={22}
+                className="text-[#F3E7D8] hover:text-white"
+              />
+            </Link>
+            <Link
+              href={""}
+              className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full "
+            >
               {/* Facebook Icon */}
-              <p>
-                <LiaFacebookF size={22} color="#ffffff" />
-              </p>
-            </div>
+              <LiaFacebookF
+                size={22}
+                className="text-[#F3E7D8] hover:text-white"
+              />
+            </Link>
+            <Link
+              href={""}
+              className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full "
+            >
+              {/* Facebook Icon */}
+              <FaTiktok size={22} className="text-[#F3E7D8] hover:text-white" />
+            </Link>
           </div>
         </div>
 
