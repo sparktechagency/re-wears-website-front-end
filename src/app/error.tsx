@@ -3,24 +3,22 @@
 
 import Link from "next/link";
 
-const NotFoundPage = () => {
+const ErrorPage = () => {
   return (
     <div className="h-screen flex items-center justify-center ">
       <div className=" flex items-center justify-center flex-col lg:w-[600px] gap-4">
         <div>
-          <img src="/not-found.svg" alt="" className=" w-[400px] h-[350px] " />
+          <img src="/error.svg" alt="" className=" w-[400px] h-[350px] " />
         </div>
 
-        <p className=" text-secondary text-[26px] font-bold">
-          {" "}
-          Oops! Page Not Found
-        </p>
+        <p className=" text-secondary text-[26px] font-bold"> Oh no... </p>
         <p className=" text-[16px] text-[#797979] font-normal text-center tracking-wide ">
-          The page you are looking for is not found or temporarily unavailable.
+          We encountered a small system error. Please try again shortly. Our
+          team is on it!
         </p>
         <Link href={"/"}>
-          <button className=" text-primary text-[16px] font-medium underline underline-offset-2">
-            Go Back To Home
+          <button className=" text-primary text-[16px] font-medium underline underline-offset-2  ">
+            Go Back to Home
           </button>
         </Link>
       </div>
@@ -28,4 +26,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default ErrorPage;
