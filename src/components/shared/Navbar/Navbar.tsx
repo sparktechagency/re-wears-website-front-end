@@ -10,7 +10,7 @@ import { TbGridDots } from "react-icons/tb";
 import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from "react-icons/gi";
 import { SlHandbag } from "react-icons/sl";
 import { useRouter } from "next/navigation";
-import { Bell, Heart, Mail, User } from "lucide-react";
+import { Bell, Heart, Mail, Search, User } from "lucide-react";
 import Notifications from "./Notifications";
 
 const items: MenuProps["items"] = [
@@ -83,10 +83,11 @@ const Navbar = () => {
             <div
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${selectedCategory === category
+              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
+                selectedCategory === category
                   ? " text-black font-bold"
                   : "text-primary"
-                }`}
+              }`}
             >
               {icon}
               {category}
@@ -97,7 +98,7 @@ const Navbar = () => {
         {/* Items List (Only visible if a category is selected) */}
         <div className="col-span-4 ps-2 pe-6">
           {selectedCategory &&
-            categories[selectedCategory]?.items?.length > 0 ? (
+          categories[selectedCategory]?.items?.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
               {categories[selectedCategory].items.map((item: string) => (
                 <div key={item} className="py-1">
@@ -171,6 +172,15 @@ const Navbar = () => {
                 placement="bottomCenter"
                 arrow={{ pointAtCenter: true }}
               >
+                <Search size={20} />
+              </Dropdown>
+            </p>
+            <p className=" flex items-center gap-1 cursor-pointer">
+              <Dropdown
+                menu={{ items }}
+                placement="bottomCenter"
+                arrow={{ pointAtCenter: true }}
+              >
                 <Bell size={20} />
               </Dropdown>
             </p>
@@ -198,12 +208,10 @@ const Navbar = () => {
             </p>
 
             <div onClick={() => router.push("/sell-now")}>
-
               <CmnButton className="hidden lg:block w-[118px] h-[44px]">
                 {" "}
                 SELL NOW
               </CmnButton>
-
             </div>
           </div>
         </div>
@@ -244,7 +252,7 @@ const Navbar = () => {
         </div>
 
         {/* search field for small screen */}
-        <div className="lg:hidden" style={{ width: "250px" }}>
+        <div className="lg:hidden relative" style={{ width: "250px" }}>
           <Input
             prefix={<BsSearch size={18} color="#797979" />}
             placeholder="Search for items"
