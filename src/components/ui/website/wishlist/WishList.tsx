@@ -31,7 +31,7 @@ const WishList = () => {
       {/* display added items */}
       <section className="my-16 px-4">
         <h1 className="text-2xl font-bold text-center">Your wishlist</h1>
-        <div className="container card my-10 grid grid-cols-2 lg:grid-cols-6 gap-4">
+        <div className="container card my-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
           {productsData.map((item) => (
             <ProductCard key={item.id} product={item} />
           ))}

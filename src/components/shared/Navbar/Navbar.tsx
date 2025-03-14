@@ -14,7 +14,7 @@ import Notifications from "./Notifications";
 import Image from "next/image";
 import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
-import MenuVertical from "./MenuVertical";
+import MenuVertical from "./NavmenuSmDevice/MenuVertical";
 
 const items: MenuProps["items"] = [
   {
@@ -262,7 +262,9 @@ const Navbar = () => {
         </div>
 
         {/* menu for small screen */}
-        <MenuVertical />
+        <div className="lg:hidden">
+          <MenuVertical />
+        </div>
 
         {/* search field for small screen */}
         {isSearchbarVisible && (
