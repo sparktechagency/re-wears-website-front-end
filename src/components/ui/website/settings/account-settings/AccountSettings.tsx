@@ -17,7 +17,9 @@ const AccountSettings = () => {
             Verified <Check />
           </span>
         </div>
-        <OutlineButton>Change</OutlineButton>
+        <Link href={`/confirm-email-change`}>
+          <OutlineButton>Change</OutlineButton>
+        </Link>
       </section>
 
       <section className="card">

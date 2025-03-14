@@ -1,6 +1,7 @@
 "use client";
 import TextInput from "@/components/shared/TextInput";
 import { Form } from "antd";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { GoDotFill } from "react-icons/go";
@@ -9,9 +10,9 @@ const ResendCode = () => {
   const router = useRouter();
 
   const onFinish = async () => {
-    router.push(`/reset-password`);
+    router.push(`/verify-otp`);
   };
-  
+
   return (
     <section className="max-w-2xl mx-auto px-4 my-16 lg:my-32">
       <p className="text-secondary text-[25px] font-bold text-center pb-4">
@@ -20,6 +21,15 @@ const ResendCode = () => {
       </p>
 
       <div className="flex flex-col gap-2 mb-7">
+        <p className="text-[#797979] text-[16px] flex items-center gap-2">
+          {" "}
+          <span>
+            {" "}
+            <GoDotFill />{" "}
+          </span>{" "}
+          <span>Make sure you entered you email address correctly. </span>{" "}
+        </p>
+
         <p className="text-[#797979] text-[16px] flex items-center gap-2">
           {" "}
           <span>
@@ -50,26 +60,18 @@ const ResendCode = () => {
             {" "}
             <GoDotFill />{" "}
           </span>{" "}
-          <span>Make sure you entered you email address correctly. </span>{" "}
-        </p>
-
-        <p className="text-[#797979] text-[16px] flex items-center gap-2">
-          {" "}
-          <span>
-            {" "}
-            <GoDotFill />{" "}
-          </span>{" "}
           <span>
             If you&apos;re still having problems, problems, please check our{" "}
-            <span className=" font-bold underline underline-offset-2">
-              {" "}
-              Help Center{" "}
-            </span>{" "}
-          </span>{" "}
+            <span className="link">Help Center</span>
+          </span>
         </p>
       </div>
 
-      <Form layout="vertical" onFinish={onFinish}>
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        style={{ fontFamily: "poppins" }}
+      >
         <TextInput name={"email"} label={"Email"} />
         <Form.Item>
           <button
@@ -79,9 +81,10 @@ const ResendCode = () => {
               height: 55,
               color: "white",
               fontWeight: "400px",
-              fontSize: "18px",
+              fontSize: "16px",
               borderRadius: 60,
               marginTop: 0,
+              fontFamily: "poppins",
             }}
             className="flex items-center justify-center bg-primary rounded-lg"
           >
@@ -89,6 +92,12 @@ const ResendCode = () => {
           </button>
         </Form.Item>
       </Form>
+      <button
+        onClick={() => router.back()}
+        className="flex items-center gap-2 mx-auto text-primary font-semibold"
+      >
+        <ArrowLeft /> Back{" "}
+      </button>
     </section>
   );
 };

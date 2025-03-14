@@ -16,9 +16,13 @@ const ProfileDetails = () => {
     }
   };
 
+  const handleSubmit = () => {
+    // action performs here
+  };
+
   return (
     <div className="">
-      <form className="grid gap-6">
+      <form onSubmit={handleSubmit} className="grid gap-6">
         <h1 className="md:hidden text-xl font-bold">Profile Details</h1>
         <section className="bg-white p-8 rounded-xl shadow-smooth">
           {/* image input */}

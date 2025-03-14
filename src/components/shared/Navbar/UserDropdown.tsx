@@ -14,14 +14,18 @@ const UserDropdown = () => {
         M
       </div>
       {isVisible && (
-        <div className="absolute right-0 bg-white p-4 w-40 rounded-lg shadow-smooth">
+        <div className="absolute right-0 bg-white p-4 w-40 rounded-lg shadow-smooth z-50">
           <ul className="">
-            <li className="p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer">
-              <Link href={"/profile"}>Profile</Link>
-            </li>
-            <li className="p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer">
-              <Link href={"/settings/profile-details"}>Settings</Link>
-            </li>
+            <Link href={"/settings/profile-details"}>
+              <li className="p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer">
+                Profile
+              </li>
+            </Link>
+            <Link href={"/settings/account-settings"}>
+              <li className="p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer">
+                Settings
+              </li>
+            </Link>
             <hr className="my-2" />
             <li className="text-red-500 p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer">
               Log out
