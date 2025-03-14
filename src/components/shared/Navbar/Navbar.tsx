@@ -4,14 +4,17 @@ import { useState } from "react";
 import { Input, Menu, Dropdown, MenuProps } from "antd";
 import { BsSearch } from "react-icons/bs";
 import Link from "next/link";
-import CmnButton from "../CmnButton";
 import { FaTshirt } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
 import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from "react-icons/gi";
 import { SlHandbag } from "react-icons/sl";
 import { useRouter } from "next/navigation";
-import { Bell, Heart, Mail, Search, User } from "lucide-react";
+import { Bell, Heart, Mail, Search, UserRound, XIcon } from "lucide-react";
 import Notifications from "./Notifications";
+import Image from "next/image";
+import FillButton from "../FillButton";
+import UserDropdown from "./UserDropdown";
+import MenuVertical from "./NavmenuSmDevice/MenuVertical";
 
 const items: MenuProps["items"] = [
   {
@@ -68,6 +71,8 @@ const categories: Categories = {
 };
 
 const Navbar = () => {
+  const [isSearchbarVisible, setSearchbarVisible] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [selectedKey, setSelectedKey] = useState("women");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "All"
@@ -118,7 +123,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="w-full lg:h-[134px] flex items-center justify-center "
+      className="w-full flex items-center justify-center "
       style={{ borderBottom: "1px solid #f0f0f0" }}
     >
       <div
@@ -131,9 +136,8 @@ const Navbar = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            height: "64px",
           }}
-          className="pt-4"
+          className="py-6"
         >
           {/* Left section - Search */}
           <div className="hidden lg:block" style={{ width: "250px" }}>
@@ -160,20 +164,23 @@ const Navbar = () => {
               }}
               className="text-primary text-3xl lg:text-4xl font-extrabold"
             >
-              re-wears
+              <Image
+                src={"/logo.svg"}
+                alt="logo"
+                width={213}
+                height={26}
+                className="w-40 lg:w-56"
+              />
             </Link>
           </div>
 
           {/* Right section - User actions */}
-          <div style={{ display: "flex", alignItems: "center", gap: "30px" }}>
-            <p className=" flex items-center gap-1 cursor-pointer">
-              <Dropdown
-                menu={{ items }}
-                placement="bottomCenter"
-                arrow={{ pointAtCenter: true }}
-              >
-                <Search size={20} />
-              </Dropdown>
+          <div className="flex items-center gap-4 lg:gap-5">
+            <p
+              onClick={() => setSearchbarVisible(!isSearchbarVisible)}
+              className="flex lg:hidden items-center gap-1 cursor-pointer"
+            >
+              <Search size={20} />
             </p>
             <p className=" flex items-center gap-1 cursor-pointer">
               <Dropdown
@@ -190,11 +197,13 @@ const Navbar = () => {
                 <Mail size={20} />{" "}
               </span>{" "}
             </p>
+
             <p className=" flex items-center gap-1 cursor-pointer">
               {" "}
               <span>
                 <Heart size={20} />{" "}
               </span>{" "}
+              <span className="hidden lg:block text-sm">Wishlist (0)</span>
             </p>
 
             <p
@@ -203,23 +212,24 @@ const Navbar = () => {
             >
               {" "}
               <span>
-                <User size={20} />{" "}
+                <UserRound size={20} />{" "}
               </span>{" "}
+              <span className="hidden lg:block text-sm">Log In</span>
             </p>
 
-            <div onClick={() => router.push("/sell-now")}>
-              <CmnButton className="hidden lg:block w-[118px] h-[44px]">
-                {" "}
-                SELL NOW
-              </CmnButton>
-            </div>
+            {/* user avater */}
+            <UserDropdown />
+
+            <Link href={"/sell-now"} className="hidden lg:block">
+              <FillButton>SELL NOW</FillButton>
+            </Link>
           </div>
         </div>
 
-        {/* menu bar - bottom section */}
-        <div className="hidden lg:block mt-3">
+        {/* menu bar for large screen - bottom section */}
+        <div className="hidden lg:block">
           <Menu
-            className="flex   items-center justify-center gap-5"
+            className="flex items-center justify-center gap-1 lg:gap-5"
             mode="horizontal"
             selectedKeys={[selectedKey]}
             style={{
@@ -251,21 +261,38 @@ const Navbar = () => {
           </Menu>
         </div>
 
-        {/* search field for small screen */}
-        <div className="lg:hidden relative" style={{ width: "250px" }}>
-          <Input
-            prefix={<BsSearch size={18} color="#797979" />}
-            placeholder="Search for items"
-            style={{
-              border: "none",
-              borderBottom: "1px solid #000000",
-              borderRadius: "0",
-              width: "98vw",
-              height: "42px",
-            }}
-            className="placeholder:text-[#797979] placeholder:text-[14px] placeholder:font-semibold"
-          />
+        {/* menu for small screen */}
+        <div className="lg:hidden">
+          <MenuVertical />
         </div>
+
+        {/* search field for small screen */}
+        {isSearchbarVisible && (
+          <div className="absolute left-0 z-50 w-full">
+            <div className="relative">
+              <Input
+                type="search"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                prefix={<BsSearch size={18} color="#797979" />}
+                placeholder="Search for items"
+                style={{
+                  border: "none",
+                  borderBottom: "1px solid #000000",
+                  borderRadius: "0",
+                  height: "42px",
+                }}
+                className="placeholder:text-[#797979] placeholder:text-[14px] placeholder:font-semibold"
+              />
+              {searchKeyword && (
+                <XIcon
+                  onClick={() => setSearchKeyword("")}
+                  className="text-[#797979] absolute right-3 top-2 z-50"
+                />
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

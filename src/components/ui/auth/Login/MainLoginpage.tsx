@@ -9,7 +9,7 @@ import { FaApple } from 'react-icons/fa';
 const MainLoginPage = () => {
     const [selectedTab, setSelectedTab] = useState("LOG IN");
     return (
-      <div className="max-w-sm py-[60px]">
+      <div className="max-w-sm mx-auto px-4 my-16 lg:my-32">
         {/* page title */}
         <div className=" flex flex-col items-center gap-1 mb-5">
           <p className=" text-[22px] font-bold text-[#000000] tracking-wide">
