@@ -209,7 +209,7 @@ const Navbar = () => {
               <span>
                 <Heart size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
-              <span className="hidden lg:block text-sm">Wishlist (0)</span>
+              <span className="hidden lg:block text-sm">Wishlist</span>
             </Link>
 
             <p
@@ -220,7 +220,9 @@ const Navbar = () => {
               <span>
                 <UserRound size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
-              <span className="hidden lg:block text-sm text-secondary">Log In | Sign Up </span>
+              <span className="hidden lg:block text-sm text-secondary">
+                Log In | Sign Up{" "}
+              </span>
             </p>
 
             {/* user avater */}
