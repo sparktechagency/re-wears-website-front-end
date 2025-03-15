@@ -16,7 +16,7 @@ const UserDropdown = () => {
       {isVisible && (
         <div className="absolute right-0 bg-white p-4 w-40 rounded-lg shadow-smooth z-50">
           <ul className="">
-            <Link href={"/settings/profile-details"}>
+            <Link href={"/profile"}>
               <li className="p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer">
                 Profile
               </li>
