@@ -231,7 +231,7 @@ const Inbox = () => {
                         className="rounded-full h-[50px] w-[50px]"
                       />
                       <div className="flex-col gap-1">
-                        <p className="text-[#12354E] font-medium text-[16px]">
+                        <p className="text-[16px] text-secondary font-bold">
                           {value?.name}
                         </p>
                         <p className="text-[#6A6A6A] text-[14px]">
@@ -303,7 +303,7 @@ const Inbox = () => {
                     <Link href={"/order"}>
                       {" "}
                       <FillButton className="!px-6 text-sm uppercase">
-                        Buy Now
+                        Reserve Now
                       </FillButton>{" "}
                     </Link>
                   </div>

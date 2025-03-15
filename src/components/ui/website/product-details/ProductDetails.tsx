@@ -9,9 +9,11 @@ import { HiMiniMapPin } from "react-icons/hi2";
 import ImageGallery from "./ImageGallery";
 import { useState } from "react";
 import ReserveNowModal from "./ReserveNowModal";
+import { RxHeartFilled } from "react-icons/rx";
 
-const ProductDetails = () => {
-  const [open, setOpen] = useState(false);
+const ProductDetails = () => { 
+  const [open, setOpen] = useState(false); 
+  const [isFavorite, setIsFavorite] = useState(false);
   return (
     <div className="container">
       {/* category breadcumb */}
@@ -77,10 +79,10 @@ const ProductDetails = () => {
                 <span className="text-[#797979]">Location</span>{" "}
                 <span className="font-bold">Orlando, United States</span>
               </li>
-              <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
+              {/* <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
                 <span className="text-[#797979]">Payment Options</span>{" "}
                 <span className="font-bold">Bank Card</span>
-              </li>
+              </li> */}
               <li className="grid grid-cols-2 gap-2 bg-[#F9F8F2] p-3 px-6">
                 <span className="text-[#797979]">Views</span>{" "}
                 <span className="font-bold">0</span>
@@ -113,13 +115,14 @@ const ProductDetails = () => {
                 <OutlineButton className="uppercase w-full">
                   Message seller
                 </OutlineButton>
-              </Link>
-              <Link href={""}>
-                {" "}
+              </Link> 
+
+              <div className="" onClick={() => setIsFavorite(!isFavorite)}>
+            
                 <OutlineButton className="uppercase w-full flex items-center justify-center gap-2">
-                  <Heart /> add to wishlist
+              {isFavorite ?  <div className="flex items-center gap-1"> <RxHeartFilled  size={24} /> remove from wishlist  </div> : <div className="flex items-center gap-1"><Heart /> add to wishlist </div>}    
                 </OutlineButton>
-              </Link>
+              </div>
             </div>
           </div>
 
