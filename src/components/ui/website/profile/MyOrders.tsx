@@ -5,6 +5,7 @@ import OutlineButton from "@/components/shared/OutlineButton";
 import { ConfigProvider, Segmented, Table } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Image from "next/image";
+import Link from "next/link";
 
 // Define the data structure
 interface Order {
@@ -67,6 +68,11 @@ const columns: ColumnsType<Order> = [
           Message seller
         </FillButton>
         <OutlineButton className="text-sm px-4 h-8">Release</OutlineButton>
+        <Link href={"leave-review"}>
+          <OutlineButton className="text-sm px-4 h-8">
+            Review seller
+          </OutlineButton>
+        </Link>
       </div>
     ),
   },
