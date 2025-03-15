@@ -1,3 +1,5 @@
+"use client";
+
 import FillButton from "@/components/shared/FillButton";
 import OutlineButton from "@/components/shared/OutlineButton";
 import { Heart, Minus } from "lucide-react";
@@ -5,8 +7,11 @@ import Link from "next/link";
 import { GoClockFill } from "react-icons/go";
 import { HiMiniMapPin } from "react-icons/hi2";
 import ImageGallery from "./ImageGallery";
+import { useState } from "react";
+import ReserveNowModal from "./ReserveNowModal";
 
 const ProductDetails = () => {
+  const [open, setOpen] = useState(false);
   return (
     <div className="container">
       {/* category breadcumb */}
@@ -93,7 +98,11 @@ const ProductDetails = () => {
 
             <div className="grid gap-2 px-6">
               <Link href={""}>
-                <FillButton className="uppercase w-full">Buy Now</FillButton>
+                <span onClick={() => setOpen(true)}>
+                  <FillButton className="uppercase w-full">
+                    Reserve Now
+                  </FillButton>
+                </span>
               </Link>
               <Link href={""}>
                 <OutlineButton className="uppercase w-full">
@@ -142,6 +151,7 @@ const ProductDetails = () => {
             </div>
           </div>
         </section>
+        <ReserveNowModal open={open} setOpen={setOpen} />
       </section>
     </div>
   );
