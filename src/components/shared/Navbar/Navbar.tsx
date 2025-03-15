@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
@@ -11,7 +12,6 @@ import { SlHandbag } from "react-icons/sl";
 import { useRouter } from "next/navigation";
 import { Bell, Heart, Mail, Search, UserRound, XIcon } from "lucide-react";
 import Notifications from "./Notifications";
-import Image from "next/image";
 import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
@@ -164,12 +164,12 @@ const Navbar = () => {
               }}
               className="text-primary text-3xl lg:text-4xl font-extrabold"
             >
-              <Image
+              <img
                 src="/logo.svg"
                 alt="logo"
                 width={213}
                 height={26}
-                className="w-40 lg:w-56"
+                className="w-40 lg:w-56 h-[26px] "
               />
             </Link>
           </div>
