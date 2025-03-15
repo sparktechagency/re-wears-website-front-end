@@ -35,3 +35,15 @@ body {
         @apply font-bold text-primary underline;
     }
 }
+/* hide scrollbar */
+.no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+
+    /* Firefox */
+    &::-webkit-scrollbar {
+        display: none;
+        /* Safari and Chrome */
+    }
+}
