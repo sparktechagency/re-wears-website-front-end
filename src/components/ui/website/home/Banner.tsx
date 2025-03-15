@@ -28,9 +28,12 @@ const Banner = () => {
           <Link href={"/sell-now"}>
             <FillButton>Sell Now</FillButton>
           </Link>
-          <p className="text-[14px] font-semibold text-primary underline underline-offset-2">
+          <Link
+            href={`/how-it-works`}
+            className="text-[14px] font-semibold text-primary underline underline-offset-2"
+          >
             Learn how it works
-          </p>
+          </Link>
         </div>
       </div>
     </div>

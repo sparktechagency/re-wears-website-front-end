@@ -180,7 +180,7 @@ const Navbar = () => {
               onClick={() => setSearchbarVisible(!isSearchbarVisible)}
               className="flex lg:hidden items-center gap-1 cursor-pointer"
             >
-              <Search size={20} />
+              <Search size={20} strokeWidth={1.5} />
             </p>
             <p className=" flex items-center gap-1 cursor-pointer">
               <Dropdown
@@ -188,20 +188,20 @@ const Navbar = () => {
                 placement="bottomCenter"
                 arrow={{ pointAtCenter: true }}
               >
-                <Bell size={20} />
+                <Bell size={20} strokeWidth={1.5} />
               </Dropdown>
             </p>
             <p className=" flex items-center gap-1 cursor-pointer">
               {" "}
               <span>
-                <Mail size={20} />{" "}
+                <Mail size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
             </p>
 
             <p className=" flex items-center gap-1 cursor-pointer">
               {" "}
               <span>
-                <Heart size={20} />{" "}
+                <Heart size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
               <span className="hidden lg:block text-sm">Wishlist (0)</span>
             </p>
@@ -212,7 +212,7 @@ const Navbar = () => {
             >
               {" "}
               <span>
-                <UserRound size={20} />{" "}
+                <UserRound size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
               <span className="hidden lg:block text-sm">Log In</span>
             </p>

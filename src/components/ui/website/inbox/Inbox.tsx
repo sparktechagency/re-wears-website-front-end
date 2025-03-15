@@ -289,14 +289,14 @@ const Inbox = () => {
                   <div className="flex items-center justify-end gap-x-4">
                     <div onClick={() => setOpen(true)}>
                       {" "}
-                      <OutlineButton className="!px-6 text-sm">
+                      <OutlineButton className="!px-6 text-sm uppercase">
                         Make an offer
                       </OutlineButton>{" "}
                     </div>
 
                     <Link href={"/order"}>
                       {" "}
-                      <FillButton className="!px-6 text-sm">
+                      <FillButton className="!px-6 text-sm uppercase">
                         Buy Now
                       </FillButton>{" "}
                     </Link>

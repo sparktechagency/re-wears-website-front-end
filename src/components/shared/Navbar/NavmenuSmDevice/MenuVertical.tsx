@@ -9,7 +9,6 @@ const { Panel } = Collapse;
 export default function Navbar() {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activePanel, setActivePanel] = useState<string | null>(null);
-  console.log(activePanel);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -24,7 +23,7 @@ export default function Navbar() {
 
   return (
     <nav className="">
-      <div className="flex justify-center gap-2 p-4 text-sm font-medium relative">
+      <div className="flex justify-center items-center gap-2 p-4 py-2 text-sm font-medium relative">
         {navData.map((navItem) => (
           <div key={navItem.name} className="menu-item">
             {/* Category Button */}

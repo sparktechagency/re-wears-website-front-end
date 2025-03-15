@@ -7,7 +7,7 @@ import OTPInput from "react-otp-input";
 const VerifyOtp = () => {
   const router = useRouter();
   const [otp, setOtp] = useState<string>("");
-  const [email, setEmail] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>("");
 
   useEffect(() => {
     const emailFromQuery = new URLSearchParams(window.location.search).get(
@@ -15,8 +15,6 @@ const VerifyOtp = () => {
     );
     setEmail(emailFromQuery);
   }, []);
-
-  console.log(email);
 
   const onFinish = async (values: { otp: string }) => {
     const userType = localStorage.getItem("userType");
@@ -29,7 +27,7 @@ const VerifyOtp = () => {
   };
 
   return (
-    <section className="max-w-lg mx-auto px-4 my-16 lg:my-32">
+    <section className="max-w-xl mx-auto px-4 my-16 lg:my-32">
       <div className=" mb-6 text-center">
         <h1 className="text-[25px] font-bold mb-3 text-secondary ">
           Verify your email
@@ -37,11 +35,16 @@ const VerifyOtp = () => {
         <p className=" text-[#797979] text-[16px] ">
           Please enter the verification code we sent to this email address:
         </p>
-        <p className="text-secondary text-[16px] ">{email}</p>
+        <p className="text-secondary text-[16px] font-bold">{email}</p>
       </div>
 
-      <Form layout="vertical" onFinish={onFinish}>
-        <div className="flex items-center justify-center mb-6">
+      <Form
+        layout="vertical"
+        onFinish={onFinish}
+        style={{ fontFamily: "poppins" }}
+      >
+        <div className="flex flex-col items-center justify-center gap-1 mb-6">
+          <p>Enter the verification code below:</p>
           <OTPInput
             value={otp}
             onChange={setOtp}
@@ -73,6 +76,7 @@ const VerifyOtp = () => {
               background: "#9D977A",
               color: "white",
               borderRadius: "60px",
+              fontFamily: "poppins",
             }}
             className="uppercase tracking-wider"
           >
@@ -85,7 +89,7 @@ const VerifyOtp = () => {
         className="flex items-center justify-center pt-6 cursor-pointer "
         onClick={() => router.push(`/resend-code`)}
       >
-        <p className="text-primary">Didn’t receive our email?</p>
+        <p className="text-primary">Didn&apos;t receive our email?</p>
       </div>
     </section>
   );
