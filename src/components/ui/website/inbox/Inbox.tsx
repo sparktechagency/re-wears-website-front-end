@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 //  import { FiSearch } from "react-icons/fi";
 //  import { Input } from "antd";
-import { IoImageOutline, IoLinkOutline, IoSendSharp } from "react-icons/io5";
+import { IoImageOutline, IoSendSharp } from "react-icons/io5";
 import Image from "next/image";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import OutlineButton from "@/components/shared/OutlineButton";
@@ -156,6 +156,12 @@ const Inbox = () => {
   const [personId, setpersonId] = useState<number | null>(1);
   const [isChatVisible, setIsChatVisible] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleIconClick = () => {
+    fileInputRef.current?.click();
+  };
 
   const handleMessage = (value: TMessageList) => {
     setPerson(value);
@@ -319,8 +325,8 @@ const Inbox = () => {
                       <div
                         className={`lg:w-3/5 w-2/3 lg:px-4 px-2 py-3 flex-col gap-4 ${
                           index % 2 === 0
-                            ? "border border-[#DCDCDC] rounded-t-xl rounded-bl-xl"
-                            : "border border-primary rounded-t-xl rounded-br-xl"
+                            ? "border bg-[#DCDCDC] rounded-t-xl rounded-bl-xl"
+                            : "border border-[#dcdcdc] rounded-t-xl rounded-br-xl"
                         }`}
                       >
                         <p>{value?.message}</p>
@@ -334,9 +340,18 @@ const Inbox = () => {
                 {/* input section */}
                 <div className="absolute bottom-0 w-full py-1  bg-white border-t border-[#DCDCDC]">
                   <div className="flex items-center justify-center gap-3 w-full px-3 mt-3">
+                    {/* file input */}
                     <div className="flex items-center gap-4">
-                      <IoLinkOutline size={22} />
-                      <IoImageOutline size={22} />
+                      <IoImageOutline
+                        size={22}
+                        className="cursor-pointer"
+                        onClick={handleIconClick} // Set up the click handler
+                      />
+                      <input
+                        type="file"
+                        ref={fileInputRef} // Reference to the file input
+                        className="hidden" // Hide the default file input
+                      />
                     </div>
                     <textarea
                       className="w-[85%] h-[48px] resize-none py-2 rounded-l-full px-4 rounded-r-full border border-[#DCDCDC] "

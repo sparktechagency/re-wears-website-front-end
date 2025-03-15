@@ -1,4 +1,5 @@
 import Closet from "@/components/ui/website/profile/Closet";
+import MyOrders from "@/components/ui/website/profile/MyOrders";
 import ProfileHeader from "@/components/ui/website/profile/ProfileHeader";
 import Reviews from "@/components/ui/website/profile/Reviews";
 import { ConfigProvider, Tabs, TabsProps } from "antd";
@@ -11,6 +12,11 @@ const items: TabsProps["items"] = [
   },
   {
     key: "2",
+    label: <p className="font-bold">My Orders</p>,
+    children: <MyOrders />,
+  },
+  {
+    key: "3",
     label: <p className="font-bold">Reviews</p>,
     children: <Reviews />,
   },

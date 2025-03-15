@@ -191,20 +191,26 @@ const Navbar = () => {
                 <Bell size={20} strokeWidth={1.5} />
               </Dropdown>
             </p>
-            <p className=" flex items-center gap-1 cursor-pointer">
+            <Link
+              href={"/inbox"}
+              className=" flex items-center gap-1 cursor-pointer"
+            >
               {" "}
               <span>
                 <Mail size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
-            </p>
+            </Link>
 
-            <p className=" flex items-center gap-1 cursor-pointer">
+            <Link
+              href={"/wishlist"}
+              className=" flex items-center gap-1 cursor-pointer"
+            >
               {" "}
               <span>
                 <Heart size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
               <span className="hidden lg:block text-sm">Wishlist (0)</span>
-            </p>
+            </Link>
 
             <p
               className=" flex items-center gap-1 cursor-pointer"

@@ -20,6 +20,8 @@ export default {
         "primary-dark": "#847e62",
         secondary: "#000000",
         base: "#5C5C5C",
+        danger: "#D04555",
+        "danger-dark": "#a32937",
       },
       fontFamily: {
         poppins: ["Poppins", "sans-serif"],
