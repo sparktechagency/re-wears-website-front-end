@@ -165,7 +165,7 @@ const Navbar = () => {
               className="text-primary text-3xl lg:text-4xl font-extrabold"
             >
               <Image
-                src={"/logo.svg"}
+                src="/logo.svg"
                 alt="logo"
                 width={213}
                 height={26}
