@@ -44,7 +44,8 @@ const About = () => {
       <section className="container grid gap-8">
         <h1 className="heading-1 text-center md:text-3xl max-w-screen-sm mx-auto">
           Welcome to re-wears, the ultimate destination for clean, sustainable
-          living
+          living 
+          
         </h1>
         {/* card container */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
