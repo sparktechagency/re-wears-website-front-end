@@ -1,6 +1,7 @@
 import image1 from "@/assets/images/about-1.svg";
 import image2 from "@/assets/images/about-2.svg";
 import image3 from "@/assets/images/about-3.svg";
+import image4 from "@/assets/images/about-4.svg";
 import Image from "next/image";
 import icon1 from "@/assets/icons/about-icon-1.svg";
 import icon2 from "@/assets/icons/about-icon-2.svg";
@@ -15,23 +16,34 @@ const About = () => {
         <h1 className="heading-1 text-center px-4">
           If you&apos;re not wearing it, someone else could be
         </h1>
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          <Image
-            src={image1}
-            alt="image"
-            width={518}
-            height={359}
-            className="w-full"
-          />
-          <Image
-            src={image2}
-            alt="image"
-            width={518}
-            height={359}
-            className="w-full"
-          />
+        <div className="grid grid-cols-1 md:grid-cols-5">
+          <div className="">
+            <Image
+              src={image1}
+              alt="image"
+              width={518}
+              height={359}
+              className="w-full"
+            />
+          </div>
+          <div className="lg:col-span-2 h-full">
+            <Image
+              src={image2}
+              alt="image"
+              width={518}
+              height={359}
+              className="w-full h-full object-cover"
+            />
+          </div>
           <Image
             src={image3}
+            alt="image"
+            width={518}
+            height={359}
+            className="w-full"
+          />
+          <Image
+            src={image4}
             alt="image"
             width={518}
             height={359}
@@ -44,8 +56,7 @@ const About = () => {
       <section className="container grid gap-8">
         <h1 className="heading-1 text-center md:text-3xl max-w-screen-sm mx-auto">
           Welcome to re-wears, the ultimate destination for clean, sustainable
-          living 
-          
+          living
         </h1>
         {/* card container */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -69,9 +80,9 @@ const About = () => {
               Rewrite Fashion: Wear It Forward
             </h1>
             <p className="lg:text-lg text-[#797979]">
-              Let&apos;s rewrite the fashion narrative together - because if you&apos;re
-              not wearing it, someone else could. Join us in creating a more
-              sustainable future, one wardrobe at a time.
+              Let&apos;s rewrite the fashion narrative together - because if
+              you&apos;re not wearing it, someone else could. Join us in
+              creating a more sustainable future, one wardrobe at a time.
             </p>
           </div>
           <div className="flex flex-col gap-6 p-8 rounded-xl shadow-smooth">
