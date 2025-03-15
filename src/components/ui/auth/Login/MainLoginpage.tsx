@@ -1,6 +1,6 @@
 "use client"
 import Login from '@/components/ui/auth/Login/Login';
-import { ConfigProvider, Segmented } from 'antd';
+// import { ConfigProvider, Segmented } from 'antd'; 
 import React, { useState } from 'react';
 import Register from '../Register/Register';
 import { FcGoogle } from 'react-icons/fc';
@@ -9,14 +9,14 @@ import { FaApple } from 'react-icons/fa';
 const MainLoginPage = () => {
     const [selectedTab, setSelectedTab] = useState("LOG IN");
     return (
-      <div className="max-w-sm mx-auto px-4 my-16 lg:my-32">
+      <div className="lg:max-w-xl max-w-sm mx-auto px-4 my-16 lg:my-32">
         {/* page title */}
         <div className=" flex flex-col items-center gap-1 mb-5">
           <p className=" text-[22px] font-bold text-[#000000] tracking-wide">
             {" "}
             Sell without fees.{" "}
           </p>
-          <p className=" text-[22px] font-bold text-[#000000] tracking-wide">
+          <p className=" lg:text-[22px] text-[20px] font-bold text-[#000000] tracking-wide">
             {" "}
             Embrace sustainable fashion.{" "}
           </p>
@@ -24,36 +24,23 @@ const MainLoginPage = () => {
 
         <div className="grid items-center justify-center w-full">
           {/* tab buttons */}
-          <div className=" flex items-center justify-center w-full">
-            <div className=" border border-[#ABABAB] rounded-full text-primary flex items-center justify-center">
-              <ConfigProvider
-                theme={{
-                  components: {
-                    Segmented: {
-                      trackPadding: "8px 7px",
-                      itemSelectedBg: "#9d977a",
-                      itemSelectedColor: "#fff",
-                      trackBg: "#fff",
-                    },
-                  },
-                  token: {
-                    controlHeight: 44,
-                    controlPaddingHorizontal: 80,
-                  },
-                }}
-              >
-                <Segmented
-                  options={["LOG IN", "REGISTER"]}
-                  className="flex items-center justify-center segmented-gap"
-                  style={{
-                    height: "60px",
-                  }}
-                  value={selectedTab}
-                  onChange={(value) => setSelectedTab(value)}
-                />
-              </ConfigProvider>
-            </div>
-          </div>
+          <div className="flex items-center justify-center w-full">
+      <div className="border border-[#ABABAB] rounded-full text-primary flex items-center justify-center bg-white p-[8px]">
+        <div className="flex items-center justify-center rounded-full overflow-hidden">
+          {["LOG IN", "REGISTER"].map((tab) => (
+            <button
+              key={tab}
+              className={`lg:px-20 px-10 py-[8px] text-lg font-medium transition-all duration-300 rounded-full h-[44px] ${
+                selectedTab === tab ? "bg-[#9d977a] text-white" : "bg-white text-primary"
+              }`}
+              onClick={() => setSelectedTab(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
 
           {/* google and apple button section */}
           <div className=" flex items-center justify-center">

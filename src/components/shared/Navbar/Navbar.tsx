@@ -107,7 +107,7 @@ const Navbar = () => {
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
               {categories[selectedCategory].items.map((item: string) => (
                 <div key={item} className="py-1">
-                  <Link href="#" className="text-[#797979] hover:text-primary ">
+                  <Link href="/products" className="text-[#797979] hover:text-primary ">
                     {item}
                   </Link>
                 </div>
@@ -220,7 +220,7 @@ const Navbar = () => {
               <span>
                 <UserRound size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
-              <span className="hidden lg:block text-sm">Log In</span>
+              <span className="hidden lg:block text-sm text-secondary">Log In | Sign Up </span>
             </p>
 
             {/* user avater */}

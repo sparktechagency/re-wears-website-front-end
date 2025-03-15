@@ -26,10 +26,10 @@ const MakeOfferModal = ({
               message: `This field is required`,
             },
           ]}
-          label={<p className="text-[14px] font-normal ">Offer your price</p>}
+          label={<p className="text-[14px] font-normal ">Offer your price </p>}
         >
           <Input
-            placeholder={`AED 45.00`}
+            placeholder={` 45.00`}
             style={{
               height: 50,
               border: "1px solid #d9d9d9",
@@ -37,7 +37,8 @@ const MakeOfferModal = ({
               boxShadow: "none",
               backgroundColor: "white",
               borderRadius: "40px",
-            }}
+            }} 
+            prefix={<p className="text-[14px] font-normal text-gray-500 ">AED</p>}
           />
         </Form.Item>
 

@@ -76,13 +76,13 @@ const ImageGallery = () => {
         {/* Custom left-right navigation Buttons */}
         <button
           ref={prevRef}
-          className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-primary bg-opacity-40 text-white p-2 rounded-lg z-50"
+          className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-primary bg-opacity-40 text-white p-2 rounded-lg z-20"
         >
           <ChevronLeft size={24} />
         </button>
         <button
           ref={nextRef}
-          className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-primary bg-opacity-40 text-white p-2 rounded-lg z-50"
+          className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-primary bg-opacity-40 text-white p-2 rounded-lg z-20"
         >
           <ChevronRight size={24} />
         </button>

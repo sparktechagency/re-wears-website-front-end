@@ -305,8 +305,8 @@ const SellNow = () => {
 
                 <div className="grid-between  pt-4  ">
                   <div className=" text-[16px] font-bold  text-secondary">
-                    {" "}
-                    Material (recommended){" "}
+
+                    Material (recommended)
                   </div>
                   <Form.Item name="Material (recommended)" className="">
                     <ConfigProvider
@@ -343,8 +343,7 @@ const SellNow = () => {
           <div className="card mt-5">
             <div className="grid-between ">
               <div className=" text-[16px] font-bold  text-secondary">
-                {" "}
-                Price (AED){" "}
+                Price
               </div>
               <Form.Item name="price" className="">
                 <Input
@@ -356,6 +355,7 @@ const SellNow = () => {
                     borderRadius: "60px",
                     backgroundColor: "#f5f5f5",
                   }}
+                  prefix={<p className="text-[16px] font-semibold">AED</p>}
                 />
               </Form.Item>
             </div>
@@ -364,8 +364,8 @@ const SellNow = () => {
           {/* Buttons */}
           <div className="flex flex-col lg:flex-row justify-end gap-4 mt-8">
             <OutlineButton className="w-full md:w-auto">
-              {" "}
-              SAVE DRAFT{" "}
+
+              SAVE DRAFT
             </OutlineButton>
             <FillButton className="w-full md:w-auto"> UPLOAD </FillButton>
           </div>

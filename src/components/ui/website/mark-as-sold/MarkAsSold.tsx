@@ -54,7 +54,7 @@ const MarkAsSold = () => {
 
               <div className="flex flex-col  items-start gap-2">
                 <p className="text-[16px] text-secondary font-bold ">
-                  Lorem Ipsum{" "}
+                  Lorem Ipsum
                 </p>
               </div>
             </div>
@@ -62,8 +62,7 @@ const MarkAsSold = () => {
 
           <div className="flex items-center justify-between  mt-7">
             <div className=" text-[16px] font-bold  text-secondary">
-              {" "}
-              Price (AED){" "}
+              Price
             </div>
             <Form.Item name="price" className="w-1/2">
               <Input
@@ -74,6 +73,7 @@ const MarkAsSold = () => {
                   height: "55px",
                   borderRadius: "60px",
                 }}
+                prefix={<p className="text-[16px] font-semibold"> AED </p>}
               />
             </Form.Item>
           </div>
