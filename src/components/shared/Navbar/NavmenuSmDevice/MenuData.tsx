@@ -66,23 +66,6 @@ const navData = [
         ],
       },
       {
-        title: "All",
-        icon: <Grip size={18} />,
-        subcategories: [
-          "Jeans",
-          "T-Shirts",
-          "Hoodies",
-          "Shorts",
-          "Jackets",
-          "Activewears",
-          "Boots",
-          "Loafers",
-          "Slippers",
-          "Wallets",
-          "Belts",
-        ],
-      },
-      {
         title: "Clothing",
         icon: <Shirt size={18} />,
         subcategories: [

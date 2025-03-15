@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Collapse } from "antd";
 import navData from "./MenuData"; // Importing dynamic nav data
+import Link from "next/link";
 
 const { Panel } = Collapse;
 
@@ -74,9 +75,14 @@ export default function Navbar() {
                           {category.subcategories.map((sub, subIndex) => (
                             <li
                               key={subIndex}
-                              className="cursor-pointer hover:text-gray-600"
+                              className="cursor-pointer hover:text-gray-600 focus::text-primary"
                             >
-                              {sub}
+                              <Link
+                                href={"/product-details"}
+                                className="text-[#797979]"
+                              >
+                                {sub}
+                              </Link>
                             </li>
                           ))}
                         </ul>

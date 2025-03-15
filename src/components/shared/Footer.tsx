@@ -58,6 +58,9 @@ const Footer = () => {
               <li>
                 <Link href="/advertising">Advertising</Link>
               </li>
+              <li>
+                <Link href="/mobile-app">Mobile App</Link>
+              </li>
             </ul>
           </div>
 
