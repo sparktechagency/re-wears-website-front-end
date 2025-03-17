@@ -16,7 +16,7 @@ const Reviews = () => {
       <section className="flex gap-6 items-center text-base lg:py-4">
         <h1 className="text-7xl font-medium text-black">4.0</h1>
         <div className="">
-          <Rate defaultValue={value} style={{ color: "#FDB11A" }} />
+          <Rate disabled defaultValue={value} style={{ color: "#FDB11A" }} />
           <p className="text-[#797979] font-medium">20 reviews</p>
         </div>
       </section>

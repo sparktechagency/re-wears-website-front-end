@@ -26,12 +26,9 @@ const Banner = () => {
             Say goodbye to closet clutter
           </p>
           <Link href={"/sell-now"}>
-            <FillButton>Sell Now</FillButton>
+            <FillButton className="uppercase">Sell Now</FillButton>
           </Link>
-          <Link
-            href={`/how-it-works`}
-            className="text-[14px] font-semibold text-primary underline underline-offset-2"
-          >
+          <Link href={`/how-it-works`} className="text-[14px] text-primary">
             Learn how it works
           </Link>
         </div>

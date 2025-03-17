@@ -130,14 +130,24 @@ const MyOrders = () => {
 
       {/* orders table */}
       <div className="w-full max-w-[calc(82vw)] overflow-x-scroll no-scrollbar">
-        <Table
-          columns={columns}
-          dataSource={data}
-          pagination={false}
-          className="min-w-[600px]"
-          scroll={{ x: "100%" }}
-          style={{ fontFamily: "poppins" }}
-        />
+        <ConfigProvider
+          theme={{
+            components: {
+              Table: {
+                headerBg: "#F5F5F5",
+              },
+            },
+          }}
+        >
+          <Table
+            columns={columns}
+            dataSource={data}
+            pagination={false}
+            className="min-w-[600px]"
+            scroll={{ x: "100%" }}
+            style={{ fontFamily: "poppins" }}
+          />
+        </ConfigProvider>
       </div>
     </div>
   );
