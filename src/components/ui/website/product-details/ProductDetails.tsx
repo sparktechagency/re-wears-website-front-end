@@ -83,10 +83,10 @@ const ProductDetails = () => {
                 <span className="text-[#797979]">Payment Options</span>{" "}
                 <span className="font-bold">Bank Card</span>
               </li> */}
-              <li className="grid grid-cols-2 gap-2 bg-[#F9F8F2] p-3 px-6">
+              {/* <li className="grid grid-cols-2 gap-2 bg-[#F9F8F2] p-3 px-6">
                 <span className="text-[#797979]">Views</span>{" "}
                 <span className="font-bold">0</span>
-              </li>
+              </li> */}
               <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
                 <span className="text-[#797979]">Uploaded</span>{" "}
                 <span className="font-bold">4 minutes ago</span>
@@ -115,12 +115,20 @@ const ProductDetails = () => {
                 <OutlineButton className="uppercase w-full">
                   Message seller
                 </OutlineButton>
-              </Link> 
+              </Link>
 
               <div className="" onClick={() => setIsFavorite(!isFavorite)}>
-            
                 <OutlineButton className="uppercase w-full flex items-center justify-center gap-2">
-              {isFavorite ?  <div className="flex items-center gap-1"> <RxHeartFilled  size={24} /> remove from wishlist  </div> : <div className="flex items-center gap-1"><Heart /> add to wishlist </div>}    
+                  {isFavorite ? (
+                    <div className="flex items-center gap-1">
+                      {" "}
+                      <RxHeartFilled size={24} /> remove from wishlist{" "}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1">
+                      <Heart /> add to wishlist{" "}
+                    </div>
+                  )}
                 </OutlineButton>
               </div>
             </div>

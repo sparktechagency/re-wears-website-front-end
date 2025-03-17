@@ -1,5 +1,6 @@
 "use client";
 
+import Accordian from "@/components/shared/Accordian";
 import FillButton from "@/components/shared/FillButton";
 import Label from "@/components/shared/Label";
 import OutlineButton from "@/components/shared/OutlineButton";
@@ -74,6 +75,12 @@ const ProfileHeader = () => {
           </OutlineButton>
           <FillButton>Follow</FillButton>
         </div>
+      </div>
+      <div className="max-w-screen-lg mx-auto">
+        <Accordian
+          title="clothes/ shoes that have been laying around for a while just want to get rid of and make space..."
+          text="clothes/ shoes that have been laying around for a while just want to get rid of and make space clothes/ shoes that have been laying around for a while just want to get rid of and make space clothes/ shoes that have been laying around for a while just want to get rid of and make space clothes/ shoes that have been laying around for a while just want to get rid of and make space"
+        />
       </div>
     </section>
   );
