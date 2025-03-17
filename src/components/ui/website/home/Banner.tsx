@@ -20,7 +20,7 @@ const Banner = () => {
       </video>
 
       {/* Content Overlay */}
-      <div className="absolute bottom-1/3 left-4 lg:left-20 z-10 flex items-end justify-center max-w-[90vw] lg:max-w-auto">
+      <div className="absolute bottom-6 lg:bottom-20 left-4 lg:left-20 z-10 flex items-end justify-center max-w-[90vw] lg:max-w-auto">
         <div className="grid gap-4 lg:gap-6 p-6 lg:p-9 bg-white rounded-xl border border-gray-200">
           <p className="text-3xl lg:text-[38px] font-bold text-[#000000] max-w-xs leading-tight">
             Say goodbye to closet clutter

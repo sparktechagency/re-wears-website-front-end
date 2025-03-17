@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Input, Menu, Dropdown, MenuProps } from "antd";
-import { BsSearch } from "react-icons/bs";
+import { Menu, Dropdown, MenuProps } from "antd";
 import Link from "next/link";
 import { FaTshirt } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
@@ -144,17 +143,19 @@ const Navbar = () => {
           className="py-6"
         >
           {/* Left section - Search */}
-          <div className="hidden lg:block" style={{ width: "280px" }}>
-            <Input
-              prefix={<BsSearch size={18} color="#797979" />}
+          <div
+            className="hidden lg:flex items-center gap-4 relative"
+            style={{ minWidth: "280px" }}
+          >
+            <Search
+              size={20}
+              strokeWidth={1.5}
+              color="#797979"
+              className="absolute"
+            />
+            <input
               placeholder="Search for items"
-              style={{
-                border: "none",
-                borderBottom: "1px solid #000000",
-                borderRadius: "0",
-                height: "42px",
-              }}
-              className="placeholder:text-[#797979] placeholder:text-[14px] placeholder:font-semibold"
+              className="p-8 py-3 text-sm placeholder:text-[#797979] focus:outline-none border-b border-black"
             />
           </div>
 
@@ -291,20 +292,18 @@ const Navbar = () => {
         {/* search field for small screen */}
         {isSearchbarVisible && (
           <div className="absolute left-0 z-50 w-full">
-            <div className="relative">
-              <Input
-                type="search"
+            <div className="flex lg:hidden items-center gap-4 px-4 py-1 bg-white relative">
+              <Search
+                size={20}
+                strokeWidth={1.5}
+                color="#797979"
+                className="absolute"
+              />
+              <input
+                placeholder="Search for items"
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
-                prefix={<BsSearch size={18} color="#797979" />}
-                placeholder="Search for items"
-                style={{
-                  border: "none",
-                  borderBottom: "1px solid #000000",
-                  borderRadius: "0",
-                  height: "42px",
-                }}
-                className="placeholder:text-[#797979] placeholder:text-[14px] placeholder:font-semibold"
+                className="w-full p-8 py-3 text-sm placeholder:text-[#797979] focus:outline-none border-b border-black"
               />
               {searchKeyword && (
                 <XIcon
