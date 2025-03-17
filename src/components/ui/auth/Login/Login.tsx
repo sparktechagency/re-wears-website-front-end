@@ -5,14 +5,17 @@ import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const Login = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
+  const { setUser } = useAuthContext();
+
   // submit handler
   const onFinish = async (values: { email: string; password: string }) => {
-    console.log(values);
+    setUser(values.email);
     router.push("/");
   };
 

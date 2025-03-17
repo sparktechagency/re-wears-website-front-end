@@ -1,28 +1,48 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
+import { setCookie, deleteCookie } from "cookies-next";
 
 // Define the context type
 interface AuthContextType {
   user: string | null;
   setUser: (user: string | null) => void;
+  logout: () => void;
 }
 
-// Create the context with a default value
+// Create context
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// Create a provider component
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<string | null>(null);
+export const AuthProvider = ({
+  children,
+  initialUser,
+}: {
+  children: ReactNode;
+  initialUser: string | null;
+}) => {
+  const [user, setUserState] = useState<string | null>(initialUser);
+
+  // Function to update user state and cookies
+  const setUser = (newUser: string | null) => {
+    if (newUser) {
+      setCookie("user", newUser, { maxAge: 60 * 60 * 24 * 7 }); // Store for 7 days
+    } else {
+      deleteCookie("user");
+    }
+    setUserState(newUser);
+  };
+
+  // Function to clear user state and cookies
+  const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
+    <AuthContext.Provider value={{ user, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Custom hook for using the context
+// Custom hook to use context
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (!context) {

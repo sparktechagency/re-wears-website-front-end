@@ -4,6 +4,7 @@ import "./globals.css";
 import { Poppins } from "next/font/google";
 import { ConfigProvider } from "antd";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { cookies } from "next/headers";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -19,6 +20,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = cookies().get("user")?.value || null; // Read user from cookies
+
   return (
     <html lang="en">
       <body className={`antialiased ${poppins.className}`}>
@@ -31,7 +34,7 @@ export default function RootLayout({
               components: {},
             }}
           >
-            <AuthProvider>{children}</AuthProvider>
+            <AuthProvider initialUser={user}>{children}</AuthProvider>
           </ConfigProvider>
         </AntdRegistry>
       </body>

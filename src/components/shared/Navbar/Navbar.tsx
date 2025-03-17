@@ -8,12 +8,13 @@ import { FaTshirt } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
 import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from "react-icons/gi";
 import { SlHandbag } from "react-icons/sl";
-import { Bell, Heart, Mail, Search, XIcon } from "lucide-react";
+import { Bell, Heart, Mail, Search, UserRound, XIcon } from "lucide-react";
 import Notifications from "./Notifications";
 import Image from "next/image";
 import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const items: MenuProps["items"] = [
   {
@@ -76,6 +77,8 @@ const Navbar = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "All"
   );
+
+  const { user } = useAuthContext();
 
   const menuItems = (
     <Menu style={{ width: "100%", padding: "25px" }}>
@@ -141,7 +144,7 @@ const Navbar = () => {
           className="py-6"
         >
           {/* Left section - Search */}
-          <div className="hidden lg:block" style={{ width: "250px" }}>
+          <div className="hidden lg:block" style={{ width: "280px" }}>
             <Input
               prefix={<BsSearch size={18} color="#797979" />}
               placeholder="Search for items"
@@ -176,31 +179,37 @@ const Navbar = () => {
           </div>
 
           {/* Right section - User actions */}
-          <div className="flex items-center gap-4 lg:gap-5">
+          <div className="flex items-center gap-4">
             <p
               onClick={() => setSearchbarVisible(!isSearchbarVisible)}
               className="flex lg:hidden items-center gap-1 cursor-pointer"
             >
               <Search size={20} strokeWidth={1.5} />
             </p>
-            <p className=" flex items-center gap-1 cursor-pointer">
-              <Dropdown
-                menu={{ items }}
-                placement="bottomCenter"
-                arrow={{ pointAtCenter: true }}
+
+            {user && (
+              <p className=" flex items-center gap-1 cursor-pointer">
+                <Dropdown
+                  menu={{ items }}
+                  placement="bottomCenter"
+                  arrow={{ pointAtCenter: true }}
+                >
+                  <Bell size={20} strokeWidth={1.5} />
+                </Dropdown>
+              </p>
+            )}
+
+            {user && (
+              <Link
+                href={"/inbox"}
+                className=" flex items-center gap-1 cursor-pointer"
               >
-                <Bell size={20} strokeWidth={1.5} />
-              </Dropdown>
-            </p>
-            <Link
-              href={"/inbox"}
-              className=" flex items-center gap-1 cursor-pointer"
-            >
-              {" "}
-              <span>
-                <Mail size={20} strokeWidth={1.5} />{" "}
-              </span>{" "}
-            </Link>
+                {" "}
+                <span>
+                  <Mail size={20} strokeWidth={1.5} />{" "}
+                </span>{" "}
+              </Link>
+            )}
 
             <Link
               href={"/wishlist"}
@@ -210,24 +219,28 @@ const Navbar = () => {
               <span>
                 <Heart size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
-              {/* <span className="hidden lg:block text-sm">Wishlist</span> */}
+              {!user && (
+                <span className="hidden lg:block text-sm">Wishlist</span>
+              )}
             </Link>
 
-            {/* <p
-              className=" flex items-center gap-1 cursor-pointer"
-              onClick={() => router.push("/login")}
-            >
-              {" "}
-              <span>
-                <UserRound size={20} strokeWidth={1.5} />{" "}
-              </span>{" "}
-              <span className="hidden lg:block text-sm text-secondary">
-                Log In | Sign Up{" "}
-              </span>
-            </p> */}
+            {!user && (
+              <Link
+                href={`/login`}
+                className=" flex items-center gap-1 cursor-pointer"
+              >
+                {" "}
+                <span>
+                  <UserRound size={20} strokeWidth={1.5} />{" "}
+                </span>{" "}
+                <span className="hidden lg:block text-sm text-secondary">
+                  Log In | Sign Up{" "}
+                </span>
+              </Link>
+            )}
 
             {/* user avater */}
-            <UserDropdown />
+            {user && <UserDropdown />}
 
             <Link href={"/sell-now"} className="hidden lg:block">
               <FillButton className="px-6">SELL NOW</FillButton>
