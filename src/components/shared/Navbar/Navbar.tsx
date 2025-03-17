@@ -244,7 +244,7 @@ const Navbar = () => {
             {user && <UserDropdown />}
 
             <Link href={"/sell-now"} className="hidden lg:block">
-              <FillButton className="px-6">SELL NOW</FillButton>
+              <FillButton className="px-6 text-sm">SELL NOW</FillButton>
             </Link>
           </div>
         </div>

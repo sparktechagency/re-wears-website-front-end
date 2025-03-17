@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 
+import FillButton from "@/components/shared/FillButton";
 import CountdownTimer from "@/utils/countDownTimer";
+import Link from "next/link";
 
 const Order = () => {
   return (
@@ -44,28 +46,25 @@ const Order = () => {
           </div>
 
           {/* Order Summary */}
-          <div title="Order summary" className="lg:col-span-1 card">
-            <p className="text-[14px] font-normal text-[#797979]  pb-3">
-              {" "}
-              Order summary
-            </p>
-            <div className="flex justify-between items-center mb-6">
-              <span className="text-secondary text-[16px]">Order</span>
-              <span className="font-bold text-secondary text-[16px]">
-                AED 45.00
-              </span>
+          <div
+            title="Order summary"
+            className="lg:col-span-1 card grid gap-6 justify-items-stretch"
+          >
+            <div>
+              <p className="text-[14px] font-normal text-[#797979]  pb-3">
+                {" "}
+                Order summary
+              </p>
+              <div className="flex justify-between items-center mb-6">
+                <span className="text-secondary text-[16px]">Order</span>
+                <span className="font-bold text-secondary text-[16px]">
+                  AED 45.00
+                </span>
+              </div>
             </div>
-            <button
-              type="submit"
-              className="bg-primary border-none text-white  mt-7"
-              style={{
-                height: "50px",
-                borderRadius: "60px",
-                width: "100%",
-              }}
-            >
-              BUY NOW
-            </button>
+            <Link href={"/inbox"}>
+              <FillButton className="w-full">MESSAGE SELLER</FillButton>
+            </Link>
           </div>
         </div>
       </div>

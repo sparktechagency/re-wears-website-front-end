@@ -6,49 +6,290 @@ import FillButton from "@/components/shared/FillButton";
 import { useState } from "react";
 const { TextArea } = Input;
 
-const categories = {
-  All: {
-    items: [
-      "Jeans",
-      "Tops & T-Shirts",
-      "Sweaters & Sweatshirts",
-      "Shorts",
-      "Sleepwear",
-      "Skirts",
-      "Suits & blazers",
-      "Activewear",
-      "Other men's clothing",
-      "Jumpsuits & rompers",
+interface Option {
+  value: string;
+  label: string;
+  children?: Option[];
+}
+
+const options: Option[] = [
+  {
+    value: "Men",
+    label: "Men",
+    children: [
+      {
+        value: "All",
+        label: "All",
+        children: [
+          {
+            value: "Jeans",
+            label: "Jeans",
+          },
+          {
+            value: "Tops & T-Shirts",
+            label: "Tops & T-Shirts",
+          },
+          {
+            value: "Sweaters & Sweatshirts",
+            label: "Sweaters & Sweatshirts",
+          },
+          {
+            value: "Shorts",
+            label: "Shorts",
+          },
+          {
+            value: "Sleepwear",
+            label: "Sleepwear",
+          },
+          {
+            value: "Skirts",
+            label: "Skirts",
+          },
+          {
+            value: "Suits & blazers",
+            label: "Suits & blazers",
+          },
+        ],
+      },
+      {
+        value: "Clothing",
+        label: "Clothing",
+        children: [
+          {
+            value: "Jackets",
+            label: "Jackets",
+          },
+          {
+            value: "Coats",
+            label: "Coats",
+          },
+          {
+            value: "Parkas",
+            label: "Parkas",
+          },
+        ],
+      },
+      {
+        value: "Shoes",
+        label: "Shoes",
+        children: [
+          {
+            value: "Sneaker",
+            label: "Sneaker",
+          },
+          {
+            value: "Slipper",
+            label: "Slipper",
+          },
+        ],
+      },
     ],
   },
-  Clothing: {
-    items: ["Jackets", "Coats", "Parkas"],
+  {
+    value: "Women",
+    label: "Women",
+    children: [
+      {
+        value: "All",
+        label: "All",
+        children: [
+          {
+            value: "Jeans",
+            label: "Jeans",
+          },
+          {
+            value: "Tops & T-Shirts",
+            label: "Tops & T-Shirts",
+          },
+          {
+            value: "Sweaters & Sweatshirts",
+            label: "Sweaters & Sweatshirts",
+          },
+          {
+            value: "Shorts",
+            label: "Shorts",
+          },
+          {
+            value: "Sleepwear",
+            label: "Sleepwear",
+          },
+        ],
+      },
+      {
+        value: "Clothing",
+        label: "Clothing",
+        children: [
+          {
+            value: "Skirts",
+            label: "Skirts",
+          },
+          {
+            value: "Coats",
+            label: "Coats",
+          },
+          {
+            value: "Parkas",
+            label: "Parkas",
+          },
+        ],
+      },
+      {
+        value: "Shoes",
+        label: "Shoes",
+        children: [
+          {
+            value: "Sneaker",
+            label: "Sneaker",
+          },
+          {
+            value: "Slipper",
+            label: "Slipper",
+          },
+        ],
+      },
+    ],
   },
-  Shoes: {
-    items: ["Formal Suits", "Casual Blazers"],
+  {
+    value: "Kids",
+    label: "Kids",
+    children: [
+      {
+        value: "All",
+        label: "All",
+        children: [
+          {
+            value: "Jeans",
+            label: "Jeans",
+          },
+          {
+            value: "Tops & T-Shirts",
+            label: "Tops & T-Shirts",
+          },
+          {
+            value: "Sweaters & Sweatshirts",
+            label: "Sweaters & Sweatshirts",
+          },
+          {
+            value: "Shorts",
+            label: "Shorts",
+          },
+          {
+            value: "Sleepwear",
+            label: "Sleepwear",
+          },
+        ],
+      },
+      {
+        value: "Clothing",
+        label: "Clothing",
+        children: [
+          {
+            value: "Skirts",
+            label: "Skirts",
+          },
+          {
+            value: "Coats",
+            label: "Coats",
+          },
+          {
+            value: "Parkas",
+            label: "Parkas",
+          },
+        ],
+      },
+      {
+        value: "Shoes",
+        label: "Shoes",
+        children: [
+          {
+            value: "Sneaker",
+            label: "Sneaker",
+          },
+          {
+            value: "Slipper",
+            label: "Slipper",
+          },
+        ],
+      },
+    ],
   },
-  Bags: {
-    items: ["Chinos", "Dress Pants", "Joggers"],
+  {
+    value: "Beauty/Grooming",
+    label: "Beauty/Grooming",
+    children: [
+      {
+        value: "All",
+        label: "All",
+        children: [
+          {
+            value: "Jeans",
+            label: "Jeans",
+          },
+          {
+            value: "Tops & T-Shirts",
+            label: "Tops & T-Shirts",
+          },
+          {
+            value: "Sweaters & Sweatshirts",
+            label: "Sweaters & Sweatshirts",
+          },
+          {
+            value: "Shorts",
+            label: "Shorts",
+          },
+          {
+            value: "Sleepwear",
+            label: "Sleepwear",
+          },
+        ],
+      },
+      {
+        value: "Clothing",
+        label: "Clothing",
+        children: [
+          {
+            value: "Skirts",
+            label: "Skirts",
+          },
+          {
+            value: "Coats",
+            label: "Coats",
+          },
+          {
+            value: "Parkas",
+            label: "Parkas",
+          },
+        ],
+      },
+      {
+        value: "Shoes",
+        label: "Shoes",
+        children: [
+          {
+            value: "Sneaker",
+            label: "Sneaker",
+          },
+          {
+            value: "Slipper",
+            label: "Slipper",
+          },
+        ],
+      },
+    ],
   },
-  Accessories: {
-    items: ["Socks", "Boxers", "Briefs"],
-  },
-  Beauty: {
-    items: ["Swim Shorts", "Swim Trunks"],
-  },
-};
+];
 
 const SellNow = () => {
   const [category, setCategory] = useState(false);
 
-  const options = Object.entries(categories).map(([category, { items }]) => ({
-    value: category,
-    label: category,
-    children: items.map((item) => ({
-      value: item,
-      label: item,
-    })),
-  }));
+  // const options = Object.entries(categories).map(([category, { items }]) => ({
+  //   value: category,
+  //   label: category,
+  //   children: items.map((item) => ({
+  //     value: item,
+  //     label: item,
+  //   })),
+  // }));
 
   const handleChange = (values: string[]) => {
     if (values) {
@@ -118,7 +359,7 @@ const SellNow = () => {
                 {" "}
                 Describe your item{" "}
               </div>
-              <Form.Item name="title" className="">
+              <Form.Item name="description" className="">
                 <TextArea
                   placeholder="e.g. still with tags, true to size"
                   rows={4}
@@ -154,7 +395,7 @@ const SellNow = () => {
                 >
                   <Cascader
                     options={options}
-                    placeholder="Select a category"
+                    placeholder="Choose a category"
                     className="rounded-md"
                     style={{
                       height: "55px",
@@ -185,7 +426,7 @@ const SellNow = () => {
                       }}
                     >
                       <Select
-                        placeholder="Please select a brand"
+                        placeholder="Pick a brand"
                         style={{
                           width: "100%",
                           height: "55px",
@@ -218,7 +459,7 @@ const SellNow = () => {
                       }}
                     >
                       <Select
-                        placeholder="Please select a Size"
+                        placeholder="Select a size"
                         style={{
                           width: "100%",
                           height: "55px",
@@ -251,7 +492,7 @@ const SellNow = () => {
                       }}
                     >
                       <Select
-                        placeholder="Please select a condition"
+                        placeholder="Define the condition"
                         style={{
                           width: "100%",
                           height: "55px",
@@ -285,7 +526,7 @@ const SellNow = () => {
                     >
                       <Select
                         mode="multiple"
-                        placeholder="Please select a Colors"
+                        placeholder="Select colors"
                         style={{
                           width: "100%",
                           height: "55px",
@@ -305,7 +546,6 @@ const SellNow = () => {
 
                 <div className="grid-between  pt-4  ">
                   <div className=" text-[16px] font-bold  text-secondary">
-
                     Material (recommended)
                   </div>
                   <Form.Item name="Material (recommended)" className="">
@@ -318,7 +558,7 @@ const SellNow = () => {
                       }}
                     >
                       <Select
-                        placeholder="Please select a Material"
+                        placeholder="Choose material"
                         style={{
                           width: "100%",
                           height: "55px",
@@ -348,15 +588,18 @@ const SellNow = () => {
               <Form.Item name="price" className="">
                 <Input
                   placeholder="0.00"
-                  className="rounded-full "
+                  className="rounded-full text-end"
                   style={{
                     width: "100%",
                     height: "55px",
                     borderRadius: "60px",
                     backgroundColor: "#f5f5f5",
+                    textAlign: "right",
+                    padding: "0 24px",
+                    fontSize: "16px",
                   }}
-                  prefix={<p className="text-[16px] font-semibold">AED</p>}
                 />
+                <span className="absolute left-6 top-4 font-medium">AED</span>
               </Form.Item>
             </div>
           </div>
@@ -364,7 +607,6 @@ const SellNow = () => {
           {/* Buttons */}
           <div className="flex flex-col lg:flex-row justify-end gap-4 mt-8">
             <OutlineButton className="w-full md:w-auto">
-
               SAVE DRAFT
             </OutlineButton>
             <FillButton className="w-full md:w-auto"> UPLOAD </FillButton>
