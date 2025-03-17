@@ -8,8 +8,7 @@ import { FaTshirt } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
 import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from "react-icons/gi";
 import { SlHandbag } from "react-icons/sl";
-import { useRouter } from "next/navigation";
-import { Bell, Heart, Mail, Search, UserRound, XIcon } from "lucide-react";
+import { Bell, Heart, Mail, Search, XIcon } from "lucide-react";
 import Notifications from "./Notifications";
 import Image from "next/image";
 import FillButton from "../FillButton";
@@ -77,7 +76,6 @@ const Navbar = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "All"
   );
-  const router = useRouter();
 
   const menuItems = (
     <Menu style={{ width: "100%", padding: "25px" }}>
@@ -107,7 +105,10 @@ const Navbar = () => {
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
               {categories[selectedCategory].items.map((item: string) => (
                 <div key={item} className="py-1">
-                  <Link href="/products" className="text-[#797979] hover:text-primary ">
+                  <Link
+                    href="/products"
+                    className="text-[#797979] hover:text-primary "
+                  >
                     {item}
                   </Link>
                 </div>
@@ -209,10 +210,10 @@ const Navbar = () => {
               <span>
                 <Heart size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
-              <span className="hidden lg:block text-sm">Wishlist</span>
+              {/* <span className="hidden lg:block text-sm">Wishlist</span> */}
             </Link>
 
-            <p
+            {/* <p
               className=" flex items-center gap-1 cursor-pointer"
               onClick={() => router.push("/login")}
             >
@@ -223,13 +224,13 @@ const Navbar = () => {
               <span className="hidden lg:block text-sm text-secondary">
                 Log In | Sign Up{" "}
               </span>
-            </p>
+            </p> */}
 
             {/* user avater */}
             <UserDropdown />
 
             <Link href={"/sell-now"} className="hidden lg:block">
-              <FillButton>SELL NOW</FillButton>
+              <FillButton className="px-6">SELL NOW</FillButton>
             </Link>
           </div>
         </div>
