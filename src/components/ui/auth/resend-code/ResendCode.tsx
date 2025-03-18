@@ -62,7 +62,7 @@ const ResendCode = () => {
           </span>{" "}
           <span>
             If you&apos;re still having problems, problems, please check our{" "}
-            <span className="link">Help Center</span>
+            <span className="link">Help Center.</span>
           </span>
         </p>
       </div>
