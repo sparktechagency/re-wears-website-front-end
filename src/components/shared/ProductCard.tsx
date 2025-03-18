@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 import { TProduct } from "@/types/TProduct";
-import { Heart, ShieldCheck } from "lucide-react";
+import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -37,9 +37,9 @@ const ProductCard = ({ product }: { product: TProduct }) => {
       <Link href={"/product-details"}>
         <div className="grid gap-1 p-4 ">
           <h3 className="font-bold">${product.price}</h3>
-          <p className="flex items-center gap-1 text-primary text-sm">
+          {/* <p className="flex items-center gap-1 text-primary text-sm">
             ${product.price + product.vat} incl. <ShieldCheck size={20} />
-          </p>
+          </p> */}
           <p className="text-sm">{product.size}</p>
           <h4 className="font-bold">{product.title}</h4>
         </div>

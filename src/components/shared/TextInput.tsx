@@ -7,26 +7,25 @@ const TextInput: React.FC<{ name: string; label: string }> = ({ name, label }) =
   return (
     <Form.Item
       name={name}
+      label={label}
       rules={[
         {
           required: true,
           message: `This field is required`,
         },
       ]}
-    > 
-
+    >
       <Input
-        placeholder={`Enter your ${label.toLowerCase()}`}
+        placeholder={`Enter ${label}`}
         style={{
-            height: 50,
-            border: "1px solid #d9d9d9",
-            outline: "none",
-            boxShadow: "none",
-            backgroundColor: "white",
-            borderRadius: "40px",
-          }}
+          height: 50,
+          border: "1px solid #d9d9d9",
+          outline: "none",
+          boxShadow: "none",
+          backgroundColor: "white",
+          borderRadius: "40px",
+        }}
       />
-
     </Form.Item>
   );
 };

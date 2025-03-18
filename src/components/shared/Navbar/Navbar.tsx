@@ -2,19 +2,18 @@
 "use client";
 
 import { useState } from "react";
-import { Input, Menu, Dropdown, MenuProps } from "antd";
-import { BsSearch } from "react-icons/bs";
+import { Menu, Dropdown, MenuProps } from "antd";
 import Link from "next/link";
 import { FaTshirt } from "react-icons/fa";
 import { TbGridDots } from "react-icons/tb";
 import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from "react-icons/gi";
 import { SlHandbag } from "react-icons/sl";
-import { useRouter } from "next/navigation";
 import { Bell, Heart, Mail, Search, UserRound, XIcon } from "lucide-react";
 import Notifications from "./Notifications";
 import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const items: MenuProps["items"] = [
   {
@@ -77,7 +76,8 @@ const Navbar = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "All"
   );
-  const router = useRouter();
+
+  const { user } = useAuthContext();
 
   const menuItems = (
     <Menu style={{ width: "100%", padding: "25px" }}>
@@ -107,7 +107,10 @@ const Navbar = () => {
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
               {categories[selectedCategory].items.map((item: string) => (
                 <div key={item} className="py-1">
-                  <Link href="/products" className="text-[#797979] hover:text-primary ">
+                  <Link
+                    href="/products"
+                    className="text-[#797979] hover:text-primary "
+                  >
                     {item}
                   </Link>
                 </div>
@@ -140,17 +143,19 @@ const Navbar = () => {
           className="py-6"
         >
           {/* Left section - Search */}
-          <div className="hidden lg:block" style={{ width: "250px" }}>
-            <Input
-              prefix={<BsSearch size={18} color="#797979" />}
+          <div
+            className="hidden lg:flex items-center gap-4 relative"
+            style={{ minWidth: "280px" }}
+          >
+            <Search
+              size={20}
+              strokeWidth={1.5}
+              color="#797979"
+              className="absolute"
+            />
+            <input
               placeholder="Search for items"
-              style={{
-                border: "none",
-                borderBottom: "1px solid #000000",
-                borderRadius: "0",
-                height: "42px",
-              }}
-              className="placeholder:text-[#797979] placeholder:text-[14px] placeholder:font-semibold"
+              className="p-8 py-3 text-sm placeholder:text-[#797979] focus:outline-none border-b border-black"
             />
           </div>
 
@@ -175,31 +180,52 @@ const Navbar = () => {
           </div>
 
           {/* Right section - User actions */}
-          <div className="flex items-center gap-4 lg:gap-5">
+          <div className="flex items-center gap-4">
             <p
               onClick={() => setSearchbarVisible(!isSearchbarVisible)}
               className="flex lg:hidden items-center gap-1 cursor-pointer"
             >
               <Search size={20} strokeWidth={1.5} />
             </p>
-            <p className=" flex items-center gap-1 cursor-pointer">
-              <Dropdown
-                menu={{ items }}
-                placement="bottomCenter"
-                arrow={{ pointAtCenter: true }}
+
+            {user && (
+              <p className=" flex items-center gap-1 cursor-pointer">
+                <Dropdown
+                  menu={{ items }}
+                  placement="bottomCenter"
+                  arrow={{ pointAtCenter: true }}
+                >
+                  <Bell size={20} strokeWidth={1.5} />
+                </Dropdown>
+              </p>
+            )}
+
+            {user && (
+              <Link
+                href={"/inbox"}
+                className=" flex items-center gap-1 cursor-pointer"
               >
-                <Bell size={20} strokeWidth={1.5} />
-              </Dropdown>
-            </p>
-            <Link
-              href={"/inbox"}
-              className=" flex items-center gap-1 cursor-pointer"
-            >
-              {" "}
-              <span>
-                <Mail size={20} strokeWidth={1.5} />{" "}
-              </span>{" "}
-            </Link>
+                {" "}
+                <span>
+                  <Mail size={20} strokeWidth={1.5} />{" "}
+                </span>{" "}
+              </Link>
+            )}
+
+            {!user && (
+              <Link
+                href={`/login`}
+                className=" flex items-center gap-1 cursor-pointer"
+              >
+                {" "}
+                <span>
+                  <UserRound size={20} strokeWidth={1.5} />{" "}
+                </span>{" "}
+                <span className="hidden lg:block text-sm text-secondary">
+                  Log In | Sign Up{" "}
+                </span>
+              </Link>
+            )}
 
             <Link
               href={"/wishlist"}
@@ -209,27 +235,16 @@ const Navbar = () => {
               <span>
                 <Heart size={20} strokeWidth={1.5} />{" "}
               </span>{" "}
-              <span className="hidden lg:block text-sm">Wishlist</span>
+              {!user && (
+                <span className="hidden lg:block text-sm">Wishlist</span>
+              )}
             </Link>
 
-            <p
-              className=" flex items-center gap-1 cursor-pointer"
-              onClick={() => router.push("/login")}
-            >
-              {" "}
-              <span>
-                <UserRound size={20} strokeWidth={1.5} />{" "}
-              </span>{" "}
-              <span className="hidden lg:block text-sm text-secondary">
-                Log In | Sign Up{" "}
-              </span>
-            </p>
-
             {/* user avater */}
-            <UserDropdown />
+            {user && <UserDropdown />}
 
             <Link href={"/sell-now"} className="hidden lg:block">
-              <FillButton>SELL NOW</FillButton>
+              <FillButton className="px-6 text-sm">SELL NOW</FillButton>
             </Link>
           </div>
         </div>
@@ -277,20 +292,18 @@ const Navbar = () => {
         {/* search field for small screen */}
         {isSearchbarVisible && (
           <div className="absolute left-0 z-50 w-full">
-            <div className="relative">
-              <Input
-                type="search"
+            <div className="flex lg:hidden items-center gap-4 px-4 py-1 bg-white relative">
+              <Search
+                size={20}
+                strokeWidth={1.5}
+                color="#797979"
+                className="absolute"
+              />
+              <input
+                placeholder="Search for items"
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
-                prefix={<BsSearch size={18} color="#797979" />}
-                placeholder="Search for items"
-                style={{
-                  border: "none",
-                  borderBottom: "1px solid #000000",
-                  borderRadius: "0",
-                  height: "42px",
-                }}
-                className="placeholder:text-[#797979] placeholder:text-[14px] placeholder:font-semibold"
+                className="w-full p-8 py-3 text-sm placeholder:text-[#797979] focus:outline-none border-b border-black"
               />
               {searchKeyword && (
                 <XIcon

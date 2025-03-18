@@ -3,13 +3,14 @@
 import React, { useRef, useState } from "react";
 //  import { FiSearch } from "react-icons/fi";
 //  import { Input } from "antd";
-import { IoImageOutline, IoSendSharp } from "react-icons/io5";
+import { IoSendSharp } from "react-icons/io5";
 import Image from "next/image";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import OutlineButton from "@/components/shared/OutlineButton";
 import FillButton from "@/components/shared/FillButton";
 import MakeOfferModal from "./MakeOfferModal";
 import Link from "next/link";
+import { Camera } from "lucide-react";
 
 type TMessageList = {
   id: number;
@@ -176,7 +177,7 @@ const Inbox = () => {
   return (
     <div className=" py-[50px]  bg-[#FDFDFD]">
       <div className="container mt-4 ">
-        <div className="grid grid-cols-12 gap-4 h-[890px]">
+        <div className="grid grid-cols-12 gap-4">
           {/* Message List */}
           <div
             className={`lg:col-span-4 col-span-12 bg-white  rounded-xl px-2 py-4 ${
@@ -214,7 +215,7 @@ const Inbox = () => {
               </p>
             </div>
 
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 h-[calc(80vh)] overflow-y-scroll no-scrollbar">
               {messageList.map((value: TMessageList, index) => (
                 <div key={index} onClick={() => handleMessage(value)}>
                   <div
@@ -267,9 +268,12 @@ const Inbox = () => {
                     >
                       <IoMdArrowRoundBack size={20} />
                     </button>
-                    <p className="text-[20px] text-primary font-bold ">
+                    <Link
+                      href={"/profile"}
+                      className="text-[20px] text-primary font-bold "
+                    >
                       {person?.name}
-                    </p>
+                    </Link>
                   </div>
                 </div>
 
@@ -310,9 +314,9 @@ const Inbox = () => {
                 </div>
               </div>
 
-              <div className="bg-white w-full h-[calc(684px)] rounded-lg relative">
+              <div className="bg-white w-full rounded-lg relative">
                 {/* Chat messages */}
-                <div className="py-6 lg:px-8 px-3 overflow-y-auto h-[72vh]">
+                <div className="py-6 lg:px-8 px-3 h-[calc(70vh)] overflow-y-scroll no-scrollbar pb-16">
                   {messageContent.map((value, index) => (
                     <div
                       key={index}
@@ -342,9 +346,10 @@ const Inbox = () => {
                   <div className="flex items-center justify-center gap-3 w-full px-3 mt-3">
                     {/* file input */}
                     <div className="flex items-center gap-4">
-                      <IoImageOutline
-                        size={22}
-                        className="cursor-pointer"
+                      <Camera
+                        size={24}
+                        strokeWidth={1.75}
+                        className="text-[#9B9B9B] cursor-pointer"
                         onClick={handleIconClick} // Set up the click handler
                       />
                       <input
@@ -353,13 +358,15 @@ const Inbox = () => {
                         className="hidden" // Hide the default file input
                       />
                     </div>
-                    <textarea
-                      className="w-[85%] h-[48px] resize-none py-2 rounded-l-full px-4 rounded-r-full border border-[#DCDCDC] "
-                      placeholder="Type your message"
-                    />
-                    <button className="h-[40px] w-[40px] bg-primary text-white rounded-full flex justify-center items-center ">
-                      <IoSendSharp size={22} />
-                    </button>
+                    <div className="flex justify-between items-center gap-4 w-full relative">
+                      <textarea
+                        className="w-full h-[48px] resize-none py-2 rounded-l-full px-4 rounded-r-full border bg-[#F8F8F8] border-[#DCDCDC] placeholder:text-[#797979]"
+                        placeholder="Write a message here"
+                      />
+                      <button className="h-[40px] w-[40px] flex justify-center items-center absolute right-4">
+                        <IoSendSharp size={28} className="text-primary" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -5,31 +5,19 @@ const notifications = [
   {
     username: "John Doe",
     photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    items: [
-      "Flower sunglasses for girl 3/7 years",
-      "Maileg first kit box",
-      "The Kooples short printed floral lavender dress",
-    ],
+    message: "has just added new item",
     time: "1 day",
   },
   {
     username: "John Smith",
     photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    items: [
-      "Flower sunglasses for girl 3/7 years",
-      "Maileg first kit box",
-      "The Kooples short printed floral lavender dress",
-    ],
+    message: "has just added your item to their wishlist",
     time: "2 day",
   },
   {
     username: "Xein Alex",
     photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    items: [
-      "Flower sunglasses for girl 3/7 years",
-      "Maileg first kit box",
-      "The Kooples short printed floral lavender dress",
-    ],
+    message: "has just changed the price",
     time: "3 day",
   },
 ];
@@ -62,11 +50,9 @@ const Notifications = () => {
               <div>
                 <p>
                   <span className="text-primary font-bold">
-                    {item.username}
-                  </span>{" "}
-                  as just uploaded new items:{" "}
-                  <span className="text-primary font-bold">{item.items}</span>{" "}
-                  and more.
+                    {item.username}{" "}
+                  </span>
+                  <span>{item.message}</span>
                 </p>
                 <p className="text-[#797979] mt-1">
                   <span>{item.time}</span> ago

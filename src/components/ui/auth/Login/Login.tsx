@@ -5,14 +5,17 @@ import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const Login = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
+  const { setUser } = useAuthContext();
+
   // submit handler
   const onFinish = async (values: { email: string; password: string }) => {
-    console.log(values);
+    setUser(values.email);
     router.push("/");
   };
 
@@ -27,18 +30,18 @@ const Login = () => {
 
         <Form.Item
           name="password"
-          // label={<p>Password</p>}
+          label={<p>Password</p>}
           rules={[
             {
               required: true,
-              message: "Please input your Password!",
+              message: "Please enter your password!",
             },
           ]}
           style={{ width: "100%" }}
         >
           <Input.Password
             type="password"
-            placeholder="Enter your password"
+            placeholder="Enter password"
             style={{
               height: 50,
               width: "100%",
@@ -60,10 +63,10 @@ const Login = () => {
           </Form.Item>
 
           <p
-            className="login-form-forgot text-primary font-semibold cursor-pointer "
+            className="login-form-forgot cursor-pointer underline"
             onClick={() => setOpen(true)}
           >
-            Forgot password
+            Forgot password?
           </p>
         </div>
 
@@ -75,13 +78,13 @@ const Login = () => {
               height: 45,
               color: "white",
               fontWeight: "400px",
-              fontSize: "18px",
+              fontSize: "16px",
 
               marginTop: 20,
             }}
-            className="flex items-center justify-center bg-primary rounded-full"
+            className="flex items-center justify-center bg-primary rounded-full uppercase font-poppins"
           >
-            {/* {isLoading? < Spinner/> : "Sign in"} */} Sign in
+            {/* {isLoading? < Spinner/> : "Sign in"} */} Log In
           </button>
         </Form.Item>
       </Form>
