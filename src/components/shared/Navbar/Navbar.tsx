@@ -212,19 +212,6 @@ const Navbar = () => {
               </Link>
             )}
 
-            <Link
-              href={"/wishlist"}
-              className=" flex items-center gap-1 cursor-pointer"
-            >
-              {" "}
-              <span>
-                <Heart size={20} strokeWidth={1.5} />{" "}
-              </span>{" "}
-              {!user && (
-                <span className="hidden lg:block text-sm">Wishlist</span>
-              )}
-            </Link>
-
             {!user && (
               <Link
                 href={`/login`}
@@ -239,6 +226,19 @@ const Navbar = () => {
                 </span>
               </Link>
             )}
+
+            <Link
+              href={"/wishlist"}
+              className=" flex items-center gap-1 cursor-pointer"
+            >
+              {" "}
+              <span>
+                <Heart size={20} strokeWidth={1.5} />{" "}
+              </span>{" "}
+              {!user && (
+                <span className="hidden lg:block text-sm">Wishlist</span>
+              )}
+            </Link>
 
             {/* user avater */}
             {user && <UserDropdown />}
