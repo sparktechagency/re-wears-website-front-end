@@ -2,10 +2,12 @@
 
 import FillButton from "@/components/shared/FillButton";
 import OutlineButton from "@/components/shared/OutlineButton";
-import { ConfigProvider, Segmented, Table } from "antd";
+import CountdownTimer from "@/utils/countDownTimer";
+import { ConfigProvider, Segmented, Table, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Image from "next/image";
 import Link from "next/link";
+import { MdInfo } from "react-icons/md";
 
 // Define the data structure
 interface Order {
@@ -39,7 +41,35 @@ const columns: ColumnsType<Order> = [
             {record.price}
           </div>
         </figure>
-        <p className="font-bold text-sm whitespace-nowrap">{record.name}</p>
+        <div>
+          <p className="font-bold text-sm whitespace-nowrap">{record.name}</p>
+          <p className="flex items-center gap-1 text-xs text-[#797979]">
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorTextLightSolid: "#000000",
+                  borderRadius: 16,
+                  paddingMD: 24,
+                },
+              }}
+            >
+              <Tooltip
+                placement="bottomLeft"
+                arrow={false}
+                title={
+                  <p className="text-black">
+                    Changed your mind? Hit “Release” button for someone else to
+                    re-wear.
+                  </p>
+                }
+                color="#FFFFFF"
+              >
+                <MdInfo />
+              </Tooltip>
+            </ConfigProvider>{" "}
+            time left <CountdownTimer hours={24} minutes={0} seconds={0} />
+          </p>
+        </div>
       </div>
     ),
   },

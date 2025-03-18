@@ -16,19 +16,21 @@ const Order = () => {
               Order
             </p>
             <div className="flex items-center gap-4 mb-4 border border-[#DCDCDC] bg-[#f8f8f8] rounded-lg p-4">
-              <img
-                src="/user1.png"
-                alt="Dress"
-                className="w-[70px] h-[70px] object-cover rounded-md"
-              />
-              <div>
+              <Link href={`/product-details`}>
+                <img
+                  src="/user1.png"
+                  alt="Dress"
+                  className="w-[70px] h-[70px] object-cover rounded-md"
+                />
+              </Link>
+              <Link href={`/product-details`}>
                 <h2 className="text-[16px] font-bold text-secondary">
                   Lorem Ipsum
                 </h2>
                 <p className="text-secondary text-[14px] font-normal">
                   M / 10 - Good
                 </p>
-              </div>
+              </Link>
               <div className="ml-auto">
                 <p className="text-[16px] font-semibold">AED 45.00</p>
               </div>
