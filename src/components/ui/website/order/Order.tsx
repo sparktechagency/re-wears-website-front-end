@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 
 import FillButton from "@/components/shared/FillButton";
-import CountdownTimer from "@/utils/countDownTimer";
 import Link from "next/link";
 
 const Order = () => {
@@ -37,13 +36,13 @@ const Order = () => {
             </div>
             <p className="text-sm text-gray-500">
               This item will be reserved for you for{" "}
-              <CountdownTimer
+              {/* <CountdownTimer
                 hours={24}
                 minutes={0}
                 seconds={0}
                 className="font-bold"
-              />{" "}
-              hours.
+              />{" "} */}
+              24 hours.
             </p>
           </div>
 

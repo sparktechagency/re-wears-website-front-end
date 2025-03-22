@@ -25,7 +25,7 @@ const ProductCard = ({ product }: { product: TProduct }) => {
 
           <span> {isFavorite ? 8 + 1 : 8}</span>
         </button>
-        <Link href={""}>
+        <Link href={"/product-details"}>
           <img
             src={product?.images[0]}
             alt="img"
