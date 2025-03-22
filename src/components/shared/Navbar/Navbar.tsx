@@ -144,8 +144,9 @@ const Navbar = () => {
         >
           {/* Left section - Search */}
           <div
-            className="hidden lg:flex items-center gap-4 relative"
-            style={{ minWidth: "280px" }}
+            className={`hidden lg:flex items-center gap-4 relative ${
+              !user ? "min-w-[350px]" : "min-w-[280px] "
+            }`}
           >
             <Search
               size={20}
