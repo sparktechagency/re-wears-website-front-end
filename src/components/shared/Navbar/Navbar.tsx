@@ -80,7 +80,7 @@ const Navbar = () => {
   const { user } = useAuthContext();
 
   const menuItems = (
-    <Menu style={{ width: "100%", padding: "25px" }}>
+    <Menu style={{ width: "650px", padding: "25px" }}>
       <div className="grid grid-cols-6 gap-3">
         {/* Categories List */}
         <div className="col-span-2 border-e border-gray-300">
@@ -131,7 +131,7 @@ const Navbar = () => {
     >
       <div
         style={{ margin: "0 auto", padding: "0 16px" }}
-        className="container "
+        className="container"
       >
         {/* top section */}
         <div

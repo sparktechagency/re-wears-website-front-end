@@ -518,9 +518,17 @@ const SellNow = () => {
                   <Form.Item name="Colors" className="">
                     <ConfigProvider
                       theme={{
+                        components: {
+                          Select: {
+                            multipleItemHeightSM: 14,
+                          },
+                        },
                         token: {
                           borderRadius: 60,
                           colorBgBase: "#f5f5f5",
+                          controlPaddingHorizontal: 16,
+                          controlHeight: 55,
+                          controlPaddingHorizontalSM: 16,
                         },
                       }}
                     >
@@ -529,7 +537,6 @@ const SellNow = () => {
                         placeholder="Select colors"
                         style={{
                           width: "100%",
-                          height: "55px",
                           borderRadius: "60px",
                           backgroundColor: "#f5f5f5",
                         }}
@@ -587,6 +594,7 @@ const SellNow = () => {
               </div>
               <Form.Item name="price" className="">
                 <Input
+                  type="number"
                   placeholder="0.00"
                   className="rounded-full text-end"
                   style={{
