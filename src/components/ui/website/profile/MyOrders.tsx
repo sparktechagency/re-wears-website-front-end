@@ -43,32 +43,6 @@ const columns: ColumnsType<Order> = [
         </figure>
         <div>
           <p className="font-bold text-sm whitespace-nowrap">{record.name}</p>
-          <p className="flex items-center gap-1 text-xs text-[#797979]">
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorTextLightSolid: "#000000",
-                  borderRadius: 16,
-                  paddingMD: 24,
-                },
-              }}
-            >
-              <Tooltip
-                placement="bottomLeft"
-                arrow={false}
-                title={
-                  <p className="text-black">
-                    Changed your mind? Hit “Release” button for someone else to
-                    re-wear.
-                  </p>
-                }
-                color="#FFFFFF"
-              >
-                <MdInfo />
-              </Tooltip>
-            </ConfigProvider>{" "}
-            time left <CountdownTimer hours={24} minutes={0} seconds={0} />
-          </p>
         </div>
       </div>
     ),
@@ -111,9 +85,37 @@ const columns: ColumnsType<Order> = [
     dataIndex: "date",
     key: "date",
     render: (text: string) => (
-      <span className="text-sm text-[#797979] font-poppins whitespace-nowrap">
-        {text}
-      </span>
+      <div className="flex flex-col gap-6 justify-between h-full">
+        <span className="text-sm text-[#797979] font-poppins whitespace-nowrap">
+          {text}
+        </span>
+        <p className="flex items-center gap-1 text-xs text-[#797979] font-poppins">
+          <ConfigProvider
+            theme={{
+              token: {
+                colorTextLightSolid: "#000000",
+                borderRadius: 16,
+                paddingMD: 24,
+              },
+            }}
+          >
+            <Tooltip
+              placement="bottomLeft"
+              arrow={false}
+              title={
+                <p className="text-black">
+                  Changed your mind? Hit “Release” button for someone else to
+                  re-wear.
+                </p>
+              }
+              color="#FFFFFF"
+            >
+              <MdInfo />
+            </Tooltip>
+          </ConfigProvider>{" "}
+          time left <CountdownTimer hours={24} minutes={0} seconds={0} />
+        </p>
+      </div>
     ),
   },
 ];
