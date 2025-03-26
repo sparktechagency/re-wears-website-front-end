@@ -9,14 +9,14 @@ import { FaApple } from 'react-icons/fa';
 const MainLoginPage = () => {
     const [selectedTab, setSelectedTab] = useState("LOG IN");
     return (
-      <div className="lg:max-w-xl max-w-sm mx-auto px-4 my-16 lg:my-32">
+      <div className="lg:max-w-xl max-w-sm mx-auto px-4 my-16 lg:my-10 ">
         {/* page title */}
         <div className=" flex flex-col items-center gap-1 mb-5">
-          <p className=" text-[22px] font-bold text-[#000000] tracking-wide">
+          <p className=" text-[20px] font-bold text-[#000000] tracking-wide">
             {" "}
             Sell without fees.{" "}
           </p>
-          <p className=" lg:text-[22px] text-[20px] font-bold text-[#000000] tracking-wide">
+          <p className=" lg:text-[20px] text-[20px] font-bold text-[#000000] tracking-wide">
             {" "}
             Embrace sustainable fashion.{" "}
           </p>
@@ -45,10 +45,7 @@ const MainLoginPage = () => {
           {/* google and apple button section */}
           <div className=" flex items-center justify-center">
             <div className="  flex flex-col items-center justify-center gap-3 my-5 border-b border-[#ABABAB] pb-5 w-full">
-              <p className="text-lg font-normal text-center ">
-                {" "}
-                Log in to continue{" "}
-              </p>
+
 
               <button className=" flex items-center justify-center w-full border border-[#000000] rounded-full text-[#000000] gap-3  h-[50px]">
                 {" "}

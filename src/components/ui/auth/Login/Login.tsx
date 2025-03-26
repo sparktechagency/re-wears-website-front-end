@@ -1,6 +1,5 @@
 "use client"
 
-import TextInput from "@/components/shared/TextInput";
 import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -21,16 +20,39 @@ const Login = () => {
 
   return (
     <div className="w-full">
-      <p className="text-lg font-normal text-center pb-4 ">
+      <p className="text-[14px] font-normal text-center pb-3 ">
         {" "}
         or Log In with your Email{" "}
       </p>
       <Form onFinish={onFinish} layout="vertical">
-        <TextInput name={"email"} label={"Email"} />
+      
+ 
+    <Form.Item
+       name="email"
+    
+       rules={[
+         {
+           required: true,
+           message: `This field is required`,
+         },
+       ]}
+     >
+       <Input
+         placeholder={`Enter email `}
+         style={{
+           height: 50,
+           border: "1px solid #d9d9d9",
+           outline: "none",
+           boxShadow: "none",
+           backgroundColor: "white",
+           borderRadius: "40px",
+         }}
+       />
+     </Form.Item> 
 
         <Form.Item
           name="password"
-          label={<p>Password</p>}
+        
           rules={[
             {
               required: true,
@@ -80,7 +102,7 @@ const Login = () => {
               fontWeight: "400px",
               fontSize: "16px",
 
-              marginTop: 20,
+              marginTop: 10,
             }}
             className="flex items-center justify-center bg-primary rounded-full uppercase font-poppins"
           >
