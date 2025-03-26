@@ -33,7 +33,7 @@ const Login = () => {
        rules={[
          {
            required: true,
-           message: `This field is required`,
+           message: `Please enter your email !`,
          },
        ]}
      >
@@ -56,7 +56,7 @@ const Login = () => {
           rules={[
             {
               required: true,
-              message: "Please enter your password!",
+              message: "Please enter your password !",
             },
           ]}
           style={{ width: "100%" }}

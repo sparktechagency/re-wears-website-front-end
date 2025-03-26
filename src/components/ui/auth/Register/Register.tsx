@@ -1,6 +1,5 @@
 "use client";
 
-import TextInput from "@/components/shared/TextInput";
 import { Checkbox, ConfigProvider, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,7 +23,7 @@ const Register: React.FC = () => {
 
   return (
     <div className="w-full">
-      <p className="text-lg font-normal text-center pb-4 ">
+      <p className="text-[14px] font-normal text-center pb-4 ">
         {" "}
         or Register with your Email{" "}
       </p>
@@ -42,15 +41,75 @@ const Register: React.FC = () => {
       >
         <Form onFinish={onFinish} layout="vertical">
           <div className="grid grid-cols-2 gap-3">
-            <TextInput name="firstName" label="First Name" />
-            <TextInput name="lastName" label="Last Name" />
+
+            <Form.Item
+              name="firstName"
+              rules={[{
+                required: true,
+                message: `Please enter your first name !`,
+              },
+              ]}
+            >
+              <Input
+                placeholder={`Enter your first name `}
+                style={{
+                  height: 50,
+                  border: "1px solid #d9d9d9",
+                  outline: "none",
+                  boxShadow: "none",
+                  backgroundColor: "white",
+                  borderRadius: "40px",
+                }}
+              />
+            </Form.Item>
+
+
+            <Form.Item
+              name="lastName"
+              rules={[{
+                required: true,
+                message: `Please enter your last name !`,
+              },
+              ]}
+            >
+              <Input
+                placeholder={`Enter your last name `}
+                style={{
+                  height: 50,
+                  border: "1px solid #d9d9d9",
+                  outline: "none",
+                  boxShadow: "none",
+                  backgroundColor: "white",
+                  borderRadius: "40px",
+                }}
+              />
+            </Form.Item>
+
           </div>
 
           <div>
-            <TextInput name="email" label="Email" />
+            <Form.Item
+              name="email"
+              rules={[{
+                required: true,
+                message: `Please enter your email !`,
+              },
+              ]}
+            >
+              <Input
+                placeholder={`Enter your email `}
+                style={{
+                  height: 50,
+                  border: "1px solid #d9d9d9",
+                  outline: "none",
+                  boxShadow: "none",
+                  backgroundColor: "white",
+                  borderRadius: "40px",
+                }}
+              />
+            </Form.Item>
             <Form.Item
               name="password"
-              label="Create password (min 6 characters)"
               rules={[
                 {
                   required: true,
@@ -60,7 +119,7 @@ const Register: React.FC = () => {
               className="mb-5"
             >
               <Input.Password
-                placeholder="Enter Password"
+                placeholder="Create password (min 6 characters)"
                 className="border border-gray-300 h-[50px] bg-white rounded-full"
                 style={{
                   height: 50,
@@ -88,23 +147,21 @@ const Register: React.FC = () => {
             ]}
             className="w-full"
           >
-            <Checkbox className="text-[#000000] text-xs ">
-              By clicking CREATE ACCOUNT, I hereby agree and consent to{" "}
+            <Checkbox className="text-[#000000] text-[10px] ">
+              By clicking CREATE ACCOUNT, I hereby agree and consent to   re-wears
               <Link
                 href="/terms-and-conditions"
                 className="text-[#000000] font-medium underline underline-offset-2"
               >
-                {" "}
-                re-wears Terms & Conditions{" "}
+                Terms & Conditions
               </Link>
-              ; I confirm that I have read re-wears{" "}
+              ; I confirm that I have read re-wears
               <Link
                 href="/terms-and-conditions"
                 className="text-[#000000] font-medium underline underline-offset-2"
               >
-                {" "}
-                Privacy Policy{" "}
-              </Link>{" "}
+                Privacy Policy
+              </Link>
               ; and I certify that I am 18 years or older.
             </Checkbox>
           </Form.Item>
