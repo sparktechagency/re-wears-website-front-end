@@ -1,6 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import FillButton from "@/components/shared/FillButton";
+import Label from "@/components/shared/Label";
 import OutlineButton from "@/components/shared/OutlineButton";
 import CountdownTimer from "@/utils/countDownTimer";
 import { ConfigProvider, Segmented, Table, Tooltip } from "antd";
@@ -122,17 +124,17 @@ const columns: ColumnsType<Order> = [
 
 // Sample data
 const data: Order[] = [
-  {
-    key: "1",
-    image:
-      "https://media-hosting.imagekit.io//1312446cfd0b4e77/dress-1.png?Expires=1836362388&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=SY2DBe8Gbzh2-1eKUrGKd9~fl2v-Wr04fTswOqEi7atU088Jz9XawD1xS1oNw0733XiA9P8ITwrlP40GWTDZeoqv8U8Txx8cptJvA85WjEynitzhcKrMJFv0KEOgi~~6WZUCGCIdqd3JnxdB34T3v~huDc~ENQxuuMG-xW33dBiLWjPiE0ckFidCBGgzOLhhZ6RvJRM~1duhZGFR9pH3QYf1iEYdgzDAyfloaSeLuWK1xGu6sBvJR-h19gD~Jw1G5~dpbxOtXsQZMhwEOD755DQ0Yv~MGqm-HHtpJdC1Gw7lDXkurBNTUoHbjYi-cGZ8G6MXW7OSKLvTBB5vlKsLOA__",
-    price: "AED 30.00",
-    name: "Long pink dress",
-    seller: "@mykola888",
-    reviews: "No reviews yet",
-    initial: "M",
-    date: "12 January 2025",
-  },
+  // {
+  //   key: "1",
+  //   image:
+  //     "https://media-hosting.imagekit.io//1312446cfd0b4e77/dress-1.png?Expires=1836362388&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=SY2DBe8Gbzh2-1eKUrGKd9~fl2v-Wr04fTswOqEi7atU088Jz9XawD1xS1oNw0733XiA9P8ITwrlP40GWTDZeoqv8U8Txx8cptJvA85WjEynitzhcKrMJFv0KEOgi~~6WZUCGCIdqd3JnxdB34T3v~huDc~ENQxuuMG-xW33dBiLWjPiE0ckFidCBGgzOLhhZ6RvJRM~1duhZGFR9pH3QYf1iEYdgzDAyfloaSeLuWK1xGu6sBvJR-h19gD~Jw1G5~dpbxOtXsQZMhwEOD755DQ0Yv~MGqm-HHtpJdC1Gw7lDXkurBNTUoHbjYi-cGZ8G6MXW7OSKLvTBB5vlKsLOA__",
+  //   price: "AED 30.00",
+  //   name: "Long pink dress",
+  //   seller: "@mykola888",
+  //   reviews: "No reviews yet",
+  //   initial: "M",
+  //   date: "12 January 2025",
+  // },
 ];
 
 const MyOrders = () => {
@@ -161,25 +163,47 @@ const MyOrders = () => {
       </section>
 
       {/* orders table */}
-      <div className="w-full max-w-[calc(82vw)] overflow-x-scroll no-scrollbar">
-        <ConfigProvider
-          theme={{
-            components: {
-              Table: {
-                headerBg: "#F5F5F5",
+      <div className="w-full max-w-[calc(82vw)] overflow-x-scroll no-scrollbar"> 
+        {
+          data.length > 0 ? (   <ConfigProvider
+            theme={{
+              components: {
+                Table: {
+                  headerBg: "#F5F5F5",
+                },
               },
-            },
-          }}
-        >
-          <Table
-            columns={columns}
-            dataSource={data}
-            pagination={false}
-            className="min-w-[600px]"
-            scroll={{ x: "100%" }}
-            style={{ fontFamily: "poppins" }}
-          />
-        </ConfigProvider>
+            }}
+          >
+            <Table
+              columns={columns}
+              dataSource={data}
+              pagination={false}
+              className="min-w-[600px]"
+              scroll={{ x: "100%" }}
+              style={{ fontFamily: "poppins" }}
+            />
+          </ConfigProvider>  ) : (   
+                  <section className="grid justify-center gap-4 py-8 lg:py-16">
+                  <Image
+                    src="/order.png"
+                    alt="icon"
+                    width={90}
+                    height={90}
+                    className="mx-auto"
+                  />
+                  <Label className="text-xl lg:text-2xl text-center">
+                  Discover preloved gems
+                  </Label>
+                  <p className="text-[#797979] text-center text-sm lg:text-base">
+                  Shop pre-owned fashion. Embrace sustainable living .
+                  </p>
+                  <div className="flex justify-center ">
+                    <FillButton>Browse</FillButton>
+                  </div>
+                </section> 
+          )
+        }
+      
       </div>
     </div>
   );

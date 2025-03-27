@@ -115,11 +115,16 @@ const Register: React.FC = () => {
                   required: true,
                   message: "Please enter your password!",
                 },
-              ]}
+                {
+                  pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  message:
+                    "One of the password requirements wasn’t met. Please give it another go.",
+                },
+              ]} 
               className="mb-5"
             >
               <Input.Password
-                placeholder="Create password (min 6 characters)"
+                placeholder="Create a secure password (8+ characters, mix of letters, numbers & symbols)"
                 className="border border-gray-300 h-[50px] bg-white rounded-full"
                 style={{
                   height: 50,

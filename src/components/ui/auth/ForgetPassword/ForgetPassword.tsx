@@ -18,7 +18,7 @@ const ForgetPassword = ({open , setOpen}:{open:boolean , setOpen:(open:boolean)=
         <Modal open={open} onCancel={() => setOpen(false)} footer={null} width={580} centered>
 
         <div className="text-center mb-4">
-          <h1 className="text-[25px] font-bold ">Forgot Password ?</h1>
+          <h1 className="text-[25px] font-bold ">Forgot your password?</h1>
         <p className="text-[14px] font-normal px-12 pt-3 text-[#797979]">If this email address is associated with re-wears, then we have sent your password reset instructions to that email.</p>
         </div>
 
@@ -41,7 +41,7 @@ const ForgetPassword = ({open , setOpen}:{open:boolean , setOpen:(open:boolean)=
               }}
               className="flex items-center justify-center bg-primary rounded-lg"
             >
-             Send OTP
+            Continue
             </button>
           </Form.Item>
         </Form>

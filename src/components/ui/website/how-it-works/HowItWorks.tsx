@@ -35,20 +35,20 @@ const HowItWorks = () => {
           <div className="flex-1 grid gap-4">
             <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
               <span className="text-4xl text-primary font-bold">01</span>
-              <p className="text-lg">
+              <p className="text-[16px]">
                 Create an account and give your preloved clothes a new life.
               </p>
             </div>
             <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
               <span className="text-4xl text-primary font-bold">02</span>
-              <p className="text-lg">
+              <p className="text-[16px]">
                 List your item, snap photos, describe it, and set your price -
                 breathe new creativity into your wardrobe.
               </p>
             </div>
             <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
               <span className="text-4xl text-primary font-bold">03</span>
-              <p className="text-lg">
+              <p className="text-[16px]">
                 Communicate with buyers, agree on shipping or pickup, and
                 receive payments directly. It&apos;s your platform to sell, with
                 every dirham staying in your pocket.
@@ -69,23 +69,20 @@ const HowItWorks = () => {
             <div className="flex-1 grid gap-4">
               <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
                 <span className="text-4xl text-primary font-bold">01</span>
-                <p className="text-lg">
-                  Create an account and give your preloved clothes a new life.
+                <p className="text-[16px]">
+                Create an account and join our community dedicated to sustainable living.
                 </p>
               </div>
               <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
                 <span className="text-4xl text-primary font-bold">02</span>
-                <p className="text-lg">
-                  List your item, snap photos, describe it, and set your price -
-                  breathe new creativity into your wardrobe.
+                <p className="text-[16px]">
+                Explore our catalog and find preloved gems waiting for a second chance.
                 </p>
               </div>
               <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
                 <span className="text-4xl text-primary font-bold">03</span>
-                <p className="text-lg">
-                  Communicate with buyers, agree on shipping or pickup, and
-                  receive payments directly. It&apos;s your platform to sell,
-                  with every dirham staying in your pocket.
+                <p className="text-[16px]">
+                Communicate with sellers, agree on shipping or pickup, and make direct payments. It&apos;s a platform where buyers and sellers connect for a sustainable fashion revolution.
                 </p>
               </div>
             </div>

@@ -3,14 +3,15 @@
 import React, { useRef, useState } from "react";
 //  import { FiSearch } from "react-icons/fi";
 //  import { Input } from "antd";
-import { IoSendSharp } from "react-icons/io5";
+import { IoLocationSharp, IoSendSharp } from "react-icons/io5";
 import Image from "next/image";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import OutlineButton from "@/components/shared/OutlineButton";
-import FillButton from "@/components/shared/FillButton";
 import MakeOfferModal from "./MakeOfferModal";
 import Link from "next/link";
 import { Camera } from "lucide-react";
+import { ConfigProvider, Popover, Rate } from "antd";
+import { MdOutlineWatchLater } from "react-icons/md";
 
 type TMessageList = {
   id: number;
@@ -260,21 +261,40 @@ const Inbox = () => {
             <section>
               {/* header */}
               <div>
-                <div className="flex items-center lg:justify-center gap-2 p-4  border-b border-[#DCDCDC]">
+                <div className="flex items-center lg:justify-between gap-2 p-4  border-b border-[#DCDCDC]">
                   <div className="flex items-center lg:justify-center gap-2">
                     <button
                       className="lg:hidden text-primary"
                       onClick={handleBackToList}
                     >
                       <IoMdArrowRoundBack size={20} />
-                    </button>
+                    </button> 
+                    <img src={person?.image} alt="" className="rounded-full h-[40px] w-[40px]"/>
                     <Link
                       href={"/profile"}
                       className="text-[20px] text-primary font-bold "
                     >
                       {person?.name}
                     </Link>
-                  </div>
+                  </div> 
+ <div className="flex items-center gap-1">  
+ <ConfigProvider
+  theme={{
+    components: {
+      Rate: {
+        starColor:"#E6A817"
+      },
+    },
+  }}
+>
+  <Rate disabled defaultValue={4} />  
+  </ConfigProvider>
+  <p className=" text-[14px]">20 reviews</p>
+ </div> 
+
+ <div className="flex items-center gap-2"> <span> <IoLocationSharp size={22} color="#9D977A" />  </span> <span className=" text-[14px]" > Dubai, UAE  </span></div>
+ <div className="flex items-center gap-2"> <span> <MdOutlineWatchLater size={22} color="#9D977A" />  </span> <span className=" text-[14px]" > Last seen 10 hours ago  </span></div>
+
                 </div>
 
                 <div className="flex flex-col md:flex-row justify-between gap-4 p-4 border border-[#DCDCDC] bg-[#f8f8f8] rounded-lg mt-4">
@@ -305,10 +325,12 @@ const Inbox = () => {
                     </div>
 
                     <Link href={"/order"}>
-                      {" "}
-                      <FillButton className="!px-6 text-sm uppercase">
+                      {" "} 
+                      <Popover content=" Changed your mind? Head to the item page to release it for someone else to re-wear." >
+                      <button className=" h-12  bg-primary text-white font-normal rounded-full  transition-all duration-300 hover:bg-[#D04555]  !px-6 text-sm uppercase">
                         Reserve Now
-                      </FillButton>{" "}
+                      </button>{" "} 
+                      </Popover>
                     </Link>
                   </div>
                 </div>

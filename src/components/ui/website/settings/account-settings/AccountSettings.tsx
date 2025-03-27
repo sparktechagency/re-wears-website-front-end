@@ -2,25 +2,14 @@ import FillButton from "@/components/shared/FillButton";
 import Input from "@/components/shared/Input";
 import OutlineButton from "@/components/shared/OutlineButton";
 import Select from "@/components/shared/Select";
-import { Switch } from "antd";
-import { Check, ChevronRight } from "lucide-react";
+import { ConfigProvider, Switch } from "antd";
+import {  ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 const AccountSettings = () => {
   return (
     <div className="grid gap-5">
       <h1 className="md:hidden text-xl font-bold">Account settings</h1>
-      <section className="bg-white p-8 rounded-xl shadow-smooth flex flex-wrap justify-between items-center gap-4">
-        <div className="">
-          <p className="font-bold">mykola@gmail.com</p>
-          <span className="flex items-center gap-2 text-[#797979]">
-            Verified <Check />
-          </span>
-        </div>
-        <Link href={`/confirm-email-change`}>
-          <OutlineButton>Change</OutlineButton>
-        </Link>
-      </section>
 
       <section className="card">
         <div className="grid-between items-center">
@@ -60,14 +49,24 @@ const AccountSettings = () => {
       </section>
       {/* Vacation mode */}
       <section className="card flex justify-between items-center gap-2">
-        <label className="font-bold py-2">Vacation mode</label>
+        <label className="font-bold py-2">Vacation mode</label> 
+        <ConfigProvider
+  theme={{
+    token: {
+      colorPrimary: "#008000"
+
+    },
+  }}
+>  
         <Switch />
+
+</ConfigProvider>
       </section>
       {/* Google */}
-      <section className="card flex justify-between items-center gap-2">
+      {/* <section className="card flex justify-between items-center gap-2">
         <label className="font-bold py-2">Google</label>
         <OutlineButton>Linked</OutlineButton>
-      </section>
+      </section> */}
       {/* Change password */}
       <section className="card flex justify-between items-center gap-2">
         <label className="font-bold py-2">Change password</label>

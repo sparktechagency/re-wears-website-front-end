@@ -29,28 +29,22 @@ const ResetPassword = () => {
       <Form layout="vertical" onFinish={onFinish}>
         <Form.Item
           name="newPassword"
-          label={
-            <p
-              style={{
-                display: "block",
-                color: "#5C5C5C",
-              }}
-              className="font-semibold "
-            >
-              New Password
-            </p>
-          }
           rules={[
             {
               required: true,
-              message: "Please input your new Password!",
+              message: "Please enter your new password!",
             },
-          ]}
+            {
+              pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message:
+                "One of the password requirements wasn’t met. Please give it another go.",
+            },
+          ]} 
           style={{ marginBottom: 0 }}
         >
           <Input.Password
             type="password"
-            placeholder="Enter New password"
+            placeholder="Create a secure password (8+ characters, mix of letters, numbers & symbols)"
             style={{
               border: "1px solid #E0E4EC",
               height: "52px",
@@ -64,17 +58,6 @@ const ResetPassword = () => {
 
         <Form.Item
           style={{ marginBottom: 0 }}
-          label={
-            <p
-              style={{
-                display: "block",
-                color: "#5C5C5C",
-              }}
-              className="font-semibold"
-            >
-              Confirm Password
-            </p>
-          }
           name="confirmPassword"
           dependencies={["newPassword"]}
           hasFeedback
@@ -97,7 +80,7 @@ const ResetPassword = () => {
         >
           <Input.Password
             type="password"
-            placeholder="Enter Confirm password"
+            placeholder="Re-enter your new password"
             style={{
               border: "1px solid #E0E4EC",
               height: "52px",
@@ -119,11 +102,11 @@ const ResetPassword = () => {
               fontWeight: "400px",
               fontSize: "18px",
               background: "#9D977A",
-              marginTop: 20,
+              marginTop: 10,
               borderRadius: "60px",
             }}
           >
-            Update
+            Submit
           </Button>
         </Form.Item>
       </Form>

@@ -28,8 +28,8 @@ const Banner = () => {
           <Link href={"/sell-now"}>
             <FillButton className="uppercase">Sell Now</FillButton>
           </Link>
-          <Link href={`/how-it-works`} className="text-[14px] text-primary">
-            Learn how it works
+          <Link href={`/how-it-works`} className="text-[14px] text-primary hover:underline">
+          Ready to start? Here’s how.
           </Link>
         </div>
       </div>

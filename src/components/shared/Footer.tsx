@@ -11,7 +11,7 @@ const Footer = () => {
         {/* About Section */}
         <div className="max-w-md">
           <h3 className="text-xl font-bold text-[#F3E7D8]">About re-wears</h3>
-          <p className="mt-2 text-sm font-normal text-[#F3E7D8] tracking-wide leading-6">
+          <p className="mt-2 text-sm font-normal text-gray-200 tracking-wide leading-6">
             re-wears, your go-to platform for selling and buying pre-owned
             pieces. We&apos;re all about clean, sustainable living. Bid farewell
             to closet clutter and say hello to conscious consumerism.

@@ -1,11 +1,38 @@
 "use client";
-import { ConfigProvider, Rate } from "antd";
+import FillButton from "@/components/shared/FillButton";
+import { ConfigProvider, Modal, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { MapPin } from "lucide-react";
 import React, { useState } from "react";
 
 const LeaveReview = () => {
   const [rating, setRating] = useState(2);
+  const [open, setOpen] = useState(false); 
+
+  const SuccessModal = ({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) => {  
+    return (  
+      <Modal
+        open={open} 
+        centered
+        onCancel={() => setOpen(false)} 
+        footer={null}  
+        width={470}
+      > 
+        <div className="flex flex-col gap-y-5"> 
+          <p className="text-center font-bold text-[22px] text-[#000000]">
+            Thank you for your review!
+          </p> 
+          <p className="text-[16px] font-normal text-[#797979]">
+            Your feedback helps us create a better <span className="font-semibold">re-wears</span> experience for everyone. We appreciate you being part of our community.
+          </p> 
+          <FillButton className="uppercase w-full mx-auto">
+            Continue browsing
+          </FillButton>
+        </div>
+      </Modal>
+    );
+  };
+
   return (
     <div className=" container lg:pt-[50px] pt-6 pb-[100px]">
       <p className=" text-secondary lg:text-[25px] text-[22px] font-bold flex items-center justify-center pb-6">
@@ -97,11 +124,12 @@ const LeaveReview = () => {
       </div>
 
       <div className="flex items-center justify-center mt-10">
-        <button className="bg-primary text-white font-normal  lg:text-[16px] text-[14 px] rounded-full px-10 py-3">
+        <button className="bg-primary text-white font-normal  lg:text-[16px] text-[14 px] rounded-full px-10 py-3" onClick={() => setOpen(true)}>
           {" "}
           SUBMIT{" "}
         </button>
-      </div>
+      </div> 
+ <SuccessModal open={open} setOpen={setOpen} />
     </div>
   );
 };

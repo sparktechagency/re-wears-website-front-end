@@ -14,38 +14,32 @@ const ChangePassword = () => {
     router.push(`/confirm-change-password`);
   };
   return (
-    <div className="w-full max-w-lg mx-auto px-4 my-20">
+    <div className="w-full max-w-xl mx-auto px-4 my-20">
       <div className="mb-6">
         <h1 className=" text-secondary text-[25px] font-bold   text-center ">
-          Change password
+        Reset password
         </h1>
       </div>
 
       <Form layout="vertical" onFinish={onFinish}>
         <Form.Item
           name="newPassword"
-          label={
-            <p
-              style={{
-                display: "block",
-                color: "#5C5C5C",
-              }}
-              className="font-semibold "
-            >
-              New Password
-            </p>
-          }
           rules={[
             {
               required: true,
               message: "Please input your new Password!",
+            }, 
+            {
+              pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+              message:
+                "One of the password requirements wasn’t met. Please give it another go.",
             },
           ]}
           style={{ marginBottom: 0 }}
         >
           <Input.Password
             type="password"
-            placeholder="Enter New password"
+            placeholder="Create a secure password (8+ characters, mix of letters, numbers & symbols)"
             style={{
               border: "1px solid #E0E4EC",
               height: "52px",
@@ -59,17 +53,6 @@ const ChangePassword = () => {
 
         <Form.Item
           style={{ marginBottom: 0 }}
-          label={
-            <p
-              style={{
-                display: "block",
-                color: "#5C5C5C",
-              }}
-              className="font-semibold"
-            >
-              Confirm Password
-            </p>
-          }
           name="confirmPassword"
           dependencies={["newPassword"]}
           hasFeedback
@@ -92,7 +75,7 @@ const ChangePassword = () => {
         >
           <Input.Password
             type="password"
-            placeholder="Enter Confirm password"
+            placeholder="Re-enter your new password"
             style={{
               border: "1px solid #E0E4EC",
               height: "52px",

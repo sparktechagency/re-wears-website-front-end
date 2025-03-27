@@ -6,9 +6,6 @@ export const sidebarMenus = [
   {
     title: "Account settings",
     path: "account-settings",
-  },
-  {
-    title: "Notifications",
-    path: "notifications",
-  },
+  }
 ];
+ 

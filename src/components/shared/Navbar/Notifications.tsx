@@ -5,19 +5,22 @@ const notifications = [
   {
     username: "John Doe",
     photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    message: "has just added new item",
+    message: "has just added new item:",  
+    product:"Norma Kamali Black Jersey trench straight leg Jumpsuit RRP AED 330, The Kooples short printed floral lavender dress with frills RRP AED 295" ,
     time: "1 day",
   },
   {
     username: "John Smith",
     photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    message: "has just added your item to their wishlist",
+    message: "has just added your item to their wishlist", 
+    product:"Flower sunglasses for girl 3/7 years, Maileg first kit box" ,
     time: "2 day",
   },
   {
     username: "Xein Alex",
     photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    message: "has just changed the price",
+    message: "has just changed the price", 
+    product:"Flower t-shirt " , 
     time: "3 day",
   },
 ];
@@ -51,8 +54,9 @@ const Notifications = () => {
                 <p>
                   <span className="text-primary font-bold">
                     {item.username}{" "}
-                  </span>
-                  <span>{item.message}</span>
+                  </span> 
+                  <p className=""> <span>{item.message} </span>  <span className="text-primary font-bold"> {item.product} </span> and more. </p>
+                  
                 </p>
                 <p className="text-[#797979] mt-1">
                   <span>{item.time}</span> ago
