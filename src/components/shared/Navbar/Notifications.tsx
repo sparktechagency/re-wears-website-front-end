@@ -55,7 +55,7 @@ const Notifications = () => {
                   <span className="text-primary font-bold">
                     {item.username}{" "}
                   </span> 
-                  <p className=""> <span>{item.message} </span>  <span className="text-primary font-bold"> {item.product} </span> and more. </p>
+                  <p className=""> <span>{item.message} </span>  <span className="text-primary font-bold"> {item.product} </span>  </p>
                   
                 </p>
                 <p className="text-[#797979] mt-1">

@@ -1,10 +1,15 @@
+"use client";
 import FillButton from "@/components/shared/FillButton";
 import Input from "@/components/shared/Input";
 import Label from "@/components/shared/Label";
 import TextArea from "@/components/shared/TextArea";
+import SuccessModal from "./SuccessModal";
+import { useState } from "react";
 
-const Contact = () => {
-  return (
+const Contact = () => { 
+  const [open , setOpen] = useState(false);
+  return ( 
+    <div> 
     <form className="container grid gap-14 my-20">
       <h1 className="text-2xl font-bold text-center">Contact Us</h1>
       <section className="card grid gap-4">
@@ -30,11 +35,13 @@ const Contact = () => {
             <TextArea placeholder="" rows={8} />
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-end" onClick={() => setOpen(true)}>
           <FillButton className="uppercase">Send</FillButton>
         </div>
-      </section>
+      </section> 
     </form>
+ <SuccessModal open={open} setOpen={setOpen} /> 
+    </div>
   );
 };
 

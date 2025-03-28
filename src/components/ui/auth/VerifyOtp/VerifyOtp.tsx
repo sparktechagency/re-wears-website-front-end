@@ -22,7 +22,7 @@ const VerifyOtp = () => {
     if (userType === "forget") {
       router.push(`/reset-password`);
     } else {
-      router.push(`/login`);
+      router.push(`/complete-registration`);
     }
   };
 

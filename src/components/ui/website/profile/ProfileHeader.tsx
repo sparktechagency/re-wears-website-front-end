@@ -49,7 +49,7 @@ const ProfileHeader = () => {
         {/* about */}
         <div className="grid gap-3 bg-[#F5F5F5] p-5 rounded-xl">
           <p className="text-[#797979]">About</p>
-          <p className="flex items-center gap-3">
+          <p className="flex items-center gap-2">
             <HiMapPin className="text-primary size-6" />{" "}
             <span>Colonian Beach, VA, United States</span>
           </p>

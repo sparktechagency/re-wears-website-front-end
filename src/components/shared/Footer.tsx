@@ -71,10 +71,10 @@ const Footer = () => {
                 <Link href="/how-it-works">How it works</Link>
               </li>
               <li>
-                <Link href="/sell-now">Selling</Link>
+                <Link href="/help-center/selling">Selling</Link>
               </li>
               <li>
-                <Link href="/products">Buying</Link>
+                <Link href="/help-center/buying">Buying</Link>
               </li>
             </ul>
           </div>

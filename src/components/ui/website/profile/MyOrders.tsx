@@ -198,7 +198,7 @@ const MyOrders = () => {
                   Shop pre-owned fashion. Embrace sustainable living .
                   </p>
                   <div className="flex justify-center ">
-                    <FillButton>Browse</FillButton>
+                    <FillButton className="uppercase">Browse</FillButton>
                   </div>
                 </section> 
           )

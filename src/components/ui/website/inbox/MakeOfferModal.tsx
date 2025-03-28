@@ -28,7 +28,8 @@ const MakeOfferModal = ({
           ]}
           label={<p className="text-[14px] font-normal ">Offer your price </p>}
         >
-          <Input
+          <Input 
+          type="number"
             placeholder={` 45.00`}
             style={{
               height: 50,

@@ -30,7 +30,7 @@ const MainLoginPage = () => {
           {["LOG IN", "REGISTER"].map((tab) => (
             <button
               key={tab}
-              className={`lg:px-20 px-10 py-[8px] text-lg font-medium transition-all duration-300 rounded-full h-[44px] ${
+              className={`lg:px-20 px-10 py-[8px] text-lg font-medium transition-all duration-300 rounded-full  h-[44px] ${
                 selectedTab === tab ? "bg-[#9d977a] text-white" : "bg-white text-primary"
               }`}
               onClick={() => setSelectedTab(tab)}
@@ -44,7 +44,7 @@ const MainLoginPage = () => {
 
           {/* google and apple button section */}
           <div className=" flex items-center justify-center">
-            <div className="  flex flex-col items-center justify-center gap-3 my-5 border-b border-[#ABABAB] pb-5 w-full">
+            <div className="  flex flex-col items-center justify-center gap-3 my-5 border-b border-[#ABABAB] pb-5 lg:w-[477px] w-full ">
 
 
               <button className=" flex items-center justify-center w-full border border-[#000000] rounded-full text-[#000000] gap-3  h-[50px]">

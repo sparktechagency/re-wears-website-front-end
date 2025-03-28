@@ -46,4 +46,9 @@ body {
         display: none;
         /* Safari and Chrome */
     }
-}
+} 
+
+
+.ant-form-item { 
+    margin-bottom: 8px !important;
+} 

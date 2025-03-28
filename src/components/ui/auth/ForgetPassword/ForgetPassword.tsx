@@ -1,6 +1,5 @@
 "use client"
-import TextInput from "@/components/shared/TextInput";
-import {  Form, Modal } from "antd";
+import {  Form, Input, Modal } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -23,8 +22,26 @@ const ForgetPassword = ({open , setOpen}:{open:boolean , setOpen:(open:boolean)=
         </div>
 
         <Form layout="vertical" onFinish={onFinish}>
-          <TextInput name={"email"} label={"Email"} />
-            
+          <Form.Item
+              name="email"
+              rules={[{
+                required: true,
+                message: `Please enter your email !`,
+              },
+              ]}
+            >
+              <Input
+                placeholder={`Enter your email `}
+                style={{
+                  height: 50,
+                  border: "1px solid #d9d9d9",
+                  outline: "none",
+                  boxShadow: "none",
+                  backgroundColor: "white",
+                  borderRadius: "40px",
+                }}
+              />
+            </Form.Item> 
 
           <Form.Item>
             <button
@@ -39,7 +56,7 @@ const ForgetPassword = ({open , setOpen}:{open:boolean , setOpen:(open:boolean)=
                 borderRadius:60 ,
                 marginTop: 10
               }}
-              className="flex items-center justify-center bg-primary rounded-lg"
+              className="flex items-center justify-center bg-primary rounded-lg uppercase"
             >
             Continue
             </button>

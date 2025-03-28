@@ -153,19 +153,19 @@ const Register: React.FC = () => {
             className="w-full"
           >
             <Checkbox className="text-[#000000] text-[10px] ">
-              By clicking CREATE ACCOUNT, I hereby agree and consent to   re-wears
+              By clicking CREATE ACCOUNT, I hereby agree and consent to   re-wears  
               <Link
                 href="/terms-and-conditions"
-                className="text-[#000000] font-medium underline underline-offset-2"
+                className="text-[#000000] font-medium underline underline-offset-2 mx-[2px]"
               >
-                Terms & Conditions
+                  Terms & Conditions
               </Link>
               ; I confirm that I have read re-wears
               <Link
                 href="/terms-and-conditions"
-                className="text-[#000000] font-medium underline underline-offset-2"
+                className="text-[#000000] font-medium underline underline-offset-2 mx-[2px]"
               >
-                Privacy Policy
+                  Privacy Policy
               </Link>
               ; and I certify that I am 18 years or older.
             </Checkbox>

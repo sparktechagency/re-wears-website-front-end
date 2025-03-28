@@ -104,7 +104,8 @@ const ResetPassword = () => {
               background: "#9D977A",
               marginTop: 10,
               borderRadius: "60px",
-            }}
+            }} 
+            className="uppercase"
           >
             Submit
           </Button>

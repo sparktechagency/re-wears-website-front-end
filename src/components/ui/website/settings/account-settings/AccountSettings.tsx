@@ -53,8 +53,7 @@ const AccountSettings = () => {
         <ConfigProvider
   theme={{
     token: {
-      colorPrimary: "#008000"
-
+      colorPrimary: "#9D977A"
     },
   }}
 >  

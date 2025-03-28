@@ -47,7 +47,7 @@ const Closet = () => {
           Sell your used clothes effortlessly, earning cash without hidden fees.
         </p>
         <div className="flex justify-center ">
-          <FillButton>Sell Now</FillButton>
+          <FillButton className=" uppercase">Sell Now</FillButton>
         </div>
       </section>
     </div>

@@ -351,7 +351,7 @@ const Inbox = () => {
                       <div
                         className={`lg:w-3/5 w-2/3 lg:px-4 px-2 py-3 flex-col gap-4 ${
                           index % 2 === 0
-                            ? "border bg-[#DCDCDC] rounded-t-xl rounded-bl-xl"
+                            ? "border bg-[#F8F8F8] rounded-t-xl rounded-bl-xl"
                             : "border border-[#dcdcdc] rounded-t-xl rounded-br-xl"
                         }`}
                       >
