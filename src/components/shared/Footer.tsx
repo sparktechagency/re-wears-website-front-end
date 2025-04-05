@@ -17,8 +17,9 @@ const Footer = () => {
             to closet clutter and say hello to conscious consumerism.
           </p>
           <div className="flex gap-3 mt-4">
-            <Link
-              href={""}
+            <a
+              href="https://www.instagram.com/rewearsofficial/?igsh=NjF1c2VubTFnczdp&utm_source=qr#"
+              target="_blank"
               className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full "
             >
               {/* Instagram Icon */}
@@ -26,9 +27,10 @@ const Footer = () => {
                 size={22}
                 className="text-[#F3E7D8] hover:text-white"
               />
-            </Link>
-            <Link
-              href={""}
+            </a> 
+            <a
+              href="https://www.facebook.com/share/187xMvnZYX/?mibextid=wwXIfr"
+              target="_blank"
               className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full "
             >
               {/* Facebook Icon */}
@@ -36,21 +38,22 @@ const Footer = () => {
                 size={22}
                 className="text-[#F3E7D8] hover:text-white"
               />
-            </Link>
-            <Link
-              href={""}
+            </a>
+            <a
+              href="https://www.tiktok.com/@rewears.com"
+              target="_blank"
               className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-full "
             >
               {/* Facebook Icon */}
               <FaTiktok size={22} className="text-[#F3E7D8] hover:text-white" />
-            </Link>
+            </a>
           </div>
         </div>
 
         {/* Links Sections */}
         <section className="grid grid-cols-3 gap-8 justify-between w-full flex-1">
           <div>
-            <h3 className="text-lg font-semibold">re-wears</h3>
+            <h3 className="text-lg font-semibold">Company</h3>
             <ul className="mt-2 space-y-2 text-sm text-gray-200">
               <li>
                 <Link href="/about">About Us</Link>
@@ -71,16 +74,16 @@ const Footer = () => {
                 <Link href="/how-it-works">How it works</Link>
               </li>
               <li>
-                <Link href="/help-center/selling">Selling</Link>
+                <Link href="/help-center/selling">How to sell</Link>
               </li>
               <li>
-                <Link href="/help-center/buying">Buying</Link>
+                <Link href="/help-center/buying">How to buy</Link>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-lg font-semibold">Help</h3>
+            <h3 className="text-lg font-semibold">Support</h3>
             <ul className="mt-2 space-y-2 text-sm text-gray-200">
               <li>
                 <Link href="/help-center/home">Help Center</Link>

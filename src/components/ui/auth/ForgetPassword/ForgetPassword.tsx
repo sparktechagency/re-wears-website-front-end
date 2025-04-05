@@ -18,7 +18,7 @@ const ForgetPassword = ({open , setOpen}:{open:boolean , setOpen:(open:boolean)=
 
         <div className="text-center mb-4">
           <h1 className="text-[25px] font-bold ">Forgot your password?</h1>
-        <p className="text-[14px] font-normal px-12 pt-3 text-[#797979]">If this email address is associated with re-wears, then we have sent your password reset instructions to that email.</p>
+        <p className="text-[14px] font-normal lg:px-12 px-4 pt-3 text-[#797979]">If this email address is associated with re-wears, then we have sent your password reset instructions to that email.</p>
         </div>
 
         <Form layout="vertical" onFinish={onFinish}>

@@ -4,12 +4,12 @@ import FillButton from "@/components/shared/FillButton";
 import OutlineButton from "@/components/shared/OutlineButton";
 import { Heart, Minus } from "lucide-react";
 import Link from "next/link";
-import { GoClockFill } from "react-icons/go";
-import { HiMiniMapPin } from "react-icons/hi2";
 import ImageGallery from "./ImageGallery";
 import { useState } from "react";
 import ReserveNowModal from "./ReserveNowModal";
 import { RxHeartFilled } from "react-icons/rx";
+import { HiLocationMarker } from "react-icons/hi";
+import { MdWatchLater } from "react-icons/md";
 
 const ProductDetails = () => { 
   const [open, setOpen] = useState(false); 
@@ -17,32 +17,51 @@ const ProductDetails = () => {
   return (
     <div className="container">
       {/* category breadcumb */}
-      <section>
-        <p className="flex items-center gap-2 flex-wrap py-6">
-          <Link href={"/"} className="link !font-normal">
-            Home
-          </Link>
-          <Minus className="text-primary" />
-          <Link href={""} className="link !font-normal">
-            Women
-          </Link>{" "}
-          <Minus className="text-primary" />
-          <Link href={""} className="link !font-normal">
-            Clothing
-          </Link>{" "}
-          <Minus className="text-primary" />
-          <Link href={""} className="link !font-normal">
-            Dresses
-          </Link>{" "}
-          <Minus className="text-primary" />
-          <Link href={""} className="link !font-normal">
-            Little pink dresses
-          </Link>
-          <Minus className="text-primary" />
-          <Link href={""} className="">
-            Forever 21 Little pink dresses
-          </Link>
-        </p>
+      <section className=" "> 
+      <div className=" no-scrollbar  overflow-x-auto whitespace-nowrap"> 
+  <div className="flex items-center gap-2 w-full py-6"> 
+    <p className="flex items-center gap-2"> 
+      <Link href={"/"} className="link !font-normal">
+        Home
+      </Link>
+      <Minus className="text-primary" />
+    </p>
+
+    <p className="flex items-center gap-2"> 
+      <Link href={""} className="link !font-normal">
+        Women
+      </Link>
+      <Minus className="text-primary" />
+    </p>
+
+    <p className="flex items-center gap-2"> 
+      <Link href={""} className="link !font-normal">
+        Clothing
+      </Link>
+      <Minus className="text-primary" />
+    </p>
+
+    <p className="flex items-center gap-2"> 
+      <Link href={""} className="link !font-normal">
+        Dresses
+      </Link>
+      <Minus className="text-primary" />
+    </p>
+
+    <p className="flex items-center gap-2"> 
+      <Link href={""} className="link !font-normal  w-full">
+        Little pink dresses
+      </Link>
+      <Minus className="text-primary" />
+    </p>
+
+    <p className="flex items-center gap-2"> 
+      <Link href={""}>
+        Forever 21 Little pink dresses
+      </Link>
+    </p>
+  </div>
+</div>
       </section>
 
       <section className="flex flex-col lg:flex-row justify-between gap-6 pb-4">
@@ -151,13 +170,13 @@ const ProductDetails = () => {
               </Link>
             </div>
             <div className="grid gap-2">
-              <p className="flex items-center gap-2">
-                <HiMiniMapPin className="text-primary text-xl" /> Colonian
-                Beach, VA, United States
+              <p className="flex items-center gap-2 ">
+              <span>  <HiLocationMarker size={21} color="#9d977a" /> </span>  <span> Colonian
+              Beach, VA, United States </span> 
               </p>
-              <p className="flex items-center gap-2">
-                <GoClockFill className="text-primary text-lg" /> Last seen 10
-                hours ago
+              <p className="flex items-center gap-2 ">
+             <span>  <MdWatchLater size={20} color="#9d977a" /> </span>  <span> Last seen 10
+             hours ago  </span>  
               </p>
             </div>
           </div>

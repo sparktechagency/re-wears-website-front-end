@@ -76,7 +76,8 @@ const VerifyOtp = () => {
               background: "#9D977A",
               color: "white",
               borderRadius: "60px",
-              fontFamily: "poppins",
+              fontFamily: "poppins", 
+              fontSize: "16px",
             }}
             className="uppercase tracking-wider"
           >

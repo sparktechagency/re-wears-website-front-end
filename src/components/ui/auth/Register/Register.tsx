@@ -40,7 +40,7 @@ const Register: React.FC = () => {
         }}
       >
         <Form onFinish={onFinish} layout="vertical">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 ">
 
             <Form.Item
               name="firstName"
@@ -122,9 +122,10 @@ const Register: React.FC = () => {
                 },
               ]} 
               className="mb-5"
-            >
-              <Input.Password
-                placeholder="Create a secure password (8+ characters, mix of letters, numbers & symbols)"
+            > 
+         
+              <Input.Password            
+                // placeholder="Create a secure password (8+ characters, mix of letters, numbers & symbols)" 
                 className="border border-gray-300 h-[50px] bg-white rounded-full"
                 style={{
                   height: 50,
@@ -134,10 +135,14 @@ const Register: React.FC = () => {
                   backgroundColor: "white",
                   borderRadius: "40px",
                 }}
-              />
-            </Form.Item>
+              /> 
+<div className="text-xs text-gray-500 mt-1 ms-2">
+  Must be 8+ characters, with letters, numbers and symbols.
+</div> 
+            </Form.Item> 
           </div>
-
+ 
+ <div className=" "  style={{ marginTop: "20px" }}> 
           <Form.Item
             name="agree"
             valuePropName="checked"
@@ -150,26 +155,27 @@ const Register: React.FC = () => {
                 },
               },
             ]}
-            className="w-full"
+            className="w-full "
           >
             <Checkbox className="text-[#000000] text-[10px] ">
               By clicking CREATE ACCOUNT, I hereby agree and consent to   re-wears  
               <Link
                 href="/terms-and-conditions"
-                className="text-[#000000] font-medium underline underline-offset-2 mx-[2px]"
+                className="text-[#000000] font-medium underline underline-offset-2 mx-[3px]"
               >
-                  Terms & Conditions
+                  Terms & Conditions;
               </Link>
-              ; I confirm that I have read re-wears
+               I confirm that I have read re-wears
               <Link
                 href="/terms-and-conditions"
-                className="text-[#000000] font-medium underline underline-offset-2 mx-[2px]"
+                className="text-[#000000] font-medium underline underline-offset-2 mx-[3px] "
               >
-                  Privacy Policy
+                  Privacy Policy;
               </Link>
-              ; and I certify that I am 18 years or older.
+               and I certify that I am 18 years or older.
             </Checkbox>
           </Form.Item>
+ </div>
 
           <Form.Item>
             <button

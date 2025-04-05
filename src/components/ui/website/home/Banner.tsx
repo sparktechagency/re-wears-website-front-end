@@ -22,13 +22,13 @@ const Banner = () => {
       {/* Content Overlay */}
       <div className="absolute bottom-6 lg:bottom-20 left-4 lg:left-20 z-10 flex items-end justify-center max-w-[90vw] lg:max-w-auto">
         <div className="grid gap-4 lg:gap-6 p-6 lg:p-9 bg-white rounded-xl border border-gray-200">
-          <p className="text-3xl lg:text-[38px] font-bold text-[#000000] max-w-xs leading-tight">
+          <p className="text-[20px] lg:text-[38px] font-bold text-[#000000] max-w-xs leading-tight">
             Say goodbye to closet clutter
           </p>
           <Link href={"/sell-now"}>
-            <FillButton className="uppercase">Sell Now</FillButton>
+            <FillButton className="uppercase lg:w-1/2 w-full px-0  ">Sell Now</FillButton>
           </Link>
-          <Link href={`/how-it-works`} className="text-[14px] text-primary hover:underline">
+          <Link href={`/how-it-works`} className="text-[14px] text-primary hover:underline lg:text-start text-center">
           Ready to start? Here’s how.
           </Link>
         </div>

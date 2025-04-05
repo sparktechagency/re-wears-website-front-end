@@ -88,11 +88,10 @@ const Navbar = () => {
             <div
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
-                selectedCategory === category
+              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${selectedCategory === category
                   ? " text-black font-bold"
                   : "text-primary"
-              }`}
+                }`}
             >
               {icon}
               {category}
@@ -103,7 +102,7 @@ const Navbar = () => {
         {/* Items List (Only visible if a category is selected) */}
         <div className="col-span-4 ps-2 pe-6">
           {selectedCategory &&
-          categories[selectedCategory]?.items?.length > 0 ? (
+            categories[selectedCategory]?.items?.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
               {categories[selectedCategory].items.map((item: string) => (
                 <div key={item} className="py-1">
@@ -144,9 +143,8 @@ const Navbar = () => {
         >
           {/* Left section - Search */}
           <div
-            className={`hidden lg:flex items-center gap-4 relative ${
-              !user ? "min-w-[350px]" : "min-w-[280px] "
-            }`}
+            className={`hidden lg:flex items-center gap-4 relative ${!user ? "min-w-[350px]" : "min-w-[280px] "
+              }`}
           >
             <Search
               size={20}
@@ -228,18 +226,21 @@ const Navbar = () => {
               </Link>
             )}
 
-            <Link
-              href={"/wishlist"}
-              className=" flex items-center gap-1 cursor-pointer"
-            >
-              {" "}
-              <span>
-                <Heart size={20} strokeWidth={1.5} />{" "}
-              </span>{" "}
-              {!user && (
-                <span className="hidden lg:block text-sm">Wishlist</span>
-              )}
-            </Link>
+
+            {user && (
+              // <span className="hidden lg:block text-sm">Wishlist</span>  
+              <Link
+                href={"/wishlist"}
+                className=" flex items-center gap-1 cursor-pointer"
+              >
+                {" "}
+                <span>
+                  <Heart size={20} strokeWidth={1.5} />{" "}
+                </span>{" "}
+              </Link>
+            )}
+
+
 
             {/* user avater */}
             {user && <UserDropdown />}

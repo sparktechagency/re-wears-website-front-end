@@ -181,9 +181,8 @@ const Inbox = () => {
         <div className="grid grid-cols-12 gap-4">
           {/* Message List */}
           <div
-            className={`lg:col-span-4 col-span-12 bg-white  rounded-xl px-2 py-4 ${
-              isChatVisible ? "hidden lg:block" : ""
-            }`}
+            className={`lg:col-span-4 col-span-12 bg-white  rounded-xl px-2 py-4 ${isChatVisible ? "hidden lg:block" : ""
+              }`}
             style={{
               boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.15)",
               zIndex: 10,
@@ -220,9 +219,8 @@ const Inbox = () => {
               {messageList.map((value: TMessageList, index) => (
                 <div key={index} onClick={() => handleMessage(value)}>
                   <div
-                    className={`flex justify-between  px-4 py-3 rounded-lg mb-2 ${
-                      personId === value?.id ? "bg-[#ECECEC]" : "bg-[#F8F8F8]"
-                    }`}
+                    className={`flex justify-between  px-4 py-3 rounded-lg mb-2 ${personId === value?.id ? "bg-[#ECECEC]" : "bg-[#F8F8F8]"
+                      }`}
                   >
                     <div className="flex items-center gap-1">
                       <Image
@@ -250,9 +248,8 @@ const Inbox = () => {
 
           {/* Chat Section */}
           <div
-            className={`lg:col-span-8 col-span-12 bg-white  rounded-xl p-2 ${
-              isChatVisible ? "block" : "hidden lg:block"
-            }`}
+            className={`lg:col-span-8 col-span-12 bg-white  rounded-xl p-2 ${isChatVisible ? "block" : "hidden lg:block"
+              }`}
             style={{
               boxShadow: "0px 0px 5px rgba(0, 0, 0, 0.15)",
               zIndex: 10,
@@ -261,39 +258,47 @@ const Inbox = () => {
             <section>
               {/* header */}
               <div>
-                <div className="flex items-center lg:justify-between gap-2 p-4  border-b border-[#DCDCDC]">
-                  <div className="flex items-center lg:justify-center gap-2">
-                    <button
-                      className="lg:hidden text-primary"
-                      onClick={handleBackToList}
-                    >
-                      <IoMdArrowRoundBack size={20} />
-                    </button> 
-                    <img src={person?.image} alt="" className="rounded-full h-[40px] w-[40px]"/>
-                    <Link
-                      href={"/profile"}
-                      className="text-[20px] text-primary font-bold "
-                    >
-                      {person?.name}
-                    </Link>
-                  </div> 
- <div className="flex items-center gap-1">  
- <ConfigProvider
-  theme={{
-    components: {
-      Rate: {
-        starColor:"#E6A817"
-      },
-    },
-  }}
->
-  <Rate disabled defaultValue={4} />  
-  </ConfigProvider>
-  <p className=" text-[14px]">20 reviews</p>
- </div> 
+                <div className="flex items-center justify-between lg:gap-8 gap-0 lg:p-4  border-b border-[#DCDCDC] ">
+                  <div className=" lg:w-full flex flex-col lg:flex-row lg:items-center  justify-between ">
+                    <div className="flex items-center lg:justify-center gap-2">
+                      <button
+                        className="lg:hidden text-primary"
+                        onClick={handleBackToList}
+                      >
+                        <IoMdArrowRoundBack size={20} />
+                      </button>
+                      <img src={person?.image} alt="" className="rounded-full lg:h-[40px] h-[36px] lg:w-[40px] w-[36px]" />
+                      <Link
+                        href={"/profile"}
+                        className="lg:text-[20px] text-[14px] text-primary font-bold "
+                      >
+                        {person?.name}
+                      </Link>
+                    </div>
 
- <div className="flex items-center gap-2"> <span> <IoLocationSharp size={22} color="#9D977A" />  </span> <span className=" text-[14px]" > Dubai, UAE  </span></div>
- <div className="flex items-center gap-2"> <span> <MdOutlineWatchLater size={22} color="#9D977A" />  </span> <span className=" text-[14px]" > Last seen 10 hours ago  </span></div>
+                    <div className="flex   items-center gap-1 ">
+                      <ConfigProvider
+                        theme={{
+                          components: {
+                            Rate: {
+                              starColor: "#E6A817"
+                            },
+                          },
+                        }}
+                      >
+                        <div className="scale-[0.7] lg:scale-100"> {/* 👈 scaling based on screen size */}
+                          <Rate disabled defaultValue={4} />
+                        </div>
+                      </ConfigProvider>
+                      <p className=" lg:text-[14px] text-[10px] ">20 reviews</p>   
+                    </div>
+                  </div>
+
+                  <div className=" lg:w-full flex flex-col lg:flex-row items-center justify-between gap-2">
+
+                    <div className="flex items-center lg:gap-2"> <span className="scale-[0.7] lg:scale-100"> <IoLocationSharp size={22} color="#9D977A" />  </span> <span className=" lg:text-[14px] text-[10px]" > Dubai, UAE  </span></div>
+                    <div className="flex items-center lg:gap-2"> <span  className="scale-[0.7] lg:scale-100"> <MdOutlineWatchLater size={22} color="#9D977A" />  </span> <span className=" lg:text-[14px] text-[10px]" > Last seen 10 hours ago  </span></div>
+                  </div>
 
                 </div>
 
@@ -302,7 +307,7 @@ const Inbox = () => {
                     <img
                       src="/user1.png"
                       alt=""
-                      className=" w-[70px] h-[76px] rounded-lg "
+                      className=" lg:w-[70px] w-[64px] lg:h-[76px] h-[70px] rounded-lg "
                     />
 
                     <div className="flex flex-col  items-start gap-2">
@@ -319,17 +324,17 @@ const Inbox = () => {
                   <div className="flex items-center justify-end gap-x-4">
                     <div onClick={() => setOpen(true)}>
                       {" "}
-                      <OutlineButton className="!px-6 text-sm uppercase">
+                      <OutlineButton className="!px-6 lg:text-sm text-[12px] uppercase">
                         Make an offer
                       </OutlineButton>{" "}
                     </div>
 
                     <Link href={"/order"}>
-                      {" "} 
+                      {" "}
                       <Popover content=" Changed your mind? Head to the item page to release it for someone else to re-wear." >
-                      <button className=" h-12  bg-primary text-white font-normal rounded-full  transition-all duration-300 hover:bg-[#D04555]  !px-6 text-sm uppercase">
-                        Reserve Now
-                      </button>{" "} 
+                        <button className=" h-12  bg-primary text-white font-normal rounded-full  transition-all duration-300 hover:bg-[#D04555]  !px-6 lg:text-sm text-[12px] uppercase">
+                          Reserve Now
+                        </button>{" "}
                       </Popover>
                     </Link>
                   </div>
@@ -342,18 +347,16 @@ const Inbox = () => {
                   {messageContent.map((value, index) => (
                     <div
                       key={index}
-                      className={`flex mb-5 w-full ${
-                        index % 2 === 0
-                          ? "items-end justify-end"
-                          : "items-start justify-start"
-                      }`}
+                      className={`flex mb-5 w-full ${index % 2 === 0
+                        ? "items-end justify-end"
+                        : "items-start justify-start"
+                        }`}
                     >
                       <div
-                        className={`lg:w-3/5 w-2/3 lg:px-4 px-2 py-3 flex-col gap-4 ${
-                          index % 2 === 0
-                            ? "border bg-[#F8F8F8] rounded-t-xl rounded-bl-xl"
-                            : "border border-[#dcdcdc] rounded-t-xl rounded-br-xl"
-                        }`}
+                        className={`lg:w-3/5 w-2/3 lg:px-4 px-2 py-3 flex-col gap-4 ${index % 2 === 0
+                          ? "border bg-[#F8F8F8] rounded-t-xl rounded-bl-xl"
+                          : "border border-[#dcdcdc] rounded-t-xl rounded-br-xl"
+                          }`}
                       >
                         <p>{value?.message}</p>
                         <p className="text-end text-[12px] text-[#918d8d]">

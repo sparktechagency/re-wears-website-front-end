@@ -23,7 +23,7 @@ const ReserveNowModal = ({
           {" "}
           Reserve now{" "}
         </h1>
-        <p>
+        <p className=" lg:text-start text-center px-4 lg:px-0">
           <strong>Remember:</strong> Reserving an item gives you{" "}
           <strong>24 hours</strong> to arrange payment and pickup. If plans
           change you can cancel anytime!
