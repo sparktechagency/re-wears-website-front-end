@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
@@ -25,34 +25,30 @@ const Login = () => {
         or Log In with your Email{" "}
       </p>
       <Form onFinish={onFinish} layout="vertical">
-      
- 
-    <Form.Item
-       name="email"
-    
-       rules={[
-         {
-           required: true,
-           message: `Please enter your email !`,
-         },
-       ]}
-     >
-       <Input
-         placeholder={`Enter email `}
-         style={{
-           height: 50,
-           border: "1px solid #d9d9d9",
-           outline: "none",
-           boxShadow: "none",
-           backgroundColor: "white",
-           borderRadius: "40px",
-         }}
-       />
-     </Form.Item> 
+        <Form.Item
+          name="email"
+          rules={[
+            {
+              required: true,
+              message: `Please enter your email !`,
+            },
+          ]}
+        >
+          <Input
+            placeholder={`Enter email `}
+            style={{
+              height: 50,
+              border: "1px solid #d9d9d9",
+              outline: "none",
+              boxShadow: "none",
+              backgroundColor: "white",
+              borderRadius: "40px",
+            }}
+          />
+        </Form.Item>
 
         <Form.Item
           name="password"
-        
           rules={[
             {
               required: true,

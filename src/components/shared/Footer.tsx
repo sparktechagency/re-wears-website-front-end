@@ -7,7 +7,7 @@ import { LiaFacebookF } from "react-icons/lia";
 const Footer = () => {
   return (
     <footer className="bg-primary text-white py-10 px-6 md:px-16">
-      <div className="container mx-auto flex flex-col lg:flex-row justify-items-center gap-12 lg:gap-20 pb-[30px] py-[40px]">
+      <div className="md:container mx-auto flex flex-col lg:flex-row justify-items-center gap-12 lg:gap-20 pb-[30px] py-[40px]">
         {/* About Section */}
         <div className="max-w-md">
           <h3 className="text-xl font-bold text-[#F3E7D8]">About re-wears</h3>
@@ -27,7 +27,7 @@ const Footer = () => {
                 size={22}
                 className="text-[#F3E7D8] hover:text-white"
               />
-            </a> 
+            </a>
             <a
               href="https://www.facebook.com/share/187xMvnZYX/?mibextid=wwXIfr"
               target="_blank"
@@ -51,7 +51,7 @@ const Footer = () => {
         </div>
 
         {/* Links Sections */}
-        <section className="grid grid-cols-3 gap-8 justify-between w-full flex-1">
+        <section className="grid grid-cols-3 gap-2 md:gap-8 justify-between w-full flex-1">
           <div>
             <h3 className="text-lg font-semibold">Company</h3>
             <ul className="mt-2 space-y-2 text-sm text-gray-200">
@@ -97,7 +97,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="border-t border-white/30 mt-6 pt-6 text-center text-sm text-white flex justify-start container gap-16">
+      <div className="border-t border-white/30 mt-6 pt-6 text-center text-sm text-white flex justify-start container gap-8 lg:gap-16">
         <Link href="privacy-policy">Privacy Policy</Link>
         <Link href="terms-&-conditions">Terms & Conditions</Link>
       </div>

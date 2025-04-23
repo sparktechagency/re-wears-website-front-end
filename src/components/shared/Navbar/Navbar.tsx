@@ -72,7 +72,7 @@ const categories: Categories = {
 const Navbar = () => {
   const [isSearchbarVisible, setSearchbarVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
-  const [selectedKey, setSelectedKey] = useState("women");
+  const [selectedKey, setSelectedKey] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "All"
   );
@@ -88,10 +88,11 @@ const Navbar = () => {
             <div
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${selectedCategory === category
+              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
+                selectedCategory === category
                   ? " text-black font-bold"
                   : "text-primary"
-                }`}
+              }`}
             >
               {icon}
               {category}
@@ -102,7 +103,7 @@ const Navbar = () => {
         {/* Items List (Only visible if a category is selected) */}
         <div className="col-span-4 ps-2 pe-6">
           {selectedCategory &&
-            categories[selectedCategory]?.items?.length > 0 ? (
+          categories[selectedCategory]?.items?.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
               {categories[selectedCategory].items.map((item: string) => (
                 <div key={item} className="py-1">
@@ -128,10 +129,7 @@ const Navbar = () => {
       className="w-full flex items-center justify-center "
       style={{ borderBottom: "1px solid #f0f0f0" }}
     >
-      <div
-        style={{ margin: "0 auto", padding: "0 16px" }}
-        className="container"
-      >
+      <div style={{ margin: "0 auto", padding: "0 16px" }} className="w-full">
         {/* top section */}
         <div
           style={{
@@ -139,12 +137,13 @@ const Navbar = () => {
             justifyContent: "space-between",
             alignItems: "center",
           }}
-          className="py-6"
+          className="py-6 px-8"
         >
           {/* Left section - Search */}
           <div
-            className={`hidden lg:flex items-center gap-4 relative ${!user ? "min-w-[350px]" : "min-w-[280px] "
-              }`}
+            className={`hidden lg:flex items-center gap-4 relative ${
+              !user ? "min-w-[270px]" : "min-w-[280px] "
+            }`}
           >
             <Search
               size={20}
@@ -226,9 +225,8 @@ const Navbar = () => {
               </Link>
             )}
 
-
             {user && (
-              // <span className="hidden lg:block text-sm">Wishlist</span>  
+              // <span className="hidden lg:block text-sm">Wishlist</span>
               <Link
                 href={"/wishlist"}
                 className=" flex items-center gap-1 cursor-pointer"
@@ -239,8 +237,6 @@ const Navbar = () => {
                 </span>{" "}
               </Link>
             )}
-
-
 
             {/* user avater */}
             {user && <UserDropdown />}
@@ -254,7 +250,7 @@ const Navbar = () => {
         {/* menu bar for large screen - bottom section */}
         <div className="hidden lg:block">
           <Menu
-            className="flex items-center justify-center gap-1 lg:gap-5"
+            className="flex items-center justify-center space-x-2"
             mode="horizontal"
             selectedKeys={[selectedKey]}
             style={{
@@ -305,7 +301,7 @@ const Navbar = () => {
                 placeholder="Search for items"
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
-                className="w-full p-8 py-3 text-sm placeholder:text-[#797979] focus:outline-none border-b border-black"
+                className="w-full p-8 py-3 text-sm placeholder:text-[#797979] focus:outline-none border-b rounded-none border-black"
               />
               {searchKeyword && (
                 <XIcon

@@ -3,7 +3,15 @@
 import FillButton from "@/components/shared/FillButton";
 import { useState } from "react";
 
-const locations = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Ras Al Khaimah"];
+const locations = [
+  "Dubai, UAE",
+  "Abu Dhabi, UAE",
+  "Sharjah, UAE",
+  "Ajman, UAE",
+  "Umm Al-Quwain, UAE",
+  "Ras Al Khaimah, UAE",
+  "Fujairah, UAE",
+];
 
 const ProfileDetails = () => {
   const [image, setImage] = useState<string | null>(null);
@@ -74,13 +82,21 @@ const ProfileDetails = () => {
             <select
               value={selectedLocation}
               onChange={(e) => setSelectedLocation(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 "
+              className="w-full px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
             >
               <option value="" disabled>
                 Choose a location
               </option>
               {locations.map((location) => (
-                <option key={location} value={location}>
+                <option
+                  key={location}
+                  value={location}
+                  style={{
+                    backgroundColor:
+                      selectedLocation === location ? "#9D977A" : "white",
+                    color: selectedLocation === location ? "white" : "black",
+                  }}
+                >
                   {location}
                 </option>
               ))}

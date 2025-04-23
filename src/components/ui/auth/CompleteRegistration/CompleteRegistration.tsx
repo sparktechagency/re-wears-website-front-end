@@ -40,7 +40,7 @@ const CompleteRegistration = () => {
                       
                     />
                 </Form.Item>
-                <p className=' text-[#797979] text-[12px]  '> Please use only letters and numbers. Pick something you like - usernames can’t be changed later </p>
+                <p className=' text-[#797979] text-[12px]  '> Please use only letters and numbers. Pick something you like - usernames can’t be changed later. </p>
 
                 <Form.Item>
                     <button

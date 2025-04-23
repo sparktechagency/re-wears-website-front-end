@@ -41,13 +41,13 @@ const Register: React.FC = () => {
       >
         <Form onFinish={onFinish} layout="vertical">
           <div className="grid grid-cols-2 gap-3 ">
-
             <Form.Item
               name="firstName"
-              rules={[{
-                required: true,
-                message: `Please enter your first name !`,
-              },
+              rules={[
+                {
+                  required: true,
+                  message: `Please enter your first name !`,
+                },
               ]}
             >
               <Input
@@ -63,13 +63,13 @@ const Register: React.FC = () => {
               />
             </Form.Item>
 
-
             <Form.Item
               name="lastName"
-              rules={[{
-                required: true,
-                message: `Please enter your last name !`,
-              },
+              rules={[
+                {
+                  required: true,
+                  message: `Please enter your last name !`,
+                },
               ]}
             >
               <Input
@@ -84,16 +84,16 @@ const Register: React.FC = () => {
                 }}
               />
             </Form.Item>
-
           </div>
 
           <div>
             <Form.Item
               name="email"
-              rules={[{
-                required: true,
-                message: `Please enter your email !`,
-              },
+              rules={[
+                {
+                  required: true,
+                  message: `Please enter your email !`,
+                },
               ]}
             >
               <Input
@@ -113,19 +113,36 @@ const Register: React.FC = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please enter your password!",
+                  message: `Password is required !`,
                 },
                 {
-                  pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  pattern: /[A-Z]/,
                   message:
-                    "One of the password requirements wasn’t met. Please give it another go.",
+                    "Password must include at least one uppercase letter.",
                 },
-              ]} 
+                {
+                  pattern: /[a-z]/,
+                  message:
+                    "Password must include at least one lowercase letter.",
+                },
+                {
+                  pattern: /\d/,
+                  message: "Password must include at least one number.",
+                },
+                {
+                  pattern: /[@$!%*?&]/,
+                  message:
+                    "Password must include at least one special character.",
+                },
+                {
+                  pattern: /^.{8,}$/,
+                  message: "Password must be at least 8 characters long.",
+                },
+              ]}
               className="mb-5"
-            > 
-         
-              <Input.Password            
-                // placeholder="Create a secure password (8+ characters, mix of letters, numbers & symbols)" 
+            >
+              <Input.Password
+                placeholder="Enter your password"
                 className="border border-gray-300 h-[50px] bg-white rounded-full"
                 style={{
                   height: 50,
@@ -135,47 +152,47 @@ const Register: React.FC = () => {
                   backgroundColor: "white",
                   borderRadius: "40px",
                 }}
-              /> 
-<div className="text-xs text-gray-500 mt-1 ms-2">
-  Must be 8+ characters, with letters, numbers and symbols.
-</div> 
-            </Form.Item> 
+              />
+            </Form.Item>
           </div>
- 
- <div className=" "  style={{ marginTop: "20px" }}> 
-          <Form.Item
-            name="agree"
-            valuePropName="checked"
-            rules={[
-              {
-                validator(_, value) {
-                  return value
-                    ? Promise.resolve()
-                    : Promise.reject(new Error("You must agree to continue!"));
+
+          <div className=" " style={{ marginTop: "20px" }}>
+            <Form.Item
+              name="agree"
+              valuePropName="checked"
+              rules={[
+                {
+                  validator(_, value) {
+                    return value
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error("You must agree to continue!")
+                        );
+                  },
                 },
-              },
-            ]}
-            className="w-full "
-          >
-            <Checkbox className="text-[#000000] text-[10px] ">
-              By clicking CREATE ACCOUNT, I hereby agree and consent to   re-wears  
-              <Link
-                href="/terms-and-conditions"
-                className="text-[#000000] font-medium underline underline-offset-2 mx-[3px]"
-              >
+              ]}
+              className="w-full "
+            >
+              <Checkbox className="text-[#000000] text-[10px] ">
+                By clicking CREATE ACCOUNT, I hereby agree and consent to
+                re-wears
+                <Link
+                  href="/terms-and-conditions"
+                  className="text-[#000000] font-medium underline underline-offset-2 mx-[3px]"
+                >
                   Terms & Conditions;
-              </Link>
-               I confirm that I have read re-wears
-              <Link
-                href="/terms-and-conditions"
-                className="text-[#000000] font-medium underline underline-offset-2 mx-[3px] "
-              >
+                </Link>
+                I confirm that I have read re-wears
+                <Link
+                  href="/terms-and-conditions"
+                  className="text-[#000000] font-medium underline underline-offset-2 mx-[3px] "
+                >
                   Privacy Policy;
-              </Link>
-               and I certify that I am 18 years or older.
-            </Checkbox>
-          </Form.Item>
- </div>
+                </Link>
+                and I certify that I am 18 years or older.
+              </Checkbox>
+            </Form.Item>
+          </div>
 
           <Form.Item>
             <button

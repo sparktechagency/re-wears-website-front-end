@@ -163,9 +163,9 @@ const MyOrders = () => {
       </section>
 
       {/* orders table */}
-      <div className="w-full max-w-[calc(82vw)] overflow-x-scroll no-scrollbar"> 
-        {
-          data.length > 0 ? (   <ConfigProvider
+      <div className="w-full max-w-[calc(82vw)] overflow-x-scroll no-scrollbar">
+        {data.length > 0 ? (
+          <ConfigProvider
             theme={{
               components: {
                 Table: {
@@ -182,28 +182,27 @@ const MyOrders = () => {
               scroll={{ x: "100%" }}
               style={{ fontFamily: "poppins" }}
             />
-          </ConfigProvider>  ) : (   
-                  <section className="grid justify-center gap-4 py-8 lg:py-16">
-                  <Image
-                    src="/order.png"
-                    alt="icon"
-                    width={90}
-                    height={90}
-                    className="mx-auto"
-                  />
-                  <Label className="text-xl lg:text-2xl text-center">
-                  Discover preloved gems
-                  </Label>
-                  <p className="text-[#797979] text-center text-sm lg:text-base">
-                  Shop pre-owned fashion. Embrace sustainable living .
-                  </p>
-                  <div className="flex justify-center ">
-                    <FillButton className="uppercase">Browse</FillButton>
-                  </div>
-                </section> 
-          )
-        }
-      
+          </ConfigProvider>
+        ) : (
+          <section className="grid justify-center gap-4 py-8 lg:py-16">
+            <Image
+              src="/order.png"
+              alt="icon"
+              width={90}
+              height={90}
+              className="mx-auto"
+            />
+            <Label className="text-xl lg:text-2xl text-center">
+              Discover preloved gems
+            </Label>
+            <p className="text-[#797979] text-center text-sm lg:text-base">
+              Shop pre-owned fashion. Embrace sustainable living.
+            </p>
+            <div className="flex justify-center ">
+              <FillButton className="uppercase">Browse</FillButton>
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );

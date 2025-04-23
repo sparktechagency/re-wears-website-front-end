@@ -3,7 +3,7 @@ import Input from "@/components/shared/Input";
 import OutlineButton from "@/components/shared/OutlineButton";
 import Select from "@/components/shared/Select";
 import { ConfigProvider, Switch } from "antd";
-import {  ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 const AccountSettings = () => {
@@ -49,17 +49,29 @@ const AccountSettings = () => {
       </section>
       {/* Vacation mode */}
       <section className="card flex justify-between items-center gap-2">
-        <label className="font-bold py-2">Vacation mode</label> 
+        <label className="font-bold py-2">Vacation mode</label>
         <ConfigProvider
-  theme={{
-    token: {
-      colorPrimary: "#9D977A"
-    },
-  }}
->  
-        <Switch />
-
-</ConfigProvider>
+          theme={{
+            token: {
+              colorTextQuaternary: "#f3e7d8",
+              colorText: "#f3e7d8",
+              colorPrimary: "#f3e7d8",
+              colorPrimaryHover: "#f3e7d8",
+              colorTextTertiary: "#f3e7d8",
+              colorTextLightSolid: "#9D977A",
+            },
+            components: {
+              Switch: {
+                handleBg: "#9D977A",
+                trackPadding: 5,
+                trackHeight: 28,
+                trackMinWidth: 52,
+              },
+            },
+          }}
+        >
+          <Switch />
+        </ConfigProvider>
       </section>
       {/* Google */}
       {/* <section className="card flex justify-between items-center gap-2">

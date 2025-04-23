@@ -52,7 +52,7 @@ const ResetPassword = () => {
               borderRadius: "60px",
               outline: "none",
             }}
-            className="mb-6"
+            className="mb-2"
           />
         </Form.Item>
 
@@ -88,7 +88,7 @@ const ResetPassword = () => {
               borderRadius: "60px",
               outline: "none",
             }}
-            className="mb-6"
+            className="my-2"
           />
         </Form.Item>
 
