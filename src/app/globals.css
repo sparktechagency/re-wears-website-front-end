@@ -48,6 +48,12 @@ body {
     }
 } 
 
+@supports (-webkit-touch-callout: none) {
+    .safari-only\:text-base {
+        font-size: 16px;
+        /* or use Tailwind’s theme size */
+    }
+}
 
 .ant-form-item { 
     margin-bottom: 8px !important;

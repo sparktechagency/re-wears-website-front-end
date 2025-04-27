@@ -32,14 +32,29 @@ const ResetPassword = () => {
           rules={[
             {
               required: true,
-              message: "Please enter your new password!",
+              message: `Password is required !`,
             },
             {
-              pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message:
-                "One of the password requirements wasn’t met. Please give it another go.",
+              pattern: /[A-Z]/,
+              message: "Password must include at least one uppercase letter.",
             },
-          ]} 
+            {
+              pattern: /[a-z]/,
+              message: "Password must include at least one lowercase letter.",
+            },
+            {
+              pattern: /\d/,
+              message: "Password must include at least one number.",
+            },
+            {
+              pattern: /[@$!%*?&]/,
+              message: "Password must include at least one special character.",
+            },
+            {
+              pattern: /^.{8,}$/,
+              message: "Password must be at least 8 characters long.",
+            },
+          ]}
           style={{ marginBottom: 0 }}
         >
           <Input.Password
@@ -47,6 +62,7 @@ const ResetPassword = () => {
             placeholder="Create a secure password (8+ characters, mix of letters, numbers & symbols)"
             style={{
               border: "1px solid #E0E4EC",
+              fontSize: "16px",
               height: "52px",
               background: "white",
               borderRadius: "60px",
@@ -83,6 +99,7 @@ const ResetPassword = () => {
             placeholder="Re-enter your new password"
             style={{
               border: "1px solid #E0E4EC",
+              fontSize: "16px",
               height: "52px",
               background: "white",
               borderRadius: "60px",
@@ -104,7 +121,7 @@ const ResetPassword = () => {
               background: "#9D977A",
               marginTop: 10,
               borderRadius: "60px",
-            }} 
+            }}
             className="uppercase"
           >
             Submit

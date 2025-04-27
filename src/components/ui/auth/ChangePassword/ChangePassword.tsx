@@ -75,13 +75,30 @@ const ChangePassword = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your new Password!",
+                  message: `Password is required !`,
                 },
                 {
-                  pattern:
-                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                  pattern: /[A-Z]/,
                   message:
-                    "One of the password requirements wasn’t met. Please give it another go.",
+                    "Password must include at least one uppercase letter.",
+                },
+                {
+                  pattern: /[a-z]/,
+                  message:
+                    "Password must include at least one lowercase letter.",
+                },
+                {
+                  pattern: /\d/,
+                  message: "Password must include at least one number.",
+                },
+                {
+                  pattern: /[@$!%*?&]/,
+                  message:
+                    "Password must include at least one special character.",
+                },
+                {
+                  pattern: /^.{8,}$/,
+                  message: "Password must be at least 8 characters long.",
                 },
               ]}
               style={{ marginBottom: "20px" }}

@@ -16,7 +16,7 @@ const Footer = () => {
             pieces. We&apos;re all about clean, sustainable living. Bid farewell
             to closet clutter and say hello to conscious consumerism.
           </p>
-          <div className="flex gap-3 mt-4">
+          <div className="flex gap-3 mt-12">
             <a
               href="https://www.instagram.com/rewearsofficial/?igsh=NjF1c2VubTFnczdp&utm_source=qr#"
               target="_blank"

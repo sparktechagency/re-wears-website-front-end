@@ -101,6 +101,7 @@ const Register: React.FC = () => {
                 style={{
                   height: 50,
                   border: "1px solid #d9d9d9",
+                  fontSize: 16,
                   outline: "none",
                   boxShadow: "none",
                   backgroundColor: "white",
@@ -146,6 +147,7 @@ const Register: React.FC = () => {
                 className="border border-gray-300 h-[50px] bg-white rounded-full"
                 style={{
                   height: 50,
+                  fontSize: 16,
                   border: "1px solid #d9d9d9",
                   outline: "none",
                   boxShadow: "none",

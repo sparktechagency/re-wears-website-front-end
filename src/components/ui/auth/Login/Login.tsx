@@ -35,9 +35,11 @@ const Login = () => {
           ]}
         >
           <Input
+            className="text-base"
             placeholder={`Enter email `}
             style={{
               height: 50,
+              fontSize: 16,
               border: "1px solid #d9d9d9",
               outline: "none",
               boxShadow: "none",
@@ -62,6 +64,7 @@ const Login = () => {
             placeholder="Enter password"
             style={{
               height: 50,
+              fontSize: 16,
               width: "100%",
               border: "1px solid #d9d9d9",
               outline: "none",

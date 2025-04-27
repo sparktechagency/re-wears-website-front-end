@@ -1,7 +1,7 @@
 "use client";
-import TextInput from "@/components/shared/TextInput";
-import { Form } from "antd";
+import { Form, Input } from "antd";
 import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { GoDotFill } from "react-icons/go";
@@ -53,7 +53,10 @@ const ResendCode = () => {
           </span>
           <span>
             If you&apos;re still having problems, problems, please check our
-            <span className="link"> Help Center</span>
+            {"  "}
+            <Link href={"/help-center/home"} className="link">
+              Help Center
+            </Link>
           </span>
         </p>
       </div>
@@ -63,7 +66,20 @@ const ResendCode = () => {
         onFinish={onFinish}
         style={{ fontFamily: "poppins" }}
       >
-        <TextInput name={"email"} label="" />
+        <Form.Item name="email">
+          <Input
+            placeholder={`Enter email`}
+            style={{
+              height: 50,
+              fontSize: 16,
+              border: "1px solid #d9d9d9",
+              outline: "none",
+              boxShadow: "none",
+              backgroundColor: "white",
+              borderRadius: "40px",
+            }}
+          />
+        </Form.Item>
         <Form.Item>
           <button
             type="submit"
