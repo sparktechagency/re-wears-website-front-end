@@ -171,7 +171,7 @@ const ProductDetails = () => {
             </div>
             <div className="grid gap-2">
               <p className="flex items-center gap-2 ">
-              <span>  <HiLocationMarker size={21} color="#9d977a" /> </span>  <span> Colonian
+              <span>  <HiLocationMarker size={20} color="#9d977a" /> </span>  <span> Colonian
               Beach, VA, United States </span> 
               </p>
               <p className="flex items-center gap-2 ">

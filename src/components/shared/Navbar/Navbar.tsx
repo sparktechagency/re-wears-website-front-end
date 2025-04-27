@@ -137,7 +137,7 @@ const Navbar = () => {
             justifyContent: "space-between",
             alignItems: "center",
           }}
-          className="py-6 px-8"
+          className="py-6 md:px-8"
         >
           {/* Left section - Search */}
           <div
@@ -178,7 +178,7 @@ const Navbar = () => {
           </div>
 
           {/* Right section - User actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3 md:gap-4">
             <p
               onClick={() => setSearchbarVisible(!isSearchbarVisible)}
               className="flex lg:hidden items-center gap-1 cursor-pointer"

@@ -26,10 +26,13 @@ const Banner = () => {
             Say goodbye to closet clutter
           </p>
           <Link href={"/sell-now"}>
-            <FillButton className="uppercase lg:w-1/2 w-full px-0  ">Sell Now</FillButton>
+            <FillButton className="uppercase w-full px-0">Sell Now</FillButton>
           </Link>
-          <Link href={`/how-it-works`} className="text-[14px] text-primary hover:underline lg:text-start text-center">
-          Ready to start? Here’s how.
+          <Link
+            href={`/how-it-works`}
+            className="text-[14px] text-primary hover:underline lg:text-start text-center"
+          >
+            Ready to start? Here’s how.
           </Link>
         </div>
       </div>

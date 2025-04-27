@@ -310,7 +310,7 @@ const Inbox = () => {
                     </Link>
                   </div>
 
-                  <div className=" lg:w-full flex flex-col lg:flex-row items-start justify-between gap-2">
+                  <div className=" lg:w-full flex flex-col lg:flex-row items-start justify-between gap-3.5">
                     <div className="flex items-center lg:gap-2">
                       <span className="scale-[0.7] lg:scale-100">
                         <IoLocationSharp size={22} color="#9D977A" />
