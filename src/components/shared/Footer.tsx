@@ -7,7 +7,7 @@ import { LiaFacebookF } from "react-icons/lia";
 const Footer = () => {
   return (
     <footer className="bg-primary text-white py-10 px-6 md:px-16">
-      <div className="md:container mx-auto flex flex-col lg:flex-row justify-items-center gap-12 lg:gap-20 pb-[30px] py-[40px]">
+      <div className="md:container mx-auto flex flex-col lg:flex-row justify-items-center gap-12 lg:gap-20 pb-[30px] pt-3 lg:pt-10">
         {/* About Section */}
         <div className="max-w-md">
           <h3 className="text-xl font-bold text-[#F3E7D8]">About re-wears</h3>
