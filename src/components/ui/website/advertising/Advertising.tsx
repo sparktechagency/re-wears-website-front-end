@@ -1,5 +1,5 @@
 import Image from "next/image";
-import image from "@/assets/images/advertising.svg";
+import image from "@/assets/images/advertising.png";
 
 const Advertising = () => {
   return (
