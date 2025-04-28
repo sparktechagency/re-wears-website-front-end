@@ -172,7 +172,7 @@ const Navbar = () => {
             />
             <input
               placeholder="Search for items"
-              className="p-8 py-3 text-sm placeholder:text-[#797979] focus:outline-none border-b border-black"
+              className="p-8 py-3 text-base placeholder:text-[#797979] focus:outline-none border-b border-black"
             />
           </div>
 
@@ -321,7 +321,7 @@ const Navbar = () => {
                 placeholder="Search for items"
                 value={searchKeyword}
                 onChange={(e) => setSearchKeyword(e.target.value)}
-                className="w-full p-8 py-3 text-sm safari-only:text-base placeholder:text-[#797979] focus:outline-none border-b rounded-none border-black"
+                className="w-full p-8 py-3 text-base safari-only:text-base placeholder:text-[#797979] focus:outline-none border-b rounded-none border-black"
               />
               {searchKeyword && (
                 <XIcon

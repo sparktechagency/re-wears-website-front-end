@@ -348,6 +348,7 @@ const SellNow = () => {
                     width: "100%",
                     height: "55px",
                     borderRadius: "60px",
+                    fontSize: "16px",
                     backgroundColor: "#f5f5f5",
                   }}
                 />

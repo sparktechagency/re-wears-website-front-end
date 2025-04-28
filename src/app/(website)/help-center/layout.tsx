@@ -23,6 +23,7 @@ const HelpCenterLayout = ({ children }: { children: React.ReactNode }) => {
               placeholder="Search by keyword"
               style={{
                 border: "none",
+                fontSize: "16px",
                 borderBottom: "1px solid #797979",
                 borderRadius: "0",
                 height: "42px",

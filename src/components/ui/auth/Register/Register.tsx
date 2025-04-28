@@ -55,6 +55,7 @@ const Register: React.FC = () => {
                 style={{
                   height: 50,
                   border: "1px solid #d9d9d9",
+                  fontSize: "16px",
                   outline: "none",
                   boxShadow: "none",
                   backgroundColor: "white",
@@ -77,6 +78,7 @@ const Register: React.FC = () => {
                 style={{
                   height: 50,
                   border: "1px solid #d9d9d9",
+                  fontSize: "16px",
                   outline: "none",
                   boxShadow: "none",
                   backgroundColor: "white",

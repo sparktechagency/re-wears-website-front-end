@@ -70,6 +70,7 @@ const MarkAsSold = () => {
                 className="rounded-full "
                 style={{
                   width: "100%",
+                  fontSize: "16px",
                   height: "55px",
                   borderRadius: "60px",
                 }}

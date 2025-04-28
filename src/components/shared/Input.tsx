@@ -27,7 +27,7 @@ const Input = ({
       defaultValue={defaultValue}
       onChange={(e) => setValue && setValue(e.target.value)}
       placeholder={placeholder}
-      className={`bg-[#F5F5F5] border-2 border-[#DCDCDC] rounded-full p-4 w-full ${className}`}
+      className={`bg-[#F5F5F5] border-2 border-[#DCDCDC] rounded-full p-4 w-full text-base ${className}`}
     />
   );
 };

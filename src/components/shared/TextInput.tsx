@@ -20,6 +20,7 @@ const TextInput: React.FC<{ name: string; label: string }> = ({ name, label }) =
         style={{
           height: 50,
           border: "1px solid #d9d9d9",
+          fontSize: "16px",
           outline: "none",
           boxShadow: "none",
           backgroundColor: "white",
