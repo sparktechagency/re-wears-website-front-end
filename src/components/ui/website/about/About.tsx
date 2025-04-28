@@ -1,4 +1,3 @@
-import imageJoint from "@/assets/images/about-joint.png";
 import Image from "next/image";
 import icon1 from "@/assets/icons/about-icon-1.svg";
 import icon2 from "@/assets/icons/about-icon-2.svg";
@@ -9,14 +8,14 @@ const About = () => {
   return (
     <div className="grid gap-6 md:gap-14 lg:gap-20 bg-[#F5F5F5] py-12 lg:py-20">
       {/* image gallery */}
-      <section className="grid gap-4 lg:gap-8">
+      {/* <section className="grid gap-4 lg:gap-8">
         <h1 className="heading-1 text-center px-4">
           If you&apos;re not wearing it, someone else could be
         </h1>
         <div className="">
           <Image src={imageJoint} alt="about-img" />
         </div>
-      </section>
+      </section> */}
 
       {/* card section */}
       <section className="container grid gap-4 lg:gap-8">

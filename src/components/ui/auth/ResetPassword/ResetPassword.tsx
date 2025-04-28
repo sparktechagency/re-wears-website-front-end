@@ -11,7 +11,7 @@ const ResetPassword = () => {
     confirmPassword: string;
   }) => {
     console.log(values);
-    router.push(`/login`);
+    router.push(`/confirm-change-password`);
   };
 
   return (

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, Dropdown, MenuProps } from "antd";
 import Link from "next/link";
 import { FaTshirt } from "react-icons/fa";
@@ -72,12 +72,30 @@ const categories: Categories = {
 const Navbar = () => {
   const [isSearchbarVisible, setSearchbarVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
+  const searchRef = useRef<HTMLDivElement>(null);
   const [selectedKey, setSelectedKey] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "All"
   );
 
   const { user } = useAuthContext();
+
+  // Close search bar when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setSearchbarVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const menuItems = (
     <Menu style={{ width: "650px", padding: "25px" }}>
@@ -126,6 +144,7 @@ const Navbar = () => {
 
   return (
     <div
+      ref={searchRef}
       className="w-full flex items-center justify-center "
       style={{ borderBottom: "1px solid #f0f0f0" }}
     >
@@ -179,11 +198,12 @@ const Navbar = () => {
 
           {/* Right section - User actions */}
           <div className="flex items-center gap-3 md:gap-4">
-            <p
-              onClick={() => setSearchbarVisible(!isSearchbarVisible)}
-              className="flex lg:hidden items-center gap-1 cursor-pointer"
-            >
-              <Search size={20} strokeWidth={1.5} />
+            <p className="flex lg:hidden items-center gap-1 cursor-pointer">
+              <Search
+                size={20}
+                strokeWidth={1.5}
+                onClick={() => setSearchbarVisible(!isSearchbarVisible)}
+              />
             </p>
 
             {user && (
@@ -289,7 +309,7 @@ const Navbar = () => {
 
         {/* search field for small screen */}
         {isSearchbarVisible && (
-          <div className="absolute left-0 z-50 w-full">
+          <div ref={searchRef} className="absolute left-0 z-50 w-full">
             <div className="flex lg:hidden items-center gap-4 px-4 py-1 bg-white relative">
               <Search
                 size={20}
