@@ -176,12 +176,12 @@ const Inbox = () => {
   };
 
   return (
-    <div className=" py-[50px]  bg-[#FDFDFD]">
-      <div className="container mt-4 ">
+    <div className=" lg:py-[50px] py-[20px]  bg-[#FDFDFD]">
+      <div className="container mt-4">
         <div className="grid grid-cols-12 gap-4">
           {/* Message List */}
           <div
-            className={`lg:col-span-4 col-span-12 bg-white  rounded-xl px-2 py-4 ${
+            className={`lg:col-span-4 col-span-12 bg-white  rounded-xl px-2 py-4   overflow-y-auto ${
               isChatVisible ? "hidden lg:block" : ""
             }`}
             style={{
@@ -216,7 +216,7 @@ const Inbox = () => {
               </p>
             </div>
 
-            <div className="flex flex-col gap-1 h-[calc(80vh)] overflow-y-scroll no-scrollbar">
+            <div className="flex flex-col gap-1 lg:h-auto h-[calc(82vh)] overflow-y-scroll no-scrollbar">
               {messageList.map((value: TMessageList, index) => (
                 <div key={index} onClick={() => handleMessage(value)}>
                   <div
@@ -258,9 +258,9 @@ const Inbox = () => {
               zIndex: 10,
             }}
           >
-            <section>
+            <section className="lg:h-[calc(60vh)] h-auto">
               {/* header */}
-              <div>
+              <div className="h-auto">
                 <div className="flex items-center justify-between lg:gap-8 gap-0 lg:p-4  border-b border-[#DCDCDC] ">
                   <div className=" lg:w-full flex flex-col lg:flex-row lg:items-center  justify-between ">
                     <div className="flex items-center lg:justify-center gap-2">
@@ -349,10 +349,10 @@ const Inbox = () => {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-end gap-x-4">
+                  <div className="flex items-center justify-between lg:justify-end gap-x-4">
                     <div onClick={() => setOpen(true)}>
                       {" "}
-                      <OutlineButton className="!px-6 lg:text-sm text-[12px] uppercase">
+                      <OutlineButton className="!px-4 lg:text-sm text-[12px] uppercase w-full">
                         Make an offer
                       </OutlineButton>{" "}
                     </div>
@@ -360,7 +360,7 @@ const Inbox = () => {
                     <Link href={"/order"}>
                       {" "}
                       <Popover content=" Changed your mind? Head to the item page to release it for someone else to re-wear.">
-                        <button className=" h-12  bg-primary text-white font-normal rounded-full  transition-all duration-300 hover:bg-[#D04555]  !px-6 lg:text-sm text-[12px] uppercase">
+                        <button className=" h-12  bg-primary text-white font-normal rounded-full  transition-all duration-300 hover:bg-[#D04555]  !px-4 lg:text-sm text-[12px] uppercase">
                           Reserve Now
                         </button>{" "}
                       </Popover>
@@ -371,7 +371,7 @@ const Inbox = () => {
 
               <div className="bg-white w-full rounded-lg relative">
                 {/* Chat messages */}
-                <div className="py-6 lg:px-8 px-3 h-[calc(70vh)] overflow-y-scroll no-scrollbar pb-16">
+                <div className="py-6 lg:px-8 px-3 lg:h-[calc(60vh)] h-[calc(55vh)] overflow-y-scroll no-scrollbar pb-16">
                   {messageContent.map((value, index) => (
                     <div
                       key={index}
