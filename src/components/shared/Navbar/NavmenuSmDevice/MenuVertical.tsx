@@ -79,7 +79,7 @@ export default function Navbar() {
                             >
                               <Link
                                 href={"/product-details"}
-                                className="text-[#797979]"
+                                className="text-[#797979] focus:text-primary active:text-primary"
                               >
                                 {sub}
                               </Link>
