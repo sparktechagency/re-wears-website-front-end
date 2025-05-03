@@ -75,11 +75,11 @@ export default function Navbar() {
                           {category.subcategories.map((sub, subIndex) => (
                             <li
                               key={subIndex}
-                              className="cursor-pointer hover:text-gray-600 focus::text-primary"
+                              className="cursor-pointer hover:text-primary focus:text-primary active:text-primary focus-visible:text-primary"
                             >
                               <Link
                                 href={"/product-details"}
-                                className="text-[#797979] focus:text-primary active:text-primary"
+                                className="text-[#797979] hover:text-primary focus:text-primary focus-visible:text-primary active:text-primary visited:text-[#797979] focus:outline-none"
                               >
                                 {sub}
                               </Link>
