@@ -1,4 +1,4 @@
-import icon1 from "@/assets/icons/help-center/getting-started.svg";
+// import icon1 from "@/assets/icons/help-center/getting-started.svg";
 import icon2 from "@/assets/icons/help-center/selling.svg";
 import icon3 from "@/assets/icons/help-center/buying.svg";
 import icon4 from "@/assets/icons/help-center/shipping.svg";
@@ -11,19 +11,10 @@ import Link from "next/link";
 const Home = () => {
   return (
     <div>
-      <h1 className="text-2xl lg:text-3xl font-bold py-4">General topics</h1>
+      <h1 className="hidden lg:block text-2xl lg:text-3xl font-bold py-4"></h1>
 
       {/* topics card container */}
       <section className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        <div className="grid justify-center text-center gap-4 p-10 shadow-smooth rounded-xl">
-          <figure className="flex justify-center">
-            <Image src={icon1} alt="icon" width={63} height={63} className="" />
-          </figure>
-          <Link href={`/help-center/getting-started`} className="underline">
-            Getting Started
-          </Link>
-        </div>
-
         <div className="grid justify-center text-center gap-4 p-10 shadow-smooth rounded-xl">
           <figure className="flex justify-center">
             <Image src={icon2} alt="icon" width={63} height={63} className="" />

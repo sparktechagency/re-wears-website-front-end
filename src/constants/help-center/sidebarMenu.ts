@@ -4,10 +4,6 @@ export const sidebarMenus = [
     path: "home",
   },
   {
-    title: "Getting Started",
-    path: "getting-started",
-  },
-  {
     title: "Selling",
     path: "selling",
   },
