@@ -11,57 +11,55 @@ import { RxHeartFilled } from "react-icons/rx";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdWatchLater } from "react-icons/md";
 
-const ProductDetails = () => { 
-  const [open, setOpen] = useState(false); 
+const ProductDetails = () => {
+  const [open, setOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   return (
     <div className="container">
       {/* category breadcumb */}
-      <section className=" "> 
-      <div className=" no-scrollbar  overflow-x-auto whitespace-nowrap"> 
-  <div className="flex items-center gap-2 w-full py-6"> 
-    <p className="flex items-center gap-2"> 
-      <Link href={"/"} className="link !font-normal">
-        Home
-      </Link>
-      <Minus className="text-primary" />
-    </p>
+      <section className=" ">
+        <div className=" no-scrollbar  overflow-x-auto whitespace-nowrap">
+          <div className="flex items-center gap-2 w-full py-6">
+            <p className="flex items-center gap-2">
+              <Link href={"/"} className="link !font-normal">
+                Home
+              </Link>
+              <Minus className="text-primary" />
+            </p>
 
-    <p className="flex items-center gap-2"> 
-      <Link href={""} className="link !font-normal">
-        Women
-      </Link>
-      <Minus className="text-primary" />
-    </p>
+            <p className="flex items-center gap-2">
+              <Link href={""} className="link !font-normal">
+                Women
+              </Link>
+              <Minus className="text-primary" />
+            </p>
 
-    <p className="flex items-center gap-2"> 
-      <Link href={""} className="link !font-normal">
-        Clothing
-      </Link>
-      <Minus className="text-primary" />
-    </p>
+            <p className="flex items-center gap-2">
+              <Link href={""} className="link !font-normal">
+                Clothing
+              </Link>
+              <Minus className="text-primary" />
+            </p>
 
-    <p className="flex items-center gap-2"> 
-      <Link href={""} className="link !font-normal">
-        Dresses
-      </Link>
-      <Minus className="text-primary" />
-    </p>
+            <p className="flex items-center gap-2">
+              <Link href={""} className="link !font-normal">
+                Dresses
+              </Link>
+              <Minus className="text-primary" />
+            </p>
 
-    <p className="flex items-center gap-2"> 
-      <Link href={""} className="link !font-normal  w-full">
-        Little pink dresses
-      </Link>
-      <Minus className="text-primary" />
-    </p>
+            <p className="flex items-center gap-2">
+              <Link href={""} className="link !font-normal  w-full">
+                Little pink dresses
+              </Link>
+              <Minus className="text-primary" />
+            </p>
 
-    <p className="flex items-center gap-2"> 
-      <Link href={""}>
-        Forever 21 Little pink dresses
-      </Link>
-    </p>
-  </div>
-</div>
+            <p className="flex items-center gap-2">
+              <Link href={""}>Forever 21 Little pink dresses</Link>
+            </p>
+          </div>
+        </div>
       </section>
 
       <section className="flex flex-col lg:flex-row justify-between gap-6 pb-4">
@@ -171,12 +169,18 @@ const ProductDetails = () => {
             </div>
             <div className="grid gap-2">
               <p className="flex items-center gap-2 ">
-              <span>  <HiLocationMarker size={20} color="#9d977a" /> </span>  <span> Colonian
-              Beach, VA, United States </span> 
+                <span>
+                  {" "}
+                  <HiLocationMarker size={20} color="#9d977a" />{" "}
+                </span>{" "}
+                <span> Colonian Beach, VA, United States </span>
               </p>
               <p className="flex items-center gap-2 ">
-             <span>  <MdWatchLater size={20} color="#9d977a" /> </span>  <span> Last seen 10
-             hours ago  </span>  
+                <span>
+                  {" "}
+                  <MdWatchLater size={20} color="#9d977a" />{" "}
+                </span>{" "}
+                <span> Last seen 10 hours ago </span>
               </p>
             </div>
           </div>
