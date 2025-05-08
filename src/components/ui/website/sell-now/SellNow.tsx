@@ -308,72 +308,67 @@ const SellNow = () => {
         <Form layout="vertical">
           {/* Image Upload */}
 
-          <div className="card ">
-            <p className="text-[16px] font-normal text-secondary pb-2">
-              {" "}
-              Add up to 5 photos.{" "}
-            </p>
-            <div
-              className="p-3 border border-[#DCDCDC] rounded-md bg-[#f5f5f5] flex flex-col items-center justify-center"
-              style={{ height: "150px" }}
-            >
-              <Upload className="text-center">
-                <div className="flex flex-col items-center text-primary">
-                  <UploadOutlined
-                    className="text-4xl mb-2"
-                    style={{ color: "#9d977a" }}
-                  />
-                  <p className="font-bold text-[14px]">
-                    Select your photo to upload
-                  </p>
-                  <p className="text-[12px] font-normal ">
-                    or drag and drop them here
-                  </p>
+          <div className="card grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
+            <div className="h-full flex flex-col">
+              <p className="text-[16px] font-normal text-secondary pb-2">
+                Add up to 5 photos.
+              </p>
+              <div className="flex-1 p-3 border border-[#DCDCDC] rounded-md bg-[#f5f5f5] flex flex-col items-center justify-center">
+                <Upload className="text-center">
+                  <div className="flex flex-col items-center text-primary">
+                    <UploadOutlined
+                      className="text-4xl mb-2"
+                      style={{ color: "#9d977a" }}
+                    />
+                    <p className="font-bold text-[14px]">
+                      Select your photo to upload
+                    </p>
+                    <p className="text-[12px] font-normal ">
+                      or drag and drop them here
+                    </p>
+                  </div>
+                </Upload>
+              </div>
+            </div>
+            <div className="mt-5">
+              <div className="grid gap-4 border-b pb-2 border-[#DCDCDC]">
+                <div className=" text-[16px] font-bold  text-secondary">
+                  Product name
                 </div>
-              </Upload>
-            </div>
-          </div>
-
-          <div className=" card mt-5">
-            <div className="grid-between gap-4 border-b border-[#DCDCDC]">
-              <div className=" text-[16px] font-bold  text-secondary">
-                {" "}
-                Title{" "}
+                <Form.Item name="title" className="">
+                  <Input
+                    placeholder="e.g. Black Zara jeans"
+                    className="rounded-full "
+                    style={{
+                      width: "100%",
+                      height: "55px",
+                      borderRadius: "60px",
+                      fontSize: "16px",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  />
+                </Form.Item>
               </div>
-              <Form.Item name="title" className="">
-                <Input
-                  placeholder="e.g. Black Zara jeans"
-                  className="rounded-full "
-                  style={{
-                    width: "100%",
-                    height: "55px",
-                    borderRadius: "60px",
-                    fontSize: "16px",
-                    backgroundColor: "#f5f5f5",
-                  }}
-                />
-              </Form.Item>
-            </div>
 
-            <div className="grid-between gap-4 pt-5 ">
-              <div className=" text-[16px] font-bold  text-secondary">
-                {" "}
-                Describe your item{" "}
+              <div className="grid gap-4 pt-4 ">
+                <div className=" text-[16px] font-bold  text-secondary">
+                  Product description
+                </div>
+                <Form.Item name="description" className="">
+                  <TextArea
+                    placeholder="e.g. still with tags, true to size"
+                    rows={4}
+                    className="rounded-full "
+                    style={{
+                      width: "100%",
+                      borderRadius: "20px",
+                      resize: "none",
+                      padding: "10px",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                  />
+                </Form.Item>
               </div>
-              <Form.Item name="description" className="">
-                <TextArea
-                  placeholder="e.g. still with tags, true to size"
-                  rows={4}
-                  className="rounded-full "
-                  style={{
-                    width: "100%",
-                    borderRadius: "20px",
-                    resize: "none",
-                    padding: "10px",
-                    backgroundColor: "#f5f5f5",
-                  }}
-                />
-              </Form.Item>
             </div>
           </div>
 
