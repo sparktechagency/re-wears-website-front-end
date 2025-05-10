@@ -4,7 +4,7 @@ const SaferyAndReportingPage = () => {
   return (
     <div>
       <section className="flex items-center gap-6">
-        <BackButton className="lg:hidden" />
+        <BackButton />
         <h1 className="text-2xl lg:text-3xl font-bold py-4">
           Safety & reporting
         </h1>
