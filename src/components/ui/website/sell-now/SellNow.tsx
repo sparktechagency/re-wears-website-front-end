@@ -300,8 +300,7 @@ const SellNow = () => {
   return (
     <div className="container pt-[50px] pb-[100px]">
       <p className=" text-[25px] text-secondary  text-center font-bold pb-6  ">
-        {" "}
-        Sell an item{" "}
+        List your item
       </p>
 
       <div className="  rounded-lg">
@@ -377,8 +376,7 @@ const SellNow = () => {
           <div className="card mt-5">
             <div className="grid-between ">
               <div className=" text-[16px] font-bold  text-secondary">
-                {" "}
-                Category{" "}
+                Select a category
               </div>
               <Form.Item name="category" className="">
                 <ConfigProvider
@@ -409,8 +407,7 @@ const SellNow = () => {
               <div>
                 <div className="grid-between  pt-4  border-y border-[#DCDCDC]">
                   <div className=" text-[16px] font-bold  text-secondary">
-                    {" "}
-                    Brand{" "}
+                    Name a brand
                   </div>
                   <Form.Item name="brand" className="">
                     <ConfigProvider
@@ -442,8 +439,7 @@ const SellNow = () => {
 
                 <div className="grid-between  pt-4  border-b border-[#DCDCDC]">
                   <div className=" text-[16px] font-bold  text-secondary">
-                    {" "}
-                    Size{" "}
+                    Pick the size
                   </div>
                   <Form.Item name="size" className="">
                     <ConfigProvider
@@ -475,8 +471,7 @@ const SellNow = () => {
 
                 <div className="grid-between  pt-4  border-b border-[#DCDCDC]">
                   <div className=" text-[16px] font-bold  text-secondary">
-                    {" "}
-                    Condition{" "}
+                    Identify the condition
                   </div>
                   <Form.Item name="Condition" className="">
                     <ConfigProvider
@@ -508,8 +503,7 @@ const SellNow = () => {
 
                 <div className="grid-between  pt-4  border-b border-[#DCDCDC]">
                   <div className=" text-[16px] font-bold  text-secondary">
-                    {" "}
-                    Colors{" "}
+                    Choose colors
                   </div>
                   <Form.Item name="Colors" className="">
                     <ConfigProvider
@@ -549,7 +543,7 @@ const SellNow = () => {
 
                 <div className="grid-between  pt-4  ">
                   <div className=" text-[16px] font-bold  text-secondary">
-                    Material (recommended)
+                    Specify the material (recommended)
                   </div>
                   <Form.Item name="Material (recommended)" className="">
                     <ConfigProvider
@@ -586,7 +580,7 @@ const SellNow = () => {
           <div className="card mt-5">
             <div className="grid-between ">
               <div className=" text-[16px] font-bold  text-secondary">
-                Price
+                Set your price
               </div>
               <Form.Item name="price" className="">
                 <Input
