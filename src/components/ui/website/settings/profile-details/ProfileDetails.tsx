@@ -1,6 +1,12 @@
 "use client";
 
 import FillButton from "@/components/shared/FillButton";
+import Input from "@/components/shared/Input";
+import OutlineButton from "@/components/shared/OutlineButton";
+import Select from "@/components/shared/Select";
+import { ConfigProvider, Switch } from "antd";
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 const locations = [
@@ -32,9 +38,11 @@ const ProfileDetails = () => {
     <div className="">
       <form onSubmit={handleSubmit} className="grid gap-6">
         <h1 className="md:hidden text-xl font-bold">Profile Details</h1>
+
+        {/* photo */}
         <section className="bg-white p-8 rounded-xl shadow-smooth">
           {/* image input */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 justify-between">
+          <div className="grid-between items-center">
             <label className="font-bold py-2">Your photo</label>
             <div className="flex justify-end items-center gap-4">
               {/* Image Preview */}
@@ -61,10 +69,9 @@ const ProfileDetails = () => {
               </label>
             </div>
           </div>
-          <hr className="my-4" />
 
           {/* about input */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 justify-between">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 justify-between">
             <label className="font-bold py-2">About you</label>
             <textarea
               rows={4}
@@ -72,6 +79,43 @@ const ProfileDetails = () => {
               className="bg-[#F5F5F5] border-2 border-[#DCDCDC] rounded-3xl p-4 w-full"
               style={{ resize: "none" }}
             />
+          </div> */}
+        </section>
+
+        <section className="card">
+          <div className="grid-between items-center">
+            <label className="font-bold py-2">Full Name</label>
+            <Input placeholder="Your name" />
+          </div>
+          <hr className="my-4" />
+          <div className="grid-between items-center">
+            <label className="font-bold py-2">Gender</label>
+            <Select placeholder="Select gender" options={["Male", "Female"]} />
+          </div>
+          <hr className="my-4" />
+          <div className="grid-between items-center">
+            <label className="font-bold py-2">Birthday</label>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <Input placeholder="Day" />
+              <Select
+                placeholder="Month"
+                options={[
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December",
+                ]}
+              />
+              <Input placeholder="Year" />
+            </div>
           </div>
         </section>
 
@@ -103,6 +147,55 @@ const ProfileDetails = () => {
             </select>
           </div>
         </section>
+
+        {/* Vacation mode */}
+        <section className="card flex justify-between items-center gap-2">
+          <label className="font-bold py-2">Vacation mode</label>
+          <ConfigProvider
+            theme={{
+              token: {
+                colorTextQuaternary: "#f3e7d8",
+                colorText: "#f3e7d8",
+                colorPrimary: "#f3e7d8",
+                colorPrimaryHover: "#f3e7d8",
+                colorTextTertiary: "#f3e7d8",
+                colorTextLightSolid: "#9D977A",
+              },
+              components: {
+                Switch: {
+                  handleBg: "#9D977A",
+                  trackPadding: 5,
+                  trackHeight: 28,
+                  trackMinWidth: 52,
+                },
+              },
+            }}
+          >
+            <Switch />
+          </ConfigProvider>
+        </section>
+        {/* Google */}
+        {/* <section className="card flex justify-between items-center gap-2">
+        <label className="font-bold py-2">Google</label>
+        <OutlineButton>Linked</OutlineButton>
+      </section> */}
+        {/* Change password */}
+        <section className="card flex justify-between items-center gap-2">
+          <label className="font-bold py-2">Change password</label>
+          <Link href={`/change-password`}>
+            <OutlineButton>Change</OutlineButton>
+          </Link>
+        </section>
+        {/* Delete my account */}
+        <section className="card flex justify-between items-center gap-2">
+          <label className="font-bold py-2">Delete my account</label>
+          <Link href={`/settings/account-settings/delete-account`}>
+            <button>
+              <ChevronRight />
+            </button>
+          </Link>
+        </section>
+
         <section className="flex justify-end">
           <FillButton className="w-full md:w-auto uppercase">
             Update profile
