@@ -43,7 +43,7 @@ const UserDropdown = () => {
                 Profile
               </li>
             </Link>
-            <Link href="/settings/account-settings" onClick={handleItemClick}>
+            <Link href="/settings/profile-details" onClick={handleItemClick}>
               <li className="p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer">
                 Settings
               </li>

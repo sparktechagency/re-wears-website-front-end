@@ -96,7 +96,7 @@ const ProfileHeader = () => {
             <IoMail size={20} /> Message
           </OutlineButton>
           <FillButton>Follow</FillButton> */}
-          <Link href={"/settings/account-settings"}>
+          <Link href={"/settings/profile-details"}>
             <OutlineButton className="flex justify-center items-center gap-2">
               <Pencil size={20} /> Edit Profile
             </OutlineButton>
