@@ -1,9 +1,11 @@
 "use client";
 
+import { myFetch } from "@/helpers/myFetch";
 import { Checkbox, ConfigProvider, Form, Input } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 interface ValuesType {
   firstName: string;
@@ -16,16 +18,29 @@ const Register: React.FC = () => {
   const router = useRouter();
 
   const onFinish = async (values: ValuesType) => {
-    console.log(values);
-    localStorage.setItem("userType", "register");
-    router.push(`/verify-otp?email=${values.email}`);
+    toast.loading("Loading...", { id: "sign-up" });
+    try {
+      const res = await myFetch("/users/create-user", {
+        method: "POST",
+        body: { ...values, role: "USER" },
+      });
+      if (res?.success) {
+        toast.success("Account created successfully!", { id: "sign-up" });
+        router.push(`/verify-otp?email=${values.email}`);
+      } else {
+        toast.error(res?.message || "Something went wrong!", {
+          id: "sign-up",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="w-full">
       <p className="text-[14px] font-normal text-center pb-4 ">
-        {" "}
-        or Register with your Email{" "}
+        or Register with your Email
       </p>
       <ConfigProvider
         theme={{
