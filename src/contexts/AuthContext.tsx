@@ -6,7 +6,7 @@ import { setCookie, deleteCookie } from "cookies-next";
 // Define the context type
 interface AuthContextType {
   user: string | null;
-  setUser: (user: string | null) => void;
+  setUser: (_: string | null) => void;
   logout: () => void;
 }
 

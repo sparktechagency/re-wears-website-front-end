@@ -4,18 +4,32 @@ import { Checkbox, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
-import { useAuthContext } from "@/contexts/AuthContext";
+import toast from "react-hot-toast";
+import { myFetch } from "@/helpers/myFetch";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
 
-  const { setUser } = useAuthContext();
-
   // submit handler
   const onFinish = async (values: { email: string; password: string }) => {
-    setUser(values.email);
-    router.push("/");
+    toast.loading("Pending...", { id: "login" });
+    try {
+      const res = await myFetch("/auth/login", {
+        method: "POST",
+        body: values,
+      });
+      if (res.success) {
+        toast.success("Login successful", { id: "login" });
+        Cookies.set("accessToken", res?.data?.accessToken);
+        Cookies.set("refreshToken", res?.data?.refreshToken);
+        router.push("/");
+      }
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.data?.message || "Failed to login", { id: "login" });
+    }
   };
 
   return (

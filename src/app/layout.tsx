@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import { ConfigProvider } from "antd";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { cookies } from "next/headers";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
@@ -37,6 +38,7 @@ export default function RootLayout({
             <AuthProvider initialUser={user}>{children}</AuthProvider>
           </ConfigProvider>
         </AntdRegistry>
+        <Toaster />
       </body>
     </html>
   );
