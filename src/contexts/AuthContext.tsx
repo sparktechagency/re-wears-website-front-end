@@ -33,7 +33,11 @@ export const AuthProvider = ({
   };
 
   // Function to clear user state and cookies
-  const logout = () => setUser(null);
+  const logout = () => {
+    setUser(null);
+    deleteCookie("accessToken");
+    deleteCookie("refreshToken");
+  };
 
   return (
     <AuthContext.Provider value={{ user, setUser, logout }}>
