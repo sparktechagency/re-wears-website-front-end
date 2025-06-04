@@ -1,28 +1,38 @@
 "use client";
+import { myFetch } from "@/helpers/myFetch";
 import { Button, Form } from "antd";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
 import OTPInput from "react-otp-input";
 
 const VerifyOtp = () => {
   const router = useRouter();
   const [otp, setOtp] = useState<string>("");
-  const [email, setEmail] = useState<string | null>("");
 
-  useEffect(() => {
-    const emailFromQuery = new URLSearchParams(window.location.search).get(
-      "email"
-    );
-    setEmail(emailFromQuery);
-  }, []);
+  const email = new URLSearchParams(location.search).get("email");
+  const userType = localStorage.getItem("userType");
 
-  const onFinish = async (values: { otp: string }) => {
-    const userType = localStorage.getItem("userType");
-    console.log(values);
-    if (userType === "forget") {
-      router.push(`/reset-password`);
-    } else {
-      router.push(`/complete-registration`);
+  const onFinish = async () => {
+    toast.loading("Verifying...", { id: "otp-verify" });
+    try {
+      const res = await myFetch("/auth/verify-otp", {
+        method: "POST",
+        body: { email: email, oneTimeCode: otp },
+      });
+      if (res.success) {
+        toast.success("OTP verified successfully", { id: "otp-verify" });
+        // redirect based on flow
+        if (userType === "forgot-password") {
+          router.push(`/reset-password?token=${res.data}`);
+        } else {
+          router.push(`/complete-registration?token=${res.data}`);
+        }
+      } else {
+        toast.error(res?.message || "Failed to verify", { id: "otp-verify" });
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -48,7 +58,7 @@ const VerifyOtp = () => {
           <OTPInput
             value={otp}
             onChange={setOtp}
-            numInputs={5}
+            numInputs={6}
             inputStyle={{
               height: 60,
               width: 60,
@@ -76,7 +86,7 @@ const VerifyOtp = () => {
               background: "#9D977A",
               color: "white",
               borderRadius: "60px",
-              fontFamily: "poppins", 
+              fontFamily: "poppins",
               fontSize: "16px",
             }}
             className="uppercase tracking-wider"

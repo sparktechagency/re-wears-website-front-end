@@ -1,16 +1,34 @@
 "use client";
+import { myFetch } from "@/helpers/myFetch";
 import { Form, Input } from "antd";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 import { GoDotFill } from "react-icons/go";
 
 const ResendCode = () => {
   const router = useRouter();
 
-  const onFinish = async () => {
-    router.push(`/verify-otp`);
+  const onFinish = async (values: any) => {
+    toast.loading("Sending...", { id: "resend-code" });
+    try {
+      const res = await myFetch("/auth/resend-otp", {
+        method: "POST",
+        body: values,
+      });
+      if (res?.success) {
+        toast.success("Code sent successfully", { id: "resend-code" });
+        router.push(`/verify-otp?email=${values?.email}`);
+      } else {
+        toast.error(res?.message || "Failed to send code", {
+          id: "resend-code",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -66,7 +84,7 @@ const ResendCode = () => {
         onFinish={onFinish}
         style={{ fontFamily: "poppins" }}
       >
-        <Form.Item name="email">
+        <Form.Item name="email" rules={[{ required: true }, { type: "email" }]}>
           <Input
             placeholder={`Enter email`}
             style={{
