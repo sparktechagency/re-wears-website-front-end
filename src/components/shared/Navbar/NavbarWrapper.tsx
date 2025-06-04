@@ -2,7 +2,7 @@ import { myFetch } from "@/helpers/myFetch";
 import Navbar from "./Navbar";
 
 const NavbarWrapper = async () => {
-  const res = await myFetch("/users/profile");
+  const res = await myFetch("/users/profile", { tags: ["profile"] });
 
   return (
     <>

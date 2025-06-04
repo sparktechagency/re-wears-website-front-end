@@ -1,6 +1,7 @@
 "use client";
 
 interface InputProps {
+  name?: string;
   className?: string;
   type?: string;
   placeholder?: string;
@@ -11,6 +12,7 @@ interface InputProps {
 }
 
 const Input = ({
+  name,
   className,
   type,
   placeholder,
@@ -21,6 +23,7 @@ const Input = ({
 }: InputProps) => {
   return (
     <input
+      name={name}
       required={required}
       type={type}
       value={value}
