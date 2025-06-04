@@ -1,17 +1,36 @@
 "use client";
+import { myFetch } from "@/helpers/myFetch";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
   const router = useRouter();
+  const token = new URLSearchParams(window.location.search).get("token");
 
   const onFinish = async (values: {
     newPassword: string;
     confirmPassword: string;
   }) => {
-    console.log(values);
-    router.push(`/confirm-change-password`);
+    toast.loading("Processing...", { id: "reset-password" });
+    try {
+      const res = await myFetch("/auth/reset-password", {
+        method: "POST",
+        body: values,
+        token: token as string,
+      });
+      if (res.success) {
+        toast.success("Password reset successfully", { id: "reset-password" });
+        router.push(`/confirm-change-password`);
+      } else {
+        toast.error(res.message || "Failed to reset password", {
+          id: "reset-password",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
