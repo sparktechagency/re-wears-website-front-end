@@ -26,6 +26,7 @@ const Register: React.FC = () => {
       });
       if (res?.success) {
         toast.success("Account created successfully!", { id: "sign-up" });
+        localStorage.setItem("userType", "complete-registration");
         router.push(`/verify-otp?email=${values.email}`);
       } else {
         toast.error(res?.message || "Something went wrong!", {
