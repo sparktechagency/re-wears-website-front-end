@@ -48,7 +48,7 @@ const VerifyOtp = () => {
           <OTPInput
             value={otp}
             onChange={setOtp}
-            numInputs={5}
+            numInputs={6}
             inputStyle={{
               height: 60,
               width: 60,
