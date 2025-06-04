@@ -13,7 +13,6 @@ import Notifications from "./Notifications";
 import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
-import { useAuthContext } from "@/contexts/AuthContext";
 
 const items: MenuProps["items"] = [
   {
@@ -69,7 +68,7 @@ const categories: Categories = {
   },
 };
 
-const Navbar = () => {
+const Navbar = ({ profile }: { profile: any }) => {
   const [isSearchbarVisible, setSearchbarVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
@@ -77,8 +76,6 @@ const Navbar = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
     "All"
   );
-
-  const { user } = useAuthContext();
 
   // Close search bar when clicking outside
   useEffect(() => {
@@ -161,7 +158,7 @@ const Navbar = () => {
           {/* Left section - Search */}
           <div
             className={`hidden lg:flex items-center gap-4 relative ${
-              !user ? "min-w-[270px]" : "min-w-[280px] "
+              !profile ? "min-w-[270px]" : "min-w-[280px] "
             }`}
           >
             <Search
@@ -206,7 +203,7 @@ const Navbar = () => {
               />
             </p>
 
-            {user && (
+            {profile && (
               <p className=" flex items-center gap-1 cursor-pointer">
                 <Dropdown
                   menu={{ items }}
@@ -218,48 +215,45 @@ const Navbar = () => {
               </p>
             )}
 
-            {user && (
+            {profile && (
               <Link
                 href={"/inbox"}
                 className=" flex items-center gap-1 cursor-pointer"
               >
-                {" "}
                 <span>
-                  <Mail size={20} strokeWidth={1.5} />{" "}
-                </span>{" "}
-              </Link>
-            )}
-
-            {!user && (
-              <Link
-                href={`/login`}
-                className=" flex items-center gap-1 cursor-pointer"
-              >
-                {" "}
-                <span>
-                  <UserRound size={20} strokeWidth={1.5} />{" "}
-                </span>{" "}
-                <span className="hidden lg:block text-sm text-secondary">
-                  Log In | Sign Up{" "}
+                  <Mail size={20} strokeWidth={1.5} />
                 </span>
               </Link>
             )}
 
-            {user && (
+            {!profile && (
+              <Link
+                href={`/login`}
+                className=" flex items-center gap-1 cursor-pointer"
+              >
+                <span>
+                  <UserRound size={20} strokeWidth={1.5} />
+                </span>
+                <span className="hidden lg:block text-sm text-secondary">
+                  Log In | Sign Up
+                </span>
+              </Link>
+            )}
+
+            {profile && (
               // <span className="hidden lg:block text-sm">Wishlist</span>
               <Link
                 href={"/wishlist"}
                 className=" flex items-center gap-1 cursor-pointer"
               >
-                {" "}
                 <span>
-                  <Heart size={20} strokeWidth={1.5} />{" "}
-                </span>{" "}
+                  <Heart size={20} strokeWidth={1.5} />
+                </span>
               </Link>
             )}
 
             {/* user avater */}
-            {user && <UserDropdown />}
+            {profile && <UserDropdown profile={profile || null} />}
 
             <Link href={"/sell-now"} className="hidden lg:block">
               <FillButton className="px-6 text-sm">SELL NOW</FillButton>
