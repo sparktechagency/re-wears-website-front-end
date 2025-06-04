@@ -1,10 +1,12 @@
 "use client";
 
+import { config } from "@/config/env-config";
 import { useAuthContext } from "@/contexts/AuthContext";
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const UserDropdown = () => {
+const UserDropdown = ({ profile }: { profile: any }) => {
   const [isVisible, setIsVisible] = useState(false);
   const { logout } = useAuthContext();
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -29,12 +31,19 @@ const UserDropdown = () => {
 
   return (
     <section className="font-poppins relative" ref={dropdownRef}>
-      <div
+      <Image
+        src={
+          profile?.image?.includes("http")
+            ? profile?.image
+            : `${config.IMAGE_URL}${profile?.image}`
+        }
+        alt="profile-img"
+        width={60}
+        height={60}
+        className="rounded-full cursor-pointer"
         onClick={() => setIsVisible(!isVisible)}
-        className="size-8 lg:size-12 flex justify-center items-center bg-[#465A63] text-white lg:text-lg font-semibold lg:font-bold rounded-full border cursor-pointer"
-      >
-        M
-      </div>
+      />
+
       {isVisible && (
         <div className="absolute right-0 bg-white p-4 w-40 rounded-lg shadow-smooth z-50">
           <ul>
