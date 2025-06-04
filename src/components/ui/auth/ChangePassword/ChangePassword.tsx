@@ -1,17 +1,40 @@
 "use client";
+import { useAuthContext } from "@/contexts/AuthContext";
+import { myFetch } from "@/helpers/myFetch";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 import React from "react";
+import toast from "react-hot-toast";
 
 const ChangePassword = () => {
   const router = useRouter();
+  const { logout } = useAuthContext();
 
   const onFinish = async (values: {
     newPassword: string;
     confirmPassword: string;
   }) => {
-    console.log(values);
-    router.push(`/confirm-change-password`);
+    toast.loading("Updating...", { id: "change-password" });
+    try {
+      const res = await myFetch("/auth/change-password", {
+        method: "POST",
+        body: values,
+      });
+      console.log(res);
+      if (res?.success) {
+        toast.success(res?.message || "Password updated successfully", {
+          id: "change-password",
+        });
+        router.push(`/confirm-change-password`);
+        logout();
+      } else {
+        toast.error(res?.message || "Something went wrong", {
+          id: "change-password",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

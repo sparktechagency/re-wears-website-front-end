@@ -46,11 +46,6 @@ const ProfileDetails = ({ profile }: { profile: TUser }) => {
       formData.set("image", file);
     }
 
-    // Log all FormData entries
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-
     toast.loading("Updating profile...", { id: "update-profile" });
     try {
       const res = await myFetch("/users/update-profile", {
