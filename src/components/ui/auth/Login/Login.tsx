@@ -25,10 +25,11 @@ const Login = () => {
         Cookies.set("accessToken", res?.data?.accessToken);
         Cookies.set("refreshToken", res?.data?.refreshToken);
         router.push("/");
+      } else {
+        toast.error(res?.message || "Failed to login", { id: "login" });
       }
     } catch (error: any) {
       console.error(error);
-      toast.error(error?.data?.message || "Failed to login", { id: "login" });
     }
   };
 
