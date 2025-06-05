@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Breadcrumb, Cascader, ConfigProvider, Pagination, Select } from "antd";
 import React from "react";
 import productsData from "@/data/products.json";
@@ -39,7 +38,15 @@ const options = Object.entries(categories).map(([category, items]) => ({
   children: items.map((item) => ({ value: item, label: item })),
 }));
 
-const Products = () => {
+const Products = ({
+  data = [],
+  meta,
+  filters,
+}: {
+  data: any;
+  meta?: any;
+  filters?: any;
+}) => {
   const renderSelect = (
     placeholder: keyof typeof selectOptions,
     mode?: "multiple"
@@ -97,7 +104,7 @@ const Products = () => {
         <section className="">
           <h1 className="text-[14px] font-normal text-start">500+ results.</h1>
           <div className="  my-5 grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {productsData.map((item) => (
+            {data.map((item: any) => (
               <ProductCard key={item.id} product={item} />
             ))}
           </div>
