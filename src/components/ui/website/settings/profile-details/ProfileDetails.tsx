@@ -4,6 +4,7 @@ import FillButton from "@/components/shared/FillButton";
 import Input from "@/components/shared/Input";
 import OutlineButton from "@/components/shared/OutlineButton";
 import Select from "@/components/shared/Select";
+import { TUser } from "@/types/TUser";
 import { ConfigProvider, Switch } from "antd";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -19,7 +20,8 @@ const locations = [
   "Fujairah, UAE",
 ];
 
-const ProfileDetails = () => {
+const ProfileDetails = ({ profile }: { profile: TUser }) => {
+  console.log(profile);
   const [image, setImage] = useState<string | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<string>("");
 

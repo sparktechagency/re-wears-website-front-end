@@ -4,21 +4,10 @@ import { useState, useEffect } from "react";
 import { Collapse } from "antd";
 import navData from "./MenuData"; // Importing dynamic nav data
 import Link from "next/link";
-import { myFetch } from "@/helpers/myFetch";
 const { Panel } = Collapse;
 export default function Navbar() {
-  const [categoriesData, setCategoriesData] = useState<object | null>(null);
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activePanel, setActivePanel] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const res: object = await myFetch("/category", {cache: 'no-store'});
-      console.log(res)
-      setCategoriesData(res);
-    };
-    fetchCategories();
-  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

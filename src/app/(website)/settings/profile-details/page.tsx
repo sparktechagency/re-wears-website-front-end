@@ -1,9 +1,12 @@
 import ProfileDetails from "@/components/ui/website/settings/profile-details/ProfileDetails";
+import { myFetch } from "@/helpers/myFetch";
 
-const ProfileDetailsPage = () => {
+const ProfileDetailsPage = async () => {
+  const res = await myFetch("/users/profile");
+
   return (
     <div>
-      <ProfileDetails />
+      <ProfileDetails profile={res?.data} />
     </div>
   );
 };
