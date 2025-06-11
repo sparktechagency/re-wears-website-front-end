@@ -5,10 +5,6 @@ import { useEffect, useRef, useState } from "react";
 import { Menu, Dropdown, MenuProps } from "antd";
 import Link from "next/link";
 import Image from "next/image";
-import { FaTshirt } from "react-icons/fa";
-import { TbGridDots } from "react-icons/tb";
-import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from "react-icons/gi";
-import { SlHandbag } from "react-icons/sl";
 import { Bell, Heart, Mail, Search, UserRound, XIcon } from "lucide-react";
 import Notifications from "./Notifications";
 import FillButton from "../FillButton";
@@ -111,10 +107,10 @@ const Navbar = ({
   const singleCategories = categoriesRes?.filter(
     (item) => item?.name?.toLowerCase() === selectedCategory
   );
-console.log(singleCategories)
   // Close search bar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      setSelectedSubCategory(null);
       if (
         searchRef.current &&
         !searchRef.current.contains(event.target as Node)
@@ -134,20 +130,6 @@ console.log(singleCategories)
       <div className="grid grid-cols-6 gap-3">
         {/* Categories List */}
         <div className="col-span-2 border-e border-gray-300">
-          {/* {Object.entries(singleCategories?.subCategories).map((item) => (
-            <div
-              key={item}
-              onClick={() => setSelectedSubCategory(item)}
-              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
-                selectedSubCategory === item?.name
-                  ? " text-black font-bold"
-                  : "text-primary"
-              }`}
-            >
-              {icon}
-              {item}
-            </div>
-          ))} */}
           {singleCategories?.[0]?.subCategories?.map((sub: SubCategory) => (
             <div
               key={sub._id}
@@ -177,48 +159,18 @@ console.log(singleCategories)
           ))}
         </div>
 
-        {/* <div className="col-span-2 border-e border-gray-300">
-          {Object.entries(categoriesRes).map((category: any) => (
-            <div
-              key={category?._id}
-              onClick={() => setSelectedCategory(category?._id)}
-              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
-                selectedCategory === category?._id
-                  ? " text-black font-bold"
-                  : "text-primary"
-              }`}
-            >
-              {category?.subCategories?.icon &&
-                (category?.subCategories?.icon?.startsWith("https") ? (
-                  <Image
-                    src={category?.subCategories?.icon}
-                    alt="subCategory Image"
-                  />
-                ) : (
-                  <Image
-                    src={`${config.IMAGE_URL}${category?.subCategories?.icon}`}
-                    alt="subCategory Image"
-                  />
-                ))}
-              {category?._id}
-            </div>
-          ))}
-        </div> */}
-
-
-
         {/* Items List (Only visible if a category is selected) */}
         <div className="col-span-4 ps-2 pe-6">
-          {singleCategories &&
-          (singleCategories as any)?.subCategories?.length > 0 ? (
+          {selectedSubCategory &&
+          (selectedSubCategory as any)?.childSubCategories?.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
-              {(singleCategories as any)?.[0]?.subCategories?.map((item: string) => (
-                <div key={item} className="py-1">
+              {selectedSubCategory?.childSubCategories?.map((item) => (
+                <div key={item._id} className="py-1">
                   <Link
                     href="/products"
-                    className="text-[#797979] hover:text-primary "
+                    className="text-[#797979] hover:text-primary"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </div>
               ))}
@@ -406,7 +358,7 @@ console.log(singleCategories)
 
         {/* menu for small screen */}
         <div className="lg:hidden">
-          <MenuVertical />
+          <MenuVertical categoriesRes={categoriesRes as any} />
         </div>
 
         {/* search field for small screen */}

@@ -1,11 +1,29 @@
 "use client";
-
+import { config } from "@/config/env-config";
 import { useState, useEffect } from "react";
 import { Collapse } from "antd";
-import navData from "./MenuData"; // Importing dynamic nav data
 import Link from "next/link";
+import Image from "next/image";
+
 const { Panel } = Collapse;
-export default function Navbar() {
+
+export default function Navbar({
+  categoriesRes,
+}: {
+  categoriesRes: Array<{
+    _id: string;
+    name: string;
+    subCategories: Array<{
+      _id: string;
+      name: string;
+      icon: string;
+      childSubCategories: Array<{
+        _id: string;
+        name: string;
+      }>;
+    }>;
+  }>;
+}) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activePanel, setActivePanel] = useState<string | null>(null);
 
@@ -21,65 +39,73 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className="">
+    <nav>
       <div className="flex justify-center items-center gap-2 p-4 py-2 text-sm font-medium relative">
-        {navData.map((navItem) => (
-          <div key={navItem.name} className="menu-item">
-            {/* Category Button */}
+        {categoriesRes.map((category) => (
+          <div key={category._id} className="menu-item">
+            {/* Main Category Button */}
             <button
               onClick={() =>
                 setActiveCategory(
-                  activeCategory === navItem.name ? null : navItem.name
+                  activeCategory === category.name ? null : category.name
                 )
               }
               className="relative cursor-pointer flex items-center px-3 pb-2 transition-all"
             >
-              {navItem.name}
-              {/* Custom Bottom Border */}
+              {category.name}
               <span
                 className={`absolute bottom-0 left-0 right-0 h-[4px] bg-[#B0A67D] transition-all ${
-                  activeCategory === navItem.name
+                  activeCategory === category.name
                     ? "scale-x-100 rounded-t-lg"
                     : "scale-x-0"
                 }`}
-              ></span>
+              />
             </button>
 
             {/* Dropdown Menu */}
-            {activeCategory === navItem.name && (
-              <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[80vw] bg-gray-50 rounded-lg p-4 z-40">
+            {activeCategory === category.name && (
+              <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-[80vw] bg-gray-50 rounded-lg p-4 z-40 shadow-md">
                 <Collapse
-                  accordion // Ensure only one panel is open at a time
-                  activeKey={activePanel || undefined} // Track active panel
-                  onChange={(key) => setActivePanel(key as unknown as string)}
+                  accordion
+                  activeKey={activePanel || undefined}
+                  onChange={(key) => setActivePanel(key as any)}
                   ghost
                 >
-                  {navItem.categories.map((category, index) => (
+                  {category.subCategories.map((subCategory) => (
                     <Panel
                       header={
                         <div className="flex items-center gap-2">
-                          <span className="text-primary">{category.icon}</span>{" "}
-                          {/* Dynamic Icon */}
-                          <span className={`font-medium text-[#797979]`}>
-                            {category.title}
+                          <Image
+                            width={16}
+                            height={16}
+                            src={
+                              subCategory?.icon
+                                ? subCategory.icon.includes("http")
+                                  ? subCategory.icon
+                                  : `${config?.IMAGE_URL}${subCategory.icon}`
+                                : "/placeholder.svg"
+                            }
+                            alt={subCategory.name || "subcategory"}
+                            className="w-4 h-4 object-contain"
+                            unoptimized
+                          />
+                          <span className="font-medium text-[#797979]">
+                            {subCategory.name}
                           </span>
                         </div>
                       }
-                      key={String(index)}
+                      key={subCategory._id}
                       style={{ fontFamily: "poppins" }}
                     >
-                      {category.subcategories.length > 0 ? (
-                        <ul className="space-y-4 pl-4 text-[13px] text-[#797979]">
-                          {category.subcategories.map((sub, subIndex) => (
-                            <li
-                              key={subIndex}
-                              className="cursor-pointer hover:text-primary focus:text-primary active:text-primary focus-visible:text-primary"
-                            >
+                      {subCategory.childSubCategories.length > 0 ? (
+                        <ul className="space-y-4 pl-4 text-[13px] !text-[#797979] sub-category">
+                          {subCategory.childSubCategories.map((child) => (
+                            <li key={child._id}>
                               <Link
-                                href={"/product-details"}
-                                className="text-[#797979] hover:text-primary focus:text-primary focus-visible:text-primary active:text-primary visited:text-[#797979] focus:outline-none"
+                                href={`/products?category=${category._id}&sub=${subCategory._id}&child=${child._id}`}
+                                className="hover:text-primary !text-[#797979]"
                               >
-                                {sub}
+                                {child.name}
                               </Link>
                             </li>
                           ))}
