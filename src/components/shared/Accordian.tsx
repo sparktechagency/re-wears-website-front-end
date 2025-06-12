@@ -9,7 +9,7 @@ import { ChevronDown, } from "lucide-react";
 const Accordian = ({ title, text }: { title: string; text: string }) => {
   const { token } = theme.useToken();
 
-  const getItems: (panelStyle: CSSProperties) => CollapseProps["items"] = (
+  const getItems: (_: CSSProperties) => CollapseProps["items"] = (
     panelStyle
   ) => [
     {

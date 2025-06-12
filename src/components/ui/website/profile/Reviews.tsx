@@ -2,9 +2,7 @@
 
 import Label from "@/components/shared/Label";
 import OutlineButton from "@/components/shared/OutlineButton";
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Rate } from "antd";
-import Image from "next/image";
 import { useState } from "react";
 import { FaCircleUser } from "react-icons/fa6";
 

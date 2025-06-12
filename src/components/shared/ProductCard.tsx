@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
 import { config } from "@/config/env-config";
-import { TProduct } from "@/types/TProduct";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +8,6 @@ import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
 const ProductCard = ({ product }: { product: any }) => {
-  console.log(product);
   const [isFavorite, setIsFavorite] = useState(false);
   return (
     <div className="rounded-xl border">
@@ -28,32 +26,33 @@ const ProductCard = ({ product }: { product: any }) => {
           <span> {isFavorite ? 8 + 1 : 8}</span>
         </button>
         <Link href={"/product-details"}>
-          {/* <img
+          <Image
             src={`${config.IMAGE_URL}${product?.productImage[0]}`}
             alt="img"
+            width={250}
+            height={300}
             className="rounded-t-xl w-full object-cover"
             style={{ aspectRatio: "12/14" }}
-          /> */}
+          />
         </Link>
       </figure>
       <Link href={"/product-details"}>
         <div className="grid gap-1 p-4 ">
           <h3 className="font-bold">${product?.price}</h3>
-          {/* <p className="flex items-center gap-1 text-primary text-sm">
-            ${product.price + product.vat} incl. <ShieldCheck size={20} />
-          </p> */}
           <p className="text-sm">{product?.size?.name}</p>
           <h4 className="font-bold">{product?.name}</h4>
         </div>
         <div className="flex items-center gap-3 bg-[#F5F5F5] p-2 px-4 rounded-b-xl">
-          {/* <Image
+          <Image
             src={product.user.image}
             alt="image"
             width={30}
             height={30}
             className="rounded-full size-8"
-          /> */}
-          {/* <h5>{product.user.username}</h5> */}
+          />
+          <h5>
+            {product.user.firstName} {product.user.lastName}
+          </h5>
         </div>
       </Link>
     </div>
