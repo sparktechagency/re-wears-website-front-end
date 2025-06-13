@@ -39,7 +39,7 @@ const Products = ({
   sizes = [],
   brands = [],
   colors = [],
-  metarials = [],
+  materials = [],
 }: {
   data: any;
   meta?: any;
@@ -47,7 +47,7 @@ const Products = ({
   sizes?: any;
   brands?: any;
   colors?: any;
-  metarials?: any;
+  materials?: any;
 }) => {
   const updateSearchParams = useUpdateSearchParams();
 
@@ -144,7 +144,7 @@ const Products = ({
               style={{ width: "100%", height: "35px" }}
               showSearch
             >
-              {metarials?.map((item: any) => (
+              {materials?.map((item: any) => (
                 <Select.Option key={item?.name} value={item?.name}>
                   {item?.name}
                 </Select.Option>

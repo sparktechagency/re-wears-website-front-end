@@ -68,7 +68,7 @@ const categories: Categories = {
   },
 };
 
-const Navbar = ({ profile }: { profile: any }) => {
+const Navbar = ({ profile }: { profile?: any }) => {
   const [isSearchbarVisible, setSearchbarVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);

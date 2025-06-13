@@ -2,7 +2,7 @@ import Products from "@/components/ui/website/products/Products";
 import { myFetch } from "@/helpers/myFetch";
 
 const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
-  const { searchTerm, page, category, size, brand, colors, metarial, sortBy } =
+  const { searchTerm, page, category, size, brand, colors, material, sortBy } =
     await searchParams;
   // Build query parameters for the backend request
   const queryParams = new URLSearchParams({
@@ -12,7 +12,7 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
     ...(size && { size }),
     ...(brand && { brand }),
     ...(colors && { colors }),
-    ...(metarial && { metarial }),
+    ...(material && { material }),
     ...(sortBy && { sortBy }),
   });
 
@@ -46,13 +46,13 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
         size,
         brand,
         colors,
-        metarial,
+        material,
         sortBy,
       }}
       sizes={sizesData?.data}
       brands={brandsData?.data}
       colors={colorsData?.data}
-      metarials={materialsData?.data}
+      materials={materialsData?.data}
     />
   );
 };
