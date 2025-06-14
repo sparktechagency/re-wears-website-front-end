@@ -91,8 +91,6 @@ const Navbar = ({
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
 
-  console.log(categoriesData);
-
   // Close search bar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
