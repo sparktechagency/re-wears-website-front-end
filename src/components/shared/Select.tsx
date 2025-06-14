@@ -3,8 +3,9 @@
 import { ChevronDown } from "lucide-react";
 
 interface SelectProps {
+  name?: string;
   className?: string;
-  options: string[] | number[];
+  options: { label: string; value: string }[];
   placeholder?: string;
   defaultValue?: string | number;
   value?: string | number;
@@ -12,6 +13,7 @@ interface SelectProps {
 }
 
 const Select = ({
+  name,
   className,
   options,
   placeholder,
@@ -22,6 +24,7 @@ const Select = ({
   return (
     <div className="relative">
       <select
+        name={name}
         value={value}
         defaultValue={defaultValue}
         onChange={(e) => setValue && setValue(e.target.value)}
@@ -31,8 +34,8 @@ const Select = ({
           {placeholder}
         </option>
         {options.map((option, idx: number) => (
-          <option key={idx} value={option}>
-            {option}
+          <option key={idx} value={option.value}>
+            {option.label}
           </option>
         ))}
       </select>
