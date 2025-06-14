@@ -25,7 +25,7 @@ const ProductCard = ({ product }: { product: any }) => {
 
           <span> {isFavorite ? 8 + 1 : 8}</span>
         </button>
-        <Link href={"/product-details"}>
+        <Link href={`/product-details/${product?._id}`}>
           <Image
             src={`${config.IMAGE_URL}${product?.productImage[0]}`}
             alt="img"
@@ -36,7 +36,7 @@ const ProductCard = ({ product }: { product: any }) => {
           />
         </Link>
       </figure>
-      <Link href={"/product-details"}>
+      <Link href={`/product-details/${product?._id}`}>
         <div className="grid gap-1 p-4 ">
           <h3 className="font-bold">${product?.price}</h3>
           <p className="text-sm">{product?.size?.name}</p>

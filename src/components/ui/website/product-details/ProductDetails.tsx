@@ -11,7 +11,9 @@ import { RxHeartFilled } from "react-icons/rx";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdWatchLater } from "react-icons/md";
 
-const ProductDetails = () => {
+const ProductDetails = ({ product }: { product: any }) => {
+  console.log(product);
+  
   const [open, setOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   return (

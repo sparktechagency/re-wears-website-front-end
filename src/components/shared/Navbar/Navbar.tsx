@@ -33,52 +33,6 @@ type SubCategory = {
   childSubCategories: ChildSubCategory[];
 };
 
-// type Category = {
-//   _id: string;
-//   name: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   subCategories: SubCategory[];
-// };
-
-// const subCategories: SubCategories = {
-//   All: {
-//     icon: <TbGridDots color=" #9d977a" className="text-lg" />,
-//     items: [
-//       "Jeans",
-//       "Tops & T-Shirts",
-//       "Sweaters & Sweatshirts",
-//       "Shorts",
-//       "Sleepwear",
-//       "Skirts",
-//       "Suits & blazers",
-//       "Activewear",
-//       "Other men's clothing",
-//       "Jumpsuits & rompers",
-//     ],
-//   },
-//   Clothing: {
-//     icon: <FaTshirt color=" #9d977a" className="text-lg" />,
-//     items: ["Jackets", "Coats", "Parkas"],
-//   },
-//   Shoes: {
-//     icon: <GiConverseShoe color=" #9d977a" className="text-lg" />,
-//     items: ["Formal Suits", "Casual Blazers"],
-//   },
-//   Bags: {
-//     icon: <SlHandbag color=" #9d977a" className="text-lg" />,
-//     items: ["Chinos", "Dress Pants", "Joggers"],
-//   },
-//   Accessories: {
-//     icon: <GiDoubleNecklace color=" #9d977a" className="text-lg" />,
-//     items: ["Socks", "Boxers", "Briefs"],
-//   },
-//   Beauty: {
-//     icon: <GiLipstick color=" #9d977a" className="text-lg" />,
-//     items: ["Swim Shorts", "Swim Trunks"],
-//   },
-// };
-
 const Navbar = ({
   profile,
   categoriesData,
