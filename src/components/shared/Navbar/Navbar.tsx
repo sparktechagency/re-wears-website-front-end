@@ -4,15 +4,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, Dropdown, MenuProps } from "antd";
 import Link from "next/link";
-import { FaTshirt } from "react-icons/fa";
-import { TbGridDots } from "react-icons/tb";
-import { GiConverseShoe, GiDoubleNecklace, GiLipstick } from "react-icons/gi";
-import { SlHandbag } from "react-icons/sl";
+import Image from "next/image";
 import { Bell, Heart, Mail, Search, UserRound, XIcon } from "lucide-react";
 import Notifications from "./Notifications";
 import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
+import { config } from "@/config/env-config";
 
 const items: MenuProps["items"] = [
   {
@@ -21,65 +19,98 @@ const items: MenuProps["items"] = [
   },
 ];
 
-interface Category {
-  icon: JSX.Element;
-  items: string[];
+// interface SubCategory {
+//   icon: JSX.Element;
+//   items: string[];
+// }
+
+interface SubCategories {
+  [key: string]: SubCategory;
 }
 
-interface Categories {
-  [key: string]: Category;
-}
-
-const categories: Categories = {
-  All: {
-    icon: <TbGridDots color=" #9d977a" className="text-lg" />,
-    items: [
-      "Jeans",
-      "Tops & T-Shirts",
-      "Sweaters & Sweatshirts",
-      "Shorts",
-      "Sleepwear",
-      "Skirts",
-      "Suits & blazers",
-      "Activewear",
-      "Other men's clothing",
-      "Jumpsuits & rompers",
-    ],
-  },
-  Clothing: {
-    icon: <FaTshirt color=" #9d977a" className="text-lg" />,
-    items: ["Jackets", "Coats", "Parkas"],
-  },
-  Shoes: {
-    icon: <GiConverseShoe color=" #9d977a" className="text-lg" />,
-    items: ["Formal Suits", "Casual Blazers"],
-  },
-  Bags: {
-    icon: <SlHandbag color=" #9d977a" className="text-lg" />,
-    items: ["Chinos", "Dress Pants", "Joggers"],
-  },
-  Accessories: {
-    icon: <GiDoubleNecklace color=" #9d977a" className="text-lg" />,
-    items: ["Socks", "Boxers", "Briefs"],
-  },
-  Beauty: {
-    icon: <GiLipstick color=" #9d977a" className="text-lg" />,
-    items: ["Swim Shorts", "Swim Trunks"],
-  },
+type ChildSubCategory = {
+  _id: string;
+  name: string;
 };
 
-const Navbar = ({ profile }: { profile?: any }) => {
+type SubCategory = {
+  _id: string;
+  name: string;
+  icon: string;
+  childSubCategories: ChildSubCategory[];
+};
+
+// type Category = {
+//   _id: string;
+//   name: string;
+//   createdAt: string;
+//   updatedAt: string;
+//   subCategories: SubCategory[];
+// };
+
+// const subCategories: SubCategories = {
+//   All: {
+//     icon: <TbGridDots color=" #9d977a" className="text-lg" />,
+//     items: [
+//       "Jeans",
+//       "Tops & T-Shirts",
+//       "Sweaters & Sweatshirts",
+//       "Shorts",
+//       "Sleepwear",
+//       "Skirts",
+//       "Suits & blazers",
+//       "Activewear",
+//       "Other men's clothing",
+//       "Jumpsuits & rompers",
+//     ],
+//   },
+//   Clothing: {
+//     icon: <FaTshirt color=" #9d977a" className="text-lg" />,
+//     items: ["Jackets", "Coats", "Parkas"],
+//   },
+//   Shoes: {
+//     icon: <GiConverseShoe color=" #9d977a" className="text-lg" />,
+//     items: ["Formal Suits", "Casual Blazers"],
+//   },
+//   Bags: {
+//     icon: <SlHandbag color=" #9d977a" className="text-lg" />,
+//     items: ["Chinos", "Dress Pants", "Joggers"],
+//   },
+//   Accessories: {
+//     icon: <GiDoubleNecklace color=" #9d977a" className="text-lg" />,
+//     items: ["Socks", "Boxers", "Briefs"],
+//   },
+//   Beauty: {
+//     icon: <GiLipstick color=" #9d977a" className="text-lg" />,
+//     items: ["Swim Shorts", "Swim Trunks"],
+//   },
+// };
+
+const Navbar = ({
+  profile,
+  categoriesRes,
+}: {
+  profile: any;
+  categoriesRes: Array<{ name?: string; [key: string]: any }>;
+}) => {
   const [isSearchbarVisible, setSearchbarVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
-  const [selectedKey, setSelectedKey] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(
-    "All"
-  );
+  const [selectedCategory, setSelectedCategory] = useState("");
+  // const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
+  //   "All"
+  // );
+  const [selectedSubCategory, setSelectedSubCategory] =
+    useState<SubCategory | null>(null);
 
+  // Remove singleCategories state and useEffect, compute directly
+  const singleCategories = categoriesRes?.filter(
+    (item) => item?.name?.toLowerCase() === selectedCategory
+  );
   // Close search bar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
+      setSelectedSubCategory(null);
       if (
         searchRef.current &&
         !searchRef.current.contains(event.target as Node)
@@ -99,34 +130,47 @@ const Navbar = ({ profile }: { profile?: any }) => {
       <div className="grid grid-cols-6 gap-3">
         {/* Categories List */}
         <div className="col-span-2 border-e border-gray-300">
-          {Object.entries(categories).map(([category, { icon }]) => (
+          {singleCategories?.[0]?.subCategories?.map((sub: SubCategory) => (
             <div
-              key={category}
-              onClick={() => setSelectedCategory(category)}
+              key={sub._id}
+              onClick={() => setSelectedSubCategory(sub)}
               className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
-                selectedCategory === category
-                  ? " text-black font-bold"
+                selectedSubCategory?._id === sub?._id
+                  ? "text-black font-bold"
                   : "text-primary"
               }`}
             >
-              {icon}
-              {category}
+              <Image
+                width={16}
+                height={16}
+                src={
+                  sub?.icon
+                    ? sub.icon.includes("http")
+                      ? sub.icon
+                      : `${config?.IMAGE_URL}${sub.icon}`
+                    : "/placeholder.svg"
+                }
+                alt={sub.name || "subcategory"}
+                className="w-4 h-4 object-contain"
+                unoptimized
+              />
+              {sub.name}
             </div>
           ))}
         </div>
 
         {/* Items List (Only visible if a category is selected) */}
         <div className="col-span-4 ps-2 pe-6">
-          {selectedCategory &&
-          categories[selectedCategory]?.items?.length > 0 ? (
+          {selectedSubCategory &&
+          (selectedSubCategory as any)?.childSubCategories?.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-12 gap-y-3">
-              {categories[selectedCategory].items.map((item: string) => (
-                <div key={item} className="py-1">
+              {selectedSubCategory?.childSubCategories?.map((item) => (
+                <div key={item._id} className="py-1">
                   <Link
                     href="/products"
-                    className="text-[#797979] hover:text-primary "
+                    className="text-[#797979] hover:text-primary"
                   >
-                    {item}
+                    {item.name}
                   </Link>
                 </div>
               ))}
@@ -266,30 +310,46 @@ const Navbar = ({ profile }: { profile?: any }) => {
           <Menu
             className="flex items-center justify-center space-x-2"
             mode="horizontal"
-            selectedKeys={[selectedKey]}
+            selectedKeys={[selectedCategory]}
             style={{
               border: "none",
               background: "transparent",
             }}
-            onSelect={({ key }) => setSelectedKey(key as string)}
+            onSelect={({ key }) => setSelectedCategory(key as string)}
           >
             <Menu.Item key="women">
-              <Dropdown overlay={menuItems} placement="bottom">
+              <Dropdown
+                trigger={["click"]}
+                overlay={menuItems}
+                placement="bottom"
+              >
                 <span>WOMEN</span>
               </Dropdown>
             </Menu.Item>
             <Menu.Item key="men">
-              <Dropdown overlay={menuItems} placement="bottom">
+              <Dropdown
+                trigger={["click"]}
+                overlay={menuItems}
+                placement="bottom"
+              >
                 <span>MEN</span>
               </Dropdown>
             </Menu.Item>
             <Menu.Item key="kids">
-              <Dropdown overlay={menuItems} placement="bottom">
+              <Dropdown
+                trigger={["click"]}
+                overlay={menuItems}
+                placement="bottom"
+              >
                 <span>KIDS</span>
               </Dropdown>
             </Menu.Item>
             <Menu.Item key="beauty">
-              <Dropdown overlay={menuItems} placement="bottom">
+              <Dropdown
+                trigger={["click"]}
+                overlay={menuItems}
+                placement="bottom"
+              >
                 <span>BEAUTY/GROOMING</span>
               </Dropdown>
             </Menu.Item>
@@ -298,7 +358,7 @@ const Navbar = ({ profile }: { profile?: any }) => {
 
         {/* menu for small screen */}
         <div className="lg:hidden">
-          <MenuVertical />
+          <MenuVertical categoriesRes={categoriesRes as any} />
         </div>
 
         {/* search field for small screen */}
