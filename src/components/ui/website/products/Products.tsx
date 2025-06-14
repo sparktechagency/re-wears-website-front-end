@@ -36,6 +36,7 @@ const Products = ({
   data = [],
   meta,
   filters,
+  categories = [],
   sizes = [],
   brands = [],
   colors = [],
@@ -44,12 +45,14 @@ const Products = ({
   data: any;
   meta?: any;
   filters?: any;
+  categories?: any;
   sizes?: any;
   brands?: any;
   colors?: any;
   materials?: any;
 }) => {
   const updateSearchParams = useUpdateSearchParams();
+
 
   return (
     <div className="container pt-[30px] pb-[100px]">

@@ -23,6 +23,9 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
   const products = res?.data;
 
   // fetch filtering data
+  const categoryData = await myFetch("/category", {
+    tags: ["categories"],
+  });
   const sizesData = await myFetch("/type/list/size", {
     tags: ["sizes"],
   });
@@ -49,6 +52,7 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
         material,
         sortBy,
       }}
+      categories={categoryData?.data}
       sizes={sizesData?.data}
       brands={brandsData?.data}
       colors={colorsData?.data}
