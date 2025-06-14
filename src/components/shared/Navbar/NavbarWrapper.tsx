@@ -8,7 +8,7 @@ const NavbarWrapper = async () => {
 
   return (
     <>
-      <Navbar profile={res?.data} categoriesRes={categoriesRes?.data} />
+      <Navbar profile={res?.data} categoriesData={categoriesRes?.data} />
     </>
   );
 };

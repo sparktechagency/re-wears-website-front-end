@@ -19,15 +19,6 @@ const items: MenuProps["items"] = [
   },
 ];
 
-// interface SubCategory {
-//   icon: JSX.Element;
-//   items: string[];
-// }
-
-interface SubCategories {
-  [key: string]: SubCategory;
-}
-
 type ChildSubCategory = {
   _id: string;
   name: string;
@@ -88,29 +79,23 @@ type SubCategory = {
 
 const Navbar = ({
   profile,
-  categoriesRes,
+  categoriesData,
 }: {
   profile: any;
-  categoriesRes: Array<{ name?: string; [key: string]: any }>;
+  categoriesData: Array<{ name?: string; [key: string]: any }>;
 }) => {
   const [isSearchbarVisible, setSearchbarVisible] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState("");
-  // const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
-  //   "All"
-  // );
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
 
-  // Remove singleCategories state and useEffect, compute directly
-  const singleCategories = categoriesRes?.filter(
-    (item) => item?.name?.toLowerCase() === selectedCategory
-  );
+  console.log(categoriesData);
+
   // Close search bar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      setSelectedSubCategory(null);
       if (
         searchRef.current &&
         !searchRef.current.contains(event.target as Node)
@@ -128,38 +113,40 @@ const Navbar = ({
   const menuItems = (
     <Menu style={{ width: "650px", padding: "25px" }}>
       <div className="grid grid-cols-6 gap-3">
-        {/* Categories List */}
+        {/* sub Categories List */}
         <div className="col-span-2 border-e border-gray-300">
-          {singleCategories?.[0]?.subCategories?.map((sub: SubCategory) => (
-            <div
-              key={sub._id}
-              onClick={() => setSelectedSubCategory(sub)}
-              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
-                selectedSubCategory?._id === sub?._id
-                  ? "text-black font-bold"
-                  : "text-primary"
-              }`}
-            >
-              <Image
-                width={16}
-                height={16}
-                src={
-                  sub?.icon
-                    ? sub.icon.includes("http")
-                      ? sub.icon
-                      : `${config?.IMAGE_URL}${sub.icon}`
-                    : "/placeholder.svg"
-                }
-                alt={sub.name || "subcategory"}
-                className="w-4 h-4 object-contain"
-                unoptimized
-              />
-              {sub.name}
-            </div>
-          ))}
+          {categoriesData
+            ?.filter((item) => item?.name === selectedCategory)?.[0]
+            ?.subCategories?.map((sub: SubCategory) => (
+              <div
+                key={sub._id}
+                onClick={() => setSelectedSubCategory(sub)}
+                className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
+                  selectedSubCategory?._id === sub?._id
+                    ? "text-black font-bold"
+                    : "text-primary"
+                }`}
+              >
+                <Image
+                  width={16}
+                  height={16}
+                  src={
+                    sub?.icon
+                      ? sub.icon.includes("http")
+                        ? sub.icon
+                        : `${config?.IMAGE_URL}${sub.icon}`
+                      : "/placeholder.svg"
+                  }
+                  alt={sub.name || "subcategory"}
+                  className="w-4 h-4 object-contain"
+                  unoptimized
+                />
+                {sub.name}
+              </div>
+            ))}
         </div>
 
-        {/* Items List (Only visible if a category is selected) */}
+        {/* child sub categories List */}
         <div className="col-span-4 ps-2 pe-6">
           {selectedSubCategory &&
           (selectedSubCategory as any)?.childSubCategories?.length > 0 ? (
@@ -167,7 +154,7 @@ const Navbar = ({
               {selectedSubCategory?.childSubCategories?.map((item) => (
                 <div key={item._id} className="py-1">
                   <Link
-                    href="/products"
+                    href={`/products?category=${selectedCategory}&subCategory=${selectedSubCategory?.name}&childSubCategory=${item.name}`}
                     className="text-[#797979] hover:text-primary"
                   >
                     {item.name}
@@ -317,7 +304,7 @@ const Navbar = ({
             }}
             onSelect={({ key }) => setSelectedCategory(key as string)}
           >
-            <Menu.Item key="women">
+            <Menu.Item key="WOMEN">
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
@@ -326,7 +313,7 @@ const Navbar = ({
                 <span>WOMEN</span>
               </Dropdown>
             </Menu.Item>
-            <Menu.Item key="men">
+            <Menu.Item key="MEN">
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
@@ -335,7 +322,7 @@ const Navbar = ({
                 <span>MEN</span>
               </Dropdown>
             </Menu.Item>
-            <Menu.Item key="kids">
+            <Menu.Item key="KIDS">
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
@@ -344,7 +331,7 @@ const Navbar = ({
                 <span>KIDS</span>
               </Dropdown>
             </Menu.Item>
-            <Menu.Item key="beauty">
+            <Menu.Item key="BEAUTY">
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
@@ -358,7 +345,7 @@ const Navbar = ({
 
         {/* menu for small screen */}
         <div className="lg:hidden">
-          <MenuVertical categoriesRes={categoriesRes as any} />
+          <MenuVertical categoriesRes={categoriesData as any} />
         </div>
 
         {/* search field for small screen */}
