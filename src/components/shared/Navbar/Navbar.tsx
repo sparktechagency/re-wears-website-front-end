@@ -11,6 +11,8 @@ import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
 import { config } from "@/config/env-config";
+import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
+import { useGetSearchParams } from "@/helpers/getSearchParams";
 
 const items: MenuProps["items"] = [
   {
@@ -84,8 +86,9 @@ const Navbar = ({
   profile: any;
   categoriesData: Array<{ name?: string; [key: string]: any }>;
 }) => {
+  const { searchTerm } = useGetSearchParams();
+  const updateSearchParams = useUpdateSearchParams();
   const [isSearchbarVisible, setSearchbarVisible] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] =
@@ -197,6 +200,9 @@ const Navbar = ({
               className="absolute"
             />
             <input
+              onChange={(e) =>
+                updateSearchParams({ searchTerm: e.target.value })
+              }
               placeholder="Search for items"
               className="p-8 py-3 text-base placeholder:text-[#797979] focus:outline-none border-b border-black"
             />
@@ -358,13 +364,15 @@ const Navbar = ({
               />
               <input
                 placeholder="Search for items"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
+                value={searchTerm || ""}
+                onChange={(e) =>
+                  updateSearchParams({ searchTerm: e.target.value })
+                }
                 className="w-full p-8 py-3 text-base safari-only:text-base placeholder:text-[#797979] focus:outline-none border-b rounded-none border-black"
               />
-              {searchKeyword && (
+              {searchTerm && (
                 <XIcon
-                  onClick={() => setSearchKeyword("")}
+                  onClick={() => updateSearchParams({ searchTerm: null })}
                   className="text-[#797979] absolute right-3 top-2 z-50"
                 />
               )}
