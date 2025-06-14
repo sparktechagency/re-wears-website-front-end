@@ -2,16 +2,30 @@ import Products from "@/components/ui/website/products/Products";
 import { myFetch } from "@/helpers/myFetch";
 
 const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
-  const { searchTerm, page, category, size, brand, colors, material, sortBy } =
-    await searchParams;
+  const {
+    searchTerm,
+    page,
+    category,
+    subCategory,
+    childSubCategory,
+    size,
+    brand,
+    condition,
+    colors,
+    material,
+    sortBy,
+  } = await searchParams;
   // Build query parameters for the backend request
   const queryParams = new URLSearchParams({
     ...(searchTerm && { searchTerm }),
     ...(page && { page }),
     ...(category && { category }),
+    ...(subCategory && { subCategory }),
+    ...(childSubCategory && { childSubCategory }),
     ...(size && { size }),
     ...(brand && { brand }),
     ...(colors && { colors }),
+    ...(condition && { condition }),
     ...(material && { material }),
     ...(sortBy && { sortBy }),
   });
@@ -33,7 +47,7 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
     tags: ["brands"],
   });
   const materialsData = await myFetch("/type/list/material", {
-    tags: ["colors"],
+    tags: ["materials"],
   });
   const colorsData = await myFetch("/color", {
     tags: ["colors"],
@@ -46,8 +60,11 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
       filters={{
         searchTerm,
         category,
+        subCategory,
+        childSubCategory,
         size,
         brand,
+        condition,
         colors,
         material,
         sortBy,
