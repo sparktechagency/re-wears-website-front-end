@@ -2,6 +2,7 @@ import Closet from "@/components/ui/website/profile/Closet";
 import MyOrders from "@/components/ui/website/profile/MyOrders";
 import ProfileHeader from "@/components/ui/website/profile/ProfileHeader";
 import Reviews from "@/components/ui/website/profile/Reviews";
+import { myFetch } from "@/helpers/myFetch";
 import { ConfigProvider, Tabs, TabsProps } from "antd";
 
 const items: TabsProps["items"] = [
@@ -22,12 +23,14 @@ const items: TabsProps["items"] = [
   },
 ];
 
-const ProfilePage = () => {
+const ProfilePage = async () => {
+  const res = await myFetch("/users/profile");
+
   return (
     <div className="container my-12 grid gap-6">
       {/* profile header */}
       <section>
-        <ProfileHeader />
+        <ProfileHeader user={res.data} />
       </section>
 
       {/* profile content */}

@@ -303,7 +303,7 @@ const Navbar = ({
 
         {/* menu for small screen */}
         <div className="lg:hidden">
-          <MenuVertical categoriesRes={categoriesData as any} />
+          <MenuVertical categoriesData={categoriesData as any} />
         </div>
 
         {/* search field for small screen */}
