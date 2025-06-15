@@ -4,11 +4,13 @@ import { config } from "@/config/env-config";
 import { useAuthContext } from "@/contexts/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 const UserDropdown = ({ profile }: { profile: any }) => {
   const [isVisible, setIsVisible] = useState(false);
   const { logout } = useAuthContext();
+  const router = useRouter();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown when clicking outside
@@ -62,6 +64,7 @@ const UserDropdown = ({ profile }: { profile: any }) => {
               onClick={() => {
                 logout();
                 handleItemClick(); // Close dropdown on logout
+                router.push("/login");
               }}
               className="text-red-500 p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer"
             >
