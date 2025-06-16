@@ -4,614 +4,325 @@ import { UploadOutlined } from "@ant-design/icons";
 import OutlineButton from "@/components/shared/OutlineButton";
 import FillButton from "@/components/shared/FillButton";
 import { useState } from "react";
+import { conditions } from "@/constants/product/conditions";
+import toast from "react-hot-toast";
+import { myFetch } from "@/helpers/myFetch";
+import { revalidateTags } from "@/helpers/revalidateTags";
+
 const { TextArea } = Input;
 
-interface Option {
-  value: string;
-  label: string;
-  children?: Option[];
-}
+const SellNow = ({
+  categories = [],
+  brands = [],
+  sizes = [],
+  colors = [],
+  materials = [],
+}: {
+  categories: any;
+  brands: any;
+  sizes: any;
+  colors: any;
+  materials: any;
+}) => {
+  const [fileList, setFileList] = useState<any[]>([]);
+  const [form] = Form.useForm();
 
-const options: Option[] = [
-  {
-    value: "Men",
-    label: "Men",
-    children: [
-      {
-        value: "All",
-        label: "All",
-        children: [
-          {
-            value: "Jeans",
-            label: "Jeans",
-          },
-          {
-            value: "Tops & T-Shirts",
-            label: "Tops & T-Shirts",
-          },
-          {
-            value: "Sweaters & Sweatshirts",
-            label: "Sweaters & Sweatshirts",
-          },
-          {
-            value: "Shorts",
-            label: "Shorts",
-          },
-          {
-            value: "Sleepwear",
-            label: "Sleepwear",
-          },
-          {
-            value: "Skirts",
-            label: "Skirts",
-          },
-          {
-            value: "Suits & blazers",
-            label: "Suits & blazers",
-          },
-        ],
-      },
-      {
-        value: "Clothing",
-        label: "Clothing",
-        children: [
-          {
-            value: "Jackets",
-            label: "Jackets",
-          },
-          {
-            value: "Coats",
-            label: "Coats",
-          },
-          {
-            value: "Parkas",
-            label: "Parkas",
-          },
-        ],
-      },
-      {
-        value: "Shoes",
-        label: "Shoes",
-        children: [
-          {
-            value: "Sneaker",
-            label: "Sneaker",
-          },
-          {
-            value: "Slipper",
-            label: "Slipper",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "Women",
-    label: "Women",
-    children: [
-      {
-        value: "All",
-        label: "All",
-        children: [
-          {
-            value: "Jeans",
-            label: "Jeans",
-          },
-          {
-            value: "Tops & T-Shirts",
-            label: "Tops & T-Shirts",
-          },
-          {
-            value: "Sweaters & Sweatshirts",
-            label: "Sweaters & Sweatshirts",
-          },
-          {
-            value: "Shorts",
-            label: "Shorts",
-          },
-          {
-            value: "Sleepwear",
-            label: "Sleepwear",
-          },
-        ],
-      },
-      {
-        value: "Clothing",
-        label: "Clothing",
-        children: [
-          {
-            value: "Skirts",
-            label: "Skirts",
-          },
-          {
-            value: "Coats",
-            label: "Coats",
-          },
-          {
-            value: "Parkas",
-            label: "Parkas",
-          },
-        ],
-      },
-      {
-        value: "Shoes",
-        label: "Shoes",
-        children: [
-          {
-            value: "Sneaker",
-            label: "Sneaker",
-          },
-          {
-            value: "Slipper",
-            label: "Slipper",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "Kids",
-    label: "Kids",
-    children: [
-      {
-        value: "All",
-        label: "All",
-        children: [
-          {
-            value: "Jeans",
-            label: "Jeans",
-          },
-          {
-            value: "Tops & T-Shirts",
-            label: "Tops & T-Shirts",
-          },
-          {
-            value: "Sweaters & Sweatshirts",
-            label: "Sweaters & Sweatshirts",
-          },
-          {
-            value: "Shorts",
-            label: "Shorts",
-          },
-          {
-            value: "Sleepwear",
-            label: "Sleepwear",
-          },
-        ],
-      },
-      {
-        value: "Clothing",
-        label: "Clothing",
-        children: [
-          {
-            value: "Skirts",
-            label: "Skirts",
-          },
-          {
-            value: "Coats",
-            label: "Coats",
-          },
-          {
-            value: "Parkas",
-            label: "Parkas",
-          },
-        ],
-      },
-      {
-        value: "Shoes",
-        label: "Shoes",
-        children: [
-          {
-            value: "Sneaker",
-            label: "Sneaker",
-          },
-          {
-            value: "Slipper",
-            label: "Slipper",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: "Beauty/Grooming",
-    label: "Beauty/Grooming",
-    children: [
-      {
-        value: "All",
-        label: "All",
-        children: [
-          {
-            value: "Jeans",
-            label: "Jeans",
-          },
-          {
-            value: "Tops & T-Shirts",
-            label: "Tops & T-Shirts",
-          },
-          {
-            value: "Sweaters & Sweatshirts",
-            label: "Sweaters & Sweatshirts",
-          },
-          {
-            value: "Shorts",
-            label: "Shorts",
-          },
-          {
-            value: "Sleepwear",
-            label: "Sleepwear",
-          },
-        ],
-      },
-      {
-        value: "Clothing",
-        label: "Clothing",
-        children: [
-          {
-            value: "Skirts",
-            label: "Skirts",
-          },
-          {
-            value: "Coats",
-            label: "Coats",
-          },
-          {
-            value: "Parkas",
-            label: "Parkas",
-          },
-        ],
-      },
-      {
-        value: "Shoes",
-        label: "Shoes",
-        children: [
-          {
-            value: "Sneaker",
-            label: "Sneaker",
-          },
-          {
-            value: "Slipper",
-            label: "Slipper",
-          },
-        ],
-      },
-    ],
-  },
-];
+  const formatedCategories = categories?.map((category: any) => ({
+    value: category?._id,
+    label: category?.name,
+    children: category?.subCategories?.map((subCategory: any) => ({
+      value: subCategory?._id,
+      label: subCategory?.name,
+      children: subCategory?.childSubCategories?.map(
+        (childSubCategory: any) => ({
+          value: childSubCategory?._id,
+          label: childSubCategory?.name,
+        })
+      ),
+    })),
+  }));
 
-const SellNow = () => {
-  const [category, setCategory] = useState(false);
+  // handle submit
+  const handleSubmit = async (values: any) => {
+    toast.loading("Uploading...", { id: "create-product" });
+    const formData = new FormData();
+    // append images
+    if (values?.images)
+      values?.images?.fileList?.forEach((file: any) => {
+        formData.append("productImage", file?.originFileObj);
+      });
+    // append category
+    if (values?.category) {
+      formData.append(
+        "category",
+        JSON.stringify({
+          category: values?.category[0],
+          subCategory: values?.category[1],
+          childSubCategory: values?.category[2],
+        })
+      );
+    }
+    // append other fields
+    Object.entries(values).forEach(([key, value]) => {
+      if (key !== "images" && key !== "category") {
+        // Convert value to string for FormData
+        formData.append(
+          key,
+          typeof value === "object" ? JSON.stringify(value) : String(value)
+        );
+      }
+    });
 
-  // const options = Object.entries(categories).map(([category, { items }]) => ({
-  //   value: category,
-  //   label: category,
-  //   children: items.map((item) => ({
-  //     value: item,
-  //     label: item,
-  //   })),
-  // }));
-
-  const handleChange = (values: string[]) => {
-    if (values) {
-      setCategory(true);
+    // send data to server
+    try {
+      const res = await myFetch("/product/create", {
+        method: "POST",
+        body: formData,
+      });
+      if (res?.success) {
+        toast.success("Product uploaded successfully", {
+          id: "create-product",
+        });
+        form.resetFields();
+        revalidateTags(["products"]);
+      } else {
+        toast.error(res?.message || "Something went wrong", {
+          id: "create-product",
+        });
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
   return (
-    <div className="container pt-[50px] pb-[100px]">
-      <p className=" text-[25px] text-secondary  text-center font-bold pb-6  ">
-        List your item
-      </p>
+    <ConfigProvider
+      theme={{
+        token: {
+          borderRadius: 60,
+          colorBgBase: "#f5f5f5",
+          controlHeight: 55,
+          controlPaddingHorizontal: 16,
+        },
+        components: {
+          Select: {
+            multipleItemHeightSM: 14,
+          },
+        },
+      }}
+    >
+      <div className="container pt-[50px] pb-[100px]">
+        <p className="text-[25px] text-secondary text-center font-bold pb-6">
+          List your item
+        </p>
 
-      <div className="  rounded-lg">
-        <Form layout="vertical">
-          {/* Image Upload */}
+        <div className="rounded-lg">
+          <Form layout="vertical" onFinish={handleSubmit}>
+            <div className="card grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
+              {/* Upload */}
+              <div className="h-full flex flex-col">
+                <p className="text-[16px] font-normal text-secondary pb-2">
+                  Add up to 5 photos.
+                </p>
+                <div className="flex-1 p-3 border border-[#DCDCDC] rounded-md bg-[#f5f5f5] flex flex-col items-center justify-center">
+                  <Form.Item name="images" rules={[{ required: true }]}>
+                    <Upload
+                      accept=".png,.jpg,.jpeg,.webp"
+                      maxCount={5}
+                      multiple
+                      className="text-center grid justify-center gap-4"
+                      onChange={(info) => setFileList(info?.fileList)}
+                    >
+                      {fileList?.length < 5 && (
+                        <div className="flex flex-col justify-center items-center text-primary cursor-pointer">
+                          <UploadOutlined
+                            className="text-4xl mb-2"
+                            style={{ color: "#9d977a" }}
+                          />
+                          <p className="font-bold text-[14px]">
+                            Select your photo to upload
+                          </p>
+                          <p className="text-[12px] font-normal">
+                            or drag and drop them here
+                          </p>
+                        </div>
+                      )}
+                    </Upload>
+                  </Form.Item>
+                </div>
+              </div>
 
-          <div className="card grid grid-cols-1 lg:grid-cols-2 lg:gap-8">
-            <div className="h-full flex flex-col">
-              <p className="text-[16px] font-normal text-secondary pb-2">
-                Add up to 5 photos.
-              </p>
-              <div className="flex-1 p-3 border border-[#DCDCDC] rounded-md bg-[#f5f5f5] flex flex-col items-center justify-center">
-                <Upload className="text-center">
-                  <div className="flex flex-col items-center text-primary">
-                    <UploadOutlined
-                      className="text-4xl mb-2"
-                      style={{ color: "#9d977a" }}
+              {/* Title + Description */}
+              <div className="mt-5">
+                <div className="grid gap-4 border-b pb-2 border-[#DCDCDC]">
+                  <div className="text-[16px] font-bold text-secondary">
+                    Product name
+                  </div>
+                  <Form.Item name="name" rules={[{ required: true }]}>
+                    <Input
+                      placeholder="e.g. Black Zara jeans"
+                      className="rounded-full"
                     />
-                    <p className="font-bold text-[14px]">
-                      Select your photo to upload
-                    </p>
-                    <p className="text-[12px] font-normal ">
-                      or drag and drop them here
-                    </p>
+                  </Form.Item>
+                </div>
+
+                <div className="grid gap-4 pt-4 pb-2">
+                  <div className="text-[16px] font-bold text-secondary">
+                    Product description
                   </div>
-                </Upload>
+                  <Form.Item name="description" rules={[{ required: true }]}>
+                    <TextArea
+                      placeholder="e.g. still with tags, true to size"
+                      rows={4}
+                      style={{ resize: "none", borderRadius: "20px" }}
+                    />
+                  </Form.Item>
+                </div>
               </div>
             </div>
-            <div className="mt-5">
-              <div className="grid gap-4 border-b pb-2 border-[#DCDCDC]">
-                <div className=" text-[16px] font-bold  text-secondary">
-                  Product name
+
+            {/* Category */}
+            <div className="card mt-5">
+              <div className="grid-between items-center pb-2">
+                <div className="text-[16px] font-bold text-secondary">
+                  Select a category
                 </div>
-                <Form.Item name="title" className="">
-                  <Input
-                    placeholder="e.g. Black Zara jeans"
-                    className="rounded-full "
-                    style={{
-                      width: "100%",
-                      height: "55px",
-                      borderRadius: "60px",
-                      fontSize: "16px",
-                      backgroundColor: "#f5f5f5",
-                    }}
-                  />
-                </Form.Item>
-              </div>
-
-              <div className="grid gap-4 pt-4 ">
-                <div className=" text-[16px] font-bold  text-secondary">
-                  Product description
-                </div>
-                <Form.Item name="description" className="">
-                  <TextArea
-                    placeholder="e.g. still with tags, true to size"
-                    rows={4}
-                    className="rounded-full "
-                    style={{
-                      width: "100%",
-                      borderRadius: "20px",
-                      resize: "none",
-                      padding: "10px",
-                      backgroundColor: "#f5f5f5",
-                    }}
-                  />
-                </Form.Item>
-              </div>
-            </div>
-          </div>
-
-          {/* Category Dropdown */}
-
-          <div className="card mt-5">
-            <div className="grid-between ">
-              <div className=" text-[16px] font-bold  text-secondary">
-                Select a category
-              </div>
-              <Form.Item name="category" className="">
-                <ConfigProvider
-                  theme={{
-                    token: {
-                      borderRadius: 60,
-                      colorBgBase: "#f5f5f5",
-                    },
-                  }}
-                >
+                <Form.Item name="category" rules={[{ required: true }]}>
                   <Cascader
-                    options={options}
+                    options={formatedCategories}
                     placeholder="Choose a category"
-                    className="rounded-md"
-                    style={{
-                      height: "55px",
-                      backgroundColor: "#f5f5f5",
-                      borderRadius: "60px",
-                      width: "100%",
-                    }}
-                    onChange={handleChange}
+                    className="rounded-md w-full"
+                    style={{ borderRadius: "60px" }}
                   />
-                </ConfigProvider>
-              </Form.Item>
+                </Form.Item>
+              </div>
+
+              {/* Brand */}
+              <div className="grid-between items-center pt-4 pb-2 border-y border-[#DCDCDC]">
+                <div className="text-[16px] font-bold text-secondary">
+                  Name a brand
+                </div>
+                <Form.Item
+                  name="brand"
+                  rules={[{ required: true, message: "Please select a brand" }]}
+                >
+                  <Select
+                    placeholder="Pick a brand"
+                    options={brands?.map((brand: any) => ({
+                      value: brand?._id,
+                      label: brand?.name,
+                    }))}
+                    showSearch
+                    optionFilterProp="label"
+                    allowClear
+                  />
+                </Form.Item>
+              </div>
+
+              {/* Size */}
+              <div className="grid-between items-center pt-4 pb-2 border-b border-[#DCDCDC]">
+                <div className="text-[16px] font-bold text-secondary">
+                  Pick the size
+                </div>
+                <Form.Item name="size" rules={[{ required: true }]}>
+                  <Select
+                    placeholder="Select a size"
+                    options={sizes?.map((size: any) => ({
+                      value: size?._id,
+                      label: size?.name,
+                    }))}
+                    showSearch
+                    allowClear
+                  />
+                </Form.Item>
+              </div>
+
+              {/* Condition */}
+              <div className="grid-between items-center pt-4 pb-2 border-b border-[#DCDCDC]">
+                <div className="text-[16px] font-bold text-secondary">
+                  Identify the condition
+                </div>
+                <Form.Item name="condition" rules={[{ required: true }]}>
+                  <Select
+                    placeholder="Define the condition"
+                    options={conditions?.map((condition: any) => ({
+                      value: condition,
+                      label: condition,
+                    }))}
+                  />
+                </Form.Item>
+              </div>
+
+              {/* Colors */}
+              <div className="grid-between items-center pt-4 pb-2 border-b border-[#DCDCDC]">
+                <div className="text-[16px] font-bold text-secondary">
+                  Choose colors
+                </div>
+                <Form.Item name="Colors" rules={[{ required: true }]}>
+                  <Select
+                    mode="multiple"
+                    placeholder="Select colors"
+                    options={colors?.map((color: any) => ({
+                      value: color?._id,
+                      label: color?.name,
+                    }))}
+                  />
+                </Form.Item>
+              </div>
+
+              {/* Material */}
+              <div className="grid-between items-center pt-4">
+                <div className="text-[16px] font-bold text-secondary">
+                  Specify the material (recommended)
+                </div>
+                <Form.Item name="Material (recommended)">
+                  <Select
+                    placeholder="Choose material"
+                    options={materials?.map((material: any) => ({
+                      value: material?._id,
+                      label: material?.name,
+                    }))}
+                    allowClear
+                    showSearch
+                  />
+                </Form.Item>
+              </div>
             </div>
 
-            {category && (
-              <div>
-                <div className="grid-between  pt-4  border-y border-[#DCDCDC]">
-                  <div className=" text-[16px] font-bold  text-secondary">
-                    Name a brand
-                  </div>
-                  <Form.Item name="brand" className="">
-                    <ConfigProvider
-                      theme={{
-                        token: {
-                          borderRadius: 60,
-                          colorBgBase: "#f5f5f5",
-                        },
-                      }}
-                    >
-                      <Select
-                        placeholder="Pick a brand"
-                        style={{
-                          width: "100%",
-                          height: "55px",
-                          borderRadius: "60px",
-                          backgroundColor: "#f5f5f5",
-                        }}
-                        options={[
-                          { value: "brand1", label: "Brand 1" },
-                          { value: "brand2", label: "Brand 2" },
-                          { value: "brand3", label: "Brand 3" },
-                          { value: "brand4", label: "Brand 4" },
-                        ]}
-                      />
-                    </ConfigProvider>
-                  </Form.Item>
+            {/* Price */}
+            <div className="card mt-5">
+              <div className="grid-between items-center">
+                <div className="text-[16px] font-bold text-secondary">
+                  Set your price
                 </div>
-
-                <div className="grid-between  pt-4  border-b border-[#DCDCDC]">
-                  <div className=" text-[16px] font-bold  text-secondary">
-                    Pick the size
-                  </div>
-                  <Form.Item name="size" className="">
-                    <ConfigProvider
-                      theme={{
-                        token: {
-                          borderRadius: 60,
-                          colorBgBase: "#f5f5f5",
-                        },
-                      }}
-                    >
-                      <Select
-                        placeholder="Select a size"
-                        style={{
-                          width: "100%",
-                          height: "55px",
-                          borderRadius: "60px",
-                          backgroundColor: "#f5f5f5",
-                        }}
-                        options={[
-                          { value: "Size1", label: "Size 1" },
-                          { value: "Size2", label: "Size 2" },
-                          { value: "Size3", label: "Size 3" },
-                          { value: "Size4", label: "Size 4" },
-                        ]}
-                      />
-                    </ConfigProvider>
-                  </Form.Item>
-                </div>
-
-                <div className="grid-between  pt-4  border-b border-[#DCDCDC]">
-                  <div className=" text-[16px] font-bold  text-secondary">
-                    Identify the condition
-                  </div>
-                  <Form.Item name="Condition" className="">
-                    <ConfigProvider
-                      theme={{
-                        token: {
-                          borderRadius: 60,
-                          colorBgBase: "#f5f5f5",
-                        },
-                      }}
-                    >
-                      <Select
-                        placeholder="Define the condition"
-                        style={{
-                          width: "100%",
-                          height: "55px",
-                          borderRadius: "60px",
-                          backgroundColor: "#f5f5f5",
-                        }}
-                        options={[
-                          { value: "Condition1", label: "Condition 1" },
-                          { value: "Condition2", label: "Condition 2" },
-                          { value: "Condition3", label: "Condition 3" },
-                          { value: "Condition4", label: "Condition 4" },
-                        ]}
-                      />
-                    </ConfigProvider>
-                  </Form.Item>
-                </div>
-
-                <div className="grid-between  pt-4  border-b border-[#DCDCDC]">
-                  <div className=" text-[16px] font-bold  text-secondary">
-                    Choose colors
-                  </div>
-                  <Form.Item name="Colors" className="">
-                    <ConfigProvider
-                      theme={{
-                        components: {
-                          Select: {
-                            multipleItemHeightSM: 14,
-                          },
-                        },
-                        token: {
-                          borderRadius: 60,
-                          colorBgBase: "#f5f5f5",
-                          controlPaddingHorizontal: 16,
-                          controlHeight: 55,
-                          controlPaddingHorizontalSM: 16,
-                        },
-                      }}
-                    >
-                      <Select
-                        mode="multiple"
-                        placeholder="Select colors"
-                        style={{
-                          width: "100%",
-                          borderRadius: "60px",
-                          backgroundColor: "#f5f5f5",
-                        }}
-                        options={[
-                          { value: "red", label: "Red" },
-                          { value: "yellow", label: "Yellow" },
-                          { value: "Pink", label: "Pink" },
-                          { value: "Purple", label: "Purple" },
-                        ]}
-                      />
-                    </ConfigProvider>
-                  </Form.Item>
-                </div>
-
-                <div className="grid-between  pt-4  ">
-                  <div className=" text-[16px] font-bold  text-secondary">
-                    Specify the material (recommended)
-                  </div>
-                  <Form.Item name="Material (recommended)" className="">
-                    <ConfigProvider
-                      theme={{
-                        token: {
-                          borderRadius: 60,
-                          colorBgBase: "#f5f5f5",
-                        },
-                      }}
-                    >
-                      <Select
-                        placeholder="Choose material"
-                        style={{
-                          width: "100%",
-                          height: "55px",
-                          borderRadius: "60px",
-                          backgroundColor: "#f5f5f5",
-                        }}
-                        options={[
-                          { value: "Material 1", label: "Material  1" },
-                          { value: "Material 2", label: "Material  2" },
-                          { value: "Material 3", label: "Material  3" },
-                          { value: "Material 4", label: "Material  4" },
-                        ]}
-                      />
-                    </ConfigProvider>
-                  </Form.Item>
-                </div>
+                <Form.Item name="price" rules={[{ required: true }]}>
+                  <Input
+                    type="number"
+                    placeholder="0.00"
+                    className="rounded-full text-end customInput"
+                    style={{
+                      textAlign: "right",
+                      padding: "0 24px",
+                      fontSize: "16px",
+                      height: "56px",
+                    }}
+                    prefix={<span className=" font-medium">AED</span>}
+                  />
+                </Form.Item>
               </div>
-            )}
-          </div>
-
-          {/* Price Field */}
-          <div className="card mt-5">
-            <div className="grid-between ">
-              <div className=" text-[16px] font-bold  text-secondary">
-                Set your price
-              </div>
-              <Form.Item name="price" className="">
-                <Input
-                  type="number"
-                  placeholder="0.00"
-                  className="rounded-full text-end"
-                  style={{
-                    width: "100%",
-                    height: "55px",
-                    borderRadius: "60px",
-                    backgroundColor: "#f5f5f5",
-                    textAlign: "right",
-                    padding: "0 24px",
-                    fontSize: "16px",
-                  }}
-                />
-                <span className="absolute left-6 top-4 font-medium">AED</span>
-              </Form.Item>
             </div>
-          </div>
 
-          {/* Buttons */}
-          <div className="flex flex-col lg:flex-row justify-end gap-4 mt-8">
-            <OutlineButton className="w-full md:w-auto">
-              SAVE DRAFT
-            </OutlineButton>
-            <FillButton className="w-full md:w-auto"> UPLOAD </FillButton>
-          </div>
-        </Form>
+            {/* Buttons */}
+            <div className="flex flex-col lg:flex-row justify-end gap-4 mt-8">
+              <OutlineButton className="w-full md:w-auto">
+                SAVE DRAFT
+              </OutlineButton>
+              <FillButton className="w-full md:w-auto">UPLOAD</FillButton>
+            </div>
+          </Form>
+        </div>
       </div>
-    </div>
+    </ConfigProvider>
   );
 };
 
