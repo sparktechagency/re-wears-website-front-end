@@ -19,8 +19,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NavigationOptions } from "swiper/types";
 import productdata from "../../../../data/products.json";
 
-const ImageGallery = () => {
+const ImageGallery = ({ product }: { product: any }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+
+  console.log(product?.productImage);
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -39,6 +41,17 @@ const ImageGallery = () => {
         className="mySwiper !mx-0"
       >
         <div className="hidden lg:block">
+          {/* {product?.productImage?.map((image: any, idx: number) => (
+            <SwiperSlide key={idx} className="">
+              <Image
+                src={`${config.IMAGE_URL}${image}`}
+                alt="product image"
+                width={100}
+                height={100}
+                className="hidden lg:block rounded-xl w-32 h-36 object-cover"
+              />
+            </SwiperSlide>
+          ))} */}
           {productdata[0].images.map((item, idx) => (
             <SwiperSlide key={idx} className="">
               <img
@@ -71,6 +84,17 @@ const ImageGallery = () => {
           modules={[FreeMode, Navigation, Thumbs]}
           className="mySwiper2"
         >
+          {/* {product?.productImage?.map((image: any, idx: number) => (
+            <SwiperSlide key={idx}>
+              <Image
+                src={`${config.IMAGE_URL}${image}`}
+                alt="product image"
+                width={500}
+                height={500}
+                className="rounded-xl w-full"
+              />
+            </SwiperSlide>
+          ))} */}
           {productdata[0].images.map((item, idx) => (
             <SwiperSlide key={idx}>
               <img src={item} className="rounded-xl w-full" />

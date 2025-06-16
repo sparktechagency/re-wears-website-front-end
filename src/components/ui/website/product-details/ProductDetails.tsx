@@ -11,9 +11,12 @@ import { RxHeartFilled } from "react-icons/rx";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdWatchLater } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
+import Image from "next/image";
+import { config } from "@/config/env-config";
 
 const ProductDetails = ({ product }: { product: any }) => {
-  console.log(product);
+  const productData = product?.result;
+  console.log(productData);
 
   const [open, setOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -69,7 +72,7 @@ const ProductDetails = ({ product }: { product: any }) => {
         {/* left side content */}
         <section className="flex-1">
           <div className="card">
-            <ImageGallery />
+            <ImageGallery product={productData} />
           </div>
         </section>
 
@@ -77,31 +80,33 @@ const ProductDetails = ({ product }: { product: any }) => {
         <section className="max-w-md w-full grid gap-6">
           {/* product info */}
           <div className="grid gap-6 py-6 bg-white shadow-smooth rounded-xl">
-            <h1 className="text-2xl font-bold px-6">${product?.price}</h1>
+            <h1 className="text-2xl font-bold px-6">${productData?.price}</h1>
             <ul className="grid gap-1">
               <li className="grid grid-cols-2 gap-2 bg-[#F9F8F2] p-3 px-6">
                 <span className="text-[#797979]">Brand</span>
                 <span className="text-primary font-bold">
-                  {product?.brand?.name}
+                  {productData?.brand?.name}
                 </span>
               </li>
               <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
                 <span className="text-[#797979]">Size</span>
-                <span className="font-bold">{product?.size?.name}</span>
+                <span className="font-bold">{productData?.size?.name}</span>
               </li>
               <li className="grid grid-cols-2 gap-2 bg-[#F9F8F2] p-3 px-6">
                 <span className="text-[#797979]">Condition</span>
-                <span className="font-bold">{product?.condition}</span>
+                <span className="font-bold">{productData?.condition}</span>
               </li>
               <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
                 <span className="text-[#797979]">Color</span>
                 <span className="font-bold">
-                  {product?.colors?.map((item: any) => item?.name).join(", ")}
+                  {productData?.colors
+                    ?.map((item: any) => item?.name)
+                    .join(", ")}
                 </span>
               </li>
               <li className="grid grid-cols-2 gap-2 bg-[#F9F8F2] p-3 px-6">
                 <span className="text-[#797979]">Location</span>
-                <span className="font-bold">Orlando, United States</span>
+                <span className="font-bold">{productData?.user?.location}</span>
               </li>
               {/* <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
                 <span className="text-[#797979]">Payment Options</span>
@@ -114,8 +119,8 @@ const ProductDetails = ({ product }: { product: any }) => {
               <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
                 <span className="text-[#797979]">Uploaded</span>
                 <span className="font-bold">
-                  {product?.createdAt
-                    ? formatDistanceToNow(new Date(product?.createdAt), {
+                  {productData?.createdAt
+                    ? formatDistanceToNow(new Date(productData?.createdAt), {
                         addSuffix: true,
                       })
                     : "Unknown"}
@@ -124,8 +129,8 @@ const ProductDetails = ({ product }: { product: any }) => {
             </ul>
 
             <div className="px-6">
-              <h1 className="text-lg font-bold">{product?.name}</h1>
-              <p className="text-[#797979]">{product?.description}</p>
+              <h1 className="text-lg font-bold">{productData?.name}</h1>
+              <p className="text-[#797979]">{productData?.description}</p>
             </div>
 
             {/* user actions */}
@@ -168,9 +173,13 @@ const ProductDetails = ({ product }: { product: any }) => {
           <div className="card !p-6 grid gap-4">
             <div className="flex flex-col md:flex-row lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <div className="size-16 flex justify-center items-center bg-[#465A63] text-white text-2xl font-bold rounded-full border">
-                  M
-                </div>
+                <Image
+                  src={`${config.IMAGE_URL}${productData?.user?.image}`}
+                  alt="user"
+                  width={50}
+                  height={50}
+                  className="rounded-full"
+                />
                 <div>
                   <h1 className="text-lg font-bold">@mykola888</h1>
                   <p className="text-[#797979] text-sm">No reviews yet</p>
@@ -185,13 +194,13 @@ const ProductDetails = ({ product }: { product: any }) => {
                 <span>
                   <HiLocationMarker size={20} color="#9d977a" />
                 </span>
-                <span> Colonian Beach, VA, United States </span>
+                <span>{productData?.user?.location || "Unknown"}</span>
               </p>
               <p className="flex items-center gap-2 ">
                 <span>
                   <MdWatchLater size={20} color="#9d977a" />
                 </span>
-                <span> Last seen 10 hours ago </span>
+                <span> Last seen 10 hours ago (static time) </span>
               </p>
             </div>
           </div>
