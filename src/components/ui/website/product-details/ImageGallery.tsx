@@ -18,6 +18,8 @@ import { Swiper as SwiperType } from "swiper/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NavigationOptions } from "swiper/types";
 import productdata from "../../../../data/products.json";
+import Image from "next/image";
+import { config } from "@/config/env-config";
 
 const ImageGallery = ({ product }: { product: any }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
@@ -32,35 +34,36 @@ const ImageGallery = ({ product }: { product: any }) => {
       <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
-        spaceBetween={0}
+        spaceBetween={10}
         direction="vertical"
         slidesPerView={4}
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper !mx-0"
+        className="mySwiper !mx-0 !h-[600px]"
       >
-        <div className="hidden lg:block">
-          {/* {product?.productImage?.map((image: any, idx: number) => (
-            <SwiperSlide key={idx} className="">
-              <Image
-                src={`${config.IMAGE_URL}${image}`}
-                alt="product image"
-                width={100}
-                height={100}
-                className="hidden lg:block rounded-xl w-32 h-36 object-cover"
-              />
-            </SwiperSlide>
-          ))} */}
-          {productdata[0].images.map((item, idx) => (
-            <SwiperSlide key={idx} className="">
-              <img
-                src={item}
-                className="hidden lg:block rounded-xl w-32 h-36 object-cover"
-              />
-            </SwiperSlide>
-          ))}
-        </div>
+        {product?.productImage?.map((image: any, idx: number) => (
+          <SwiperSlide key={idx} className="!h-32">
+            <Image
+              src={`${config.IMAGE_URL}${image}`}
+              alt="product image"
+              width={100}
+              height={100}
+              className="hidden lg:block rounded-xl w-32 h-32 object-cover"
+            />
+          </SwiperSlide>
+        ))}
+        {/* {productdata[0].images.map((item, idx) => (
+          <SwiperSlide key={idx}>
+            <Image
+              src={item}
+              alt="product image"
+              width={100}
+              height={100}
+              className="hidden lg:block rounded-xl w-32 h-32 object-cover"
+            />
+          </SwiperSlide>
+        ))} */}
       </Swiper>
 
       {/* right side slide viewer */}
@@ -82,24 +85,24 @@ const ImageGallery = ({ product }: { product: any }) => {
             }
           }}
           modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper2"
+          className="mySwiper2 !h-[600px]"
         >
-          {/* {product?.productImage?.map((image: any, idx: number) => (
+          {product?.productImage?.map((image: any, idx: number) => (
             <SwiperSlide key={idx}>
               <Image
                 src={`${config.IMAGE_URL}${image}`}
                 alt="product image"
                 width={500}
-                height={500}
-                className="rounded-xl w-full"
+                height={600}
+                className="rounded-xl w-full h-full object-cover"
               />
             </SwiperSlide>
-          ))} */}
-          {productdata[0].images.map((item, idx) => (
+          ))}
+          {/* {productdata[0].images.map((item, idx) => (
             <SwiperSlide key={idx}>
               <img src={item} className="rounded-xl w-full" />
             </SwiperSlide>
-          ))}
+          ))} */}
         </Swiper>
 
         {/* Custom left-right navigation Buttons */}
