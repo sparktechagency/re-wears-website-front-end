@@ -73,12 +73,18 @@ const SellNow = ({
       }
     });
 
+    console.log(values);
+    // for (let pair of formData.entries()) {
+    //   console.log(pair[0] + ":", pair[1]);
+    // }
+
     // send data to server
     try {
       const res = await myFetch("/product/create", {
         method: "POST",
         body: formData,
       });
+      console.log(res);
       if (res?.success) {
         toast.success("Product uploaded successfully", {
           id: "create-product",
@@ -258,7 +264,7 @@ const SellNow = ({
                 <div className="text-[16px] font-bold text-secondary">
                   Choose colors
                 </div>
-                <Form.Item name="Colors" rules={[{ required: true }]}>
+                <Form.Item name="colors" rules={[{ required: true }]}>
                   <Select
                     mode="multiple"
                     placeholder="Select colors"
@@ -275,7 +281,7 @@ const SellNow = ({
                 <div className="text-[16px] font-bold text-secondary">
                   Specify the material (recommended)
                 </div>
-                <Form.Item name="Material (recommended)">
+                <Form.Item name="material">
                   <Select
                     placeholder="Choose material"
                     options={materials?.map((material: any) => ({

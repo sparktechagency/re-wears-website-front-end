@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
 // Import Swiper React components
@@ -17,14 +15,11 @@ import { useRef, useState } from "react";
 import { Swiper as SwiperType } from "swiper/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NavigationOptions } from "swiper/types";
-import productdata from "../../../../data/products.json";
 import Image from "next/image";
 import { config } from "@/config/env-config";
 
 const ImageGallery = ({ product }: { product: any }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
-
-  console.log(product?.productImage);
 
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -53,17 +48,6 @@ const ImageGallery = ({ product }: { product: any }) => {
             />
           </SwiperSlide>
         ))}
-        {/* {productdata[0].images.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <Image
-              src={item}
-              alt="product image"
-              width={100}
-              height={100}
-              className="hidden lg:block rounded-xl w-32 h-32 object-cover"
-            />
-          </SwiperSlide>
-        ))} */}
       </Swiper>
 
       {/* right side slide viewer */}
@@ -98,11 +82,6 @@ const ImageGallery = ({ product }: { product: any }) => {
               />
             </SwiperSlide>
           ))}
-          {/* {productdata[0].images.map((item, idx) => (
-            <SwiperSlide key={idx}>
-              <img src={item} className="rounded-xl w-full" />
-            </SwiperSlide>
-          ))} */}
         </Swiper>
 
         {/* Custom left-right navigation Buttons */}
