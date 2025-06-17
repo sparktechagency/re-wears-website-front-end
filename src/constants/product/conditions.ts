@@ -1,1 +1,1 @@
-export const conditions = ["Link New", "Very Good", "Good", "Fair"];
+export const conditions = ["Like New", "Very Good", "Good", "Fair"];

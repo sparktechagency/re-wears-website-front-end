@@ -3,12 +3,9 @@ import Image from "next/image";
 import image1 from "@/assets/images/how-it-works-1.svg";
 import image2 from "@/assets/images/how-it-works-2.svg";
 import FillButton from "@/components/shared/FillButton";
-import { useAuthContext } from "@/contexts/AuthContext";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const HowItWorks = () => {
-  const { user } = useAuthContext();
-  const router = useRouter();
   return (
     <div>
       <section className="container">
@@ -61,10 +58,10 @@ const HowItWorks = () => {
             </div>
           </div>
         </div>
-        <div className="py-4 text-center" onClick={() => {
-          router.push(user ? "/sell-now" : "/login");
-        }} >
-          <FillButton className="uppercase">Start Earning</FillButton>
+        <div className="py-4 text-center">
+          <Link href={"/sell-now"}>
+            <FillButton className="uppercase">Start Earning</FillButton>
+          </Link>
         </div>
       </section>
 
@@ -77,19 +74,23 @@ const HowItWorks = () => {
               <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
                 <span className="text-4xl text-primary font-bold">01</span>
                 <p className="text-[16px]">
-                  Create an account and join our community dedicated to sustainable living.
+                  Create an account and join our community dedicated to
+                  sustainable living.
                 </p>
               </div>
               <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
                 <span className="text-4xl text-primary font-bold">02</span>
                 <p className="text-[16px]">
-                  Explore our catalog and find preloved gems waiting for a second chance.
+                  Explore our catalog and find preloved gems waiting for a
+                  second chance.
                 </p>
               </div>
               <div className="p-6 py-8 shadow-smooth rounded-xl flex items-center gap-4">
                 <span className="text-4xl text-primary font-bold">03</span>
                 <p className="text-[16px]">
-                  Communicate with sellers, agree on shipping or pickup, and make direct payments. It&apos;s a platform where buyers and sellers connect for a sustainable fashion revolution.
+                  Communicate with sellers, agree on shipping or pickup, and
+                  make direct payments. It&apos;s a platform where buyers and
+                  sellers connect for a sustainable fashion revolution.
                 </p>
               </div>
             </div>
@@ -103,10 +104,10 @@ const HowItWorks = () => {
               />
             </figure>
           </div>
-          <div className="py-4 text-center" onClick={() => {
-          router.push("/products");
-        }} >
-            <FillButton className="uppercase">Start browsing</FillButton>
+          <div className="py-4 text-center">
+            <Link href={"/products?category=MEN"}>
+              <FillButton className="uppercase">Start browsing</FillButton>
+            </Link>
           </div>
         </div>
       </section>

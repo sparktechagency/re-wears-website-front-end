@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
 "use client";
 
 // Import Swiper React components
@@ -17,9 +15,10 @@ import { useRef, useState } from "react";
 import { Swiper as SwiperType } from "swiper/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NavigationOptions } from "swiper/types";
-import productdata from "../../../../data/products.json";
+import Image from "next/image";
+import { config } from "@/config/env-config";
 
-const ImageGallery = () => {
+const ImageGallery = ({ product }: { product: any }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
 
   const prevRef = useRef(null);
@@ -30,24 +29,25 @@ const ImageGallery = () => {
       <Swiper
         onSwiper={setThumbsSwiper}
         loop={true}
-        spaceBetween={0}
+        spaceBetween={10}
         direction="vertical"
         slidesPerView={4}
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper !mx-0"
+        className="mySwiper !mx-0 !h-[600px]"
       >
-        <div className="hidden lg:block">
-          {productdata[0].images.map((item, idx) => (
-            <SwiperSlide key={idx} className="">
-              <img
-                src={item}
-                className="hidden lg:block rounded-xl w-32 h-36 object-cover"
-              />
-            </SwiperSlide>
-          ))}
-        </div>
+        {product?.productImage?.map((image: any, idx: number) => (
+          <SwiperSlide key={idx} className="!h-32">
+            <Image
+              src={`${config.IMAGE_URL}${image}`}
+              alt="product image"
+              width={100}
+              height={100}
+              className="hidden lg:block rounded-xl w-32 h-32 object-cover"
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       {/* right side slide viewer */}
@@ -69,11 +69,17 @@ const ImageGallery = () => {
             }
           }}
           modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper2"
+          className="mySwiper2 !h-[600px]"
         >
-          {productdata[0].images.map((item, idx) => (
+          {product?.productImage?.map((image: any, idx: number) => (
             <SwiperSlide key={idx}>
-              <img src={item} className="rounded-xl w-full" />
+              <Image
+                src={`${config.IMAGE_URL}${image}`}
+                alt="product image"
+                width={500}
+                height={600}
+                className="rounded-xl w-full h-full object-cover"
+              />
             </SwiperSlide>
           ))}
         </Swiper>
