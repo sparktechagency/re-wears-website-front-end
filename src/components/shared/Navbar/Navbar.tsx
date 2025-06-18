@@ -24,9 +24,9 @@ const items: MenuProps["items"] = [
 //   items: string[];
 // }
 
-interface SubCategories {
-  [key: string]: SubCategory;
-}
+// interface SubCategories {
+//   [key: string]: SubCategory;
+// }
 
 type ChildSubCategory = {
   _id: string;
@@ -103,19 +103,17 @@ const Navbar = ({
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
 
-  // Remove singleCategories state and useEffect, compute directly
   const singleCategories = categoriesRes?.filter(
     (item) => item?.name?.toLowerCase() === selectedCategory
   );
 
-  const handleProductData = (subCategoryId: string) => {
-    console.log("Selected SubCategory ID:", subCategoryId);
+  const handleProductData = (subChildCategoryId: string) => {
+    console.log("Selected SubChildCategory ID:", subChildCategoryId);
   };
 
   // Close search bar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      setSelectedSubCategory(null);
       if (
         searchRef.current &&
         !searchRef.current.contains(event.target as Node)
@@ -172,7 +170,9 @@ const Navbar = ({
               {selectedSubCategory?.childSubCategories?.map((item) => (
                 <div key={item._id} className="py-1">
                   <Link
-                    onClick={() => handleProductData(item._id)}
+                    onClick={() => {
+                      handleProductData(item._id);
+                    }}
                     href="/products"
                     className="text-[#797979] hover:text-primary"
                   >
@@ -350,7 +350,7 @@ const Navbar = ({
                 <span>KIDS</span>
               </Dropdown>
             </Menu.Item>
-            <Menu.Item key="beauty">
+            <Menu.Item key="beauty/grooming">
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
