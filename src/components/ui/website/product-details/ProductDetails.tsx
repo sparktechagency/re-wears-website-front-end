@@ -14,13 +14,81 @@ import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import { config } from "@/config/env-config";
 import { Rate } from "antd";
+import MakeOfferModal from "../inbox/MakeOfferModal";
+import toast from "react-hot-toast";
+import { stat } from "fs";
+import { myFetch } from "@/helpers/myFetch";
+import { revalidateTags } from "@/helpers/revalidateTags";
 
-const ProductDetails = ({ product, user }: { product: any; user: any }) => {
+const ProductDetails = ({
+  product,
+  seller,
+  buyer,
+}: {
+  product: any;
+  seller: any;
+  buyer: any;
+}) => {
   const productData = product?.result;
-  console.log(productData);
 
   const [open, setOpen] = useState(false);
+  const [makeOfferModal, setMakeOfferModal] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+
+  // handle reserving
+  const handleReserveNow = async () => {
+    toast.loading("Reserving...", { id: "reserve" });
+    const payload = {
+      seller: seller?.user?._id,
+      buyer: buyer?._id,
+      product: productData?._id,
+      status: "Reserved",
+    };
+    console.log(payload);
+
+    try {
+      const res = await myFetch(`/order/create`, {
+        method: "POST",
+        body: payload,
+      });
+      console.log(res);
+      if (res?.success) {
+        toast.success("Reserved successfully", { id: "reserve" });
+        setOpen(false);
+        revalidateTags(["Product"]);
+      } else {
+        toast.error(res?.message || "Something went wrong", { id: "reserve" });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // handle release
+  const handleRelease = async () => {
+    toast.loading("Loading...", { id: "release" });
+    const payload = {
+      product: productData?._id,
+      status: "Released",
+    };
+
+    try {
+      const res = await myFetch(`/order/update`, {
+        method: "PATCH",
+        body: payload,
+      });
+      console.log(res);
+      if (res?.success) {
+        toast.success("Released successfully", { id: "release" });
+        revalidateTags(["Product"]);
+      } else {
+        toast.error(res?.message || "Something went wrong", { id: "release" });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="container">
       {/* category breadcumb */}
@@ -134,19 +202,38 @@ const ProductDetails = ({ product, user }: { product: any; user: any }) => {
 
             {/* user actions */}
             <div className="grid gap-2 px-6">
+              {productData?.status === "Active" && (
+                <FillButton
+                  onClick={() => setOpen(true)}
+                  className="uppercase w-full"
+                >
+                  Reserve Now
+                </FillButton>
+              )}
+              {productData?.status === "Reserved" && (
+                <FillButton className="uppercase w-full bg-[#D04555] hover:bg-[#c64251] cursor-not-allowed">
+                  Reserved
+                </FillButton>
+              )}
+
+              {productData?.status === "Reserved" && (
+                <FillButton
+                  onClick={handleRelease}
+                  className="uppercase w-full"
+                >
+                  Changed your mind? Release
+                </FillButton>
+              )}
+
               <Link href={""}>
-                <span onClick={() => setOpen(true)}>
-                  <FillButton className="uppercase w-full">
-                    Reserve Now
-                  </FillButton>
-                </span>
-              </Link>
-              <Link href={""}>
-                <OutlineButton className="uppercase w-full">
+                <OutlineButton
+                  onClick={() => setMakeOfferModal(true)}
+                  className="uppercase w-full"
+                >
                   Make an offer
                 </OutlineButton>
               </Link>
-              <Link href={""}>
+              <Link href={`/inbox?recipient=${productData?.user?._id}`}>
                 <OutlineButton className="uppercase w-full">
                   Message seller
                 </OutlineButton>
@@ -182,10 +269,10 @@ const ProductDetails = ({ product, user }: { product: any; user: any }) => {
                 <div>
                   <h1 className="text-lg font-bold">@mykola888</h1>
                   <p className="text-[#797979] text-sm">
-                    {user?.customerAvgRating > 0 ? (
+                    {seller?.customerAvgRating > 0 ? (
                       <Rate
                         disabled
-                        value={user?.customerAvgRating}
+                        value={seller?.customerAvgRating}
                         style={{ color: "#FDB11A" }}
                       />
                     ) : (
@@ -214,7 +301,12 @@ const ProductDetails = ({ product, user }: { product: any; user: any }) => {
             </div>
           </div>
         </section>
-        <ReserveNowModal open={open} setOpen={setOpen} />
+        <ReserveNowModal
+          open={open}
+          setOpen={setOpen}
+          action={handleReserveNow}
+        />
+        <MakeOfferModal product={productData} open={makeOfferModal} setOpen={setMakeOfferModal} />
       </section>
     </div>
   );

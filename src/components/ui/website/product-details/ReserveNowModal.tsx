@@ -5,9 +5,11 @@ import { Modal } from "antd";
 const ReserveNowModal = ({
   open,
   setOpen,
+  action,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
+  action?: () => any;
 }) => {
   return (
     <Modal
@@ -29,8 +31,13 @@ const ReserveNowModal = ({
           change you can cancel anytime!
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-6">
-          <OutlineButton className="uppercase">Reserve now</OutlineButton>
-          <FillButton className="uppercase !bg-danger !hover:bg-danger-dark">
+          <OutlineButton onClick={action} className="uppercase">
+            Reserve now
+          </OutlineButton>
+          <FillButton
+            onClick={() => setOpen(false)}
+            className="uppercase !bg-danger !hover:bg-danger-dark"
+          >
             Cancel
           </FillButton>
         </div>
