@@ -1,13 +1,13 @@
 import OutlineButton from "@/components/shared/OutlineButton";
 import { myFetch } from "@/helpers/myFetch";
 import { revalidateTags } from "@/helpers/revalidateTags";
+import { useState } from "react";
 import toast from "react-hot-toast";
+import ProductDeleteModal from "./DeleteModal";
 
-const SellerActions = ({
-  productData,
-}: {
-  productData: any;
-}) => {
+const SellerActions = ({ productData }: { productData: any }) => {
+  const [deleteModal, setDeleteModal] = useState(false);
+
   // handle update product status
   const handleUpdateStatus = async (status: string) => {
     toast.loading("Loading...", { id: "update-product" });
@@ -26,6 +26,27 @@ const SellerActions = ({
       } else {
         toast.error(res?.message || "Something went wrong", {
           id: "update-product",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // handle delete
+  const handleDelete = async () => {
+    toast.loading("Loading...", { id: "delete-product" });
+
+    try {
+      const res = await myFetch(`/product/${productData?._id}`, {
+        method: "DELETE",
+      });
+      if (res?.success) {
+        toast.success("Deleted successfully", { id: "delete-product" });
+        revalidateTags(["Product", "products"]);
+      } else {
+        toast.error(res?.message || "Something went wrong", {
+          id: "delete-product",
         });
       }
     } catch (error) {
@@ -67,9 +88,18 @@ const SellerActions = ({
 
       <OutlineButton className="uppercase w-full">Edit listing</OutlineButton>
 
-      <OutlineButton className="uppercase w-full border-[#D04555] text-[#D04555] hover:bg-[#ce4555]">
+      <OutlineButton
+        onClick={() => setDeleteModal(true)}
+        className="uppercase w-full border-[#D04555] text-[#D04555] hover:bg-[#ce4555]"
+      >
         Delete
       </OutlineButton>
+
+      <ProductDeleteModal
+        open={deleteModal}
+        setOpen={setDeleteModal}
+        action={handleDelete}
+      />
     </div>
   );
 };
