@@ -8,9 +8,12 @@ const ProductDetailsPage = async ({ params }: { params: { id: string } }) => {
     tags: ["Product"],
   });
 
+  const userId = res?.data?.result?.user?._id;
+  const userRes = await myFetch(`/users/${userId}`);
+
   return (
     <>
-      <ProductDetails product={res.data} />
+      <ProductDetails product={res.data} user={userRes?.data} />
     </>
   );
 };

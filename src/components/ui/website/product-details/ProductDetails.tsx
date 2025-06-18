@@ -13,8 +13,9 @@ import { MdWatchLater } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import { config } from "@/config/env-config";
+import { Rate } from "antd";
 
-const ProductDetails = ({ product }: { product: any }) => {
+const ProductDetails = ({ product, user }: { product: any; user: any }) => {
   const productData = product?.result;
   console.log(productData);
 
@@ -33,37 +34,43 @@ const ProductDetails = ({ product }: { product: any }) => {
               <Minus className="text-primary" />
             </p>
 
-            <p className="flex items-center gap-2">
-              <Link href={""} className="link !font-normal">
-                Women
-              </Link>
-              <Minus className="text-primary" />
-            </p>
+            {productData?.category?.name && (
+              <p className="flex items-center gap-2">
+                <Link
+                  href={`/products?category=${productData?.category?._id}`}
+                  className="link !font-normal"
+                >
+                  {productData?.category?.name}
+                </Link>
+                <Minus className="text-primary" />
+              </p>
+            )}
 
-            <p className="flex items-center gap-2">
-              <Link href={""} className="link !font-normal">
-                Clothing
-              </Link>
-              <Minus className="text-primary" />
-            </p>
+            {productData?.category?.subCategory?.name && (
+              <p className="flex items-center gap-2">
+                <Link
+                  href={`/products?category=${productData?.category?.subCategory?._id}`}
+                  className="link !font-normal"
+                >
+                  {productData?.category?.subCategory?.name}
+                </Link>
+                <Minus className="text-primary" />
+              </p>
+            )}
 
-            <p className="flex items-center gap-2">
-              <Link href={""} className="link !font-normal">
-                Dresses
-              </Link>
-              <Minus className="text-primary" />
-            </p>
+            {productData?.category?.childSubCategory?.name && (
+              <p className="flex items-center gap-2">
+                <Link
+                  href={`/products?category=${productData?.category?.childSubCategory?._id}`}
+                  className="link !font-normal"
+                >
+                  {productData?.category?.childSubCategory?.name}
+                </Link>
+                <Minus className="text-primary" />
+              </p>
+            )}
 
-            <p className="flex items-center gap-2">
-              <Link href={""} className="link !font-normal  w-full">
-                Little pink dresses
-              </Link>
-              <Minus className="text-primary" />
-            </p>
-
-            <p className="flex items-center gap-2">
-              <Link href={""}>Forever 21 Little pink dresses</Link>
-            </p>
+            <p className="flex items-center gap-2">{productData?.name}</p>
           </div>
         </div>
       </section>
@@ -108,14 +115,6 @@ const ProductDetails = ({ product }: { product: any }) => {
                 <span className="text-[#797979]">Location</span>
                 <span className="font-bold">{productData?.user?.location}</span>
               </li>
-              {/* <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
-                <span className="text-[#797979]">Payment Options</span>
-                <span className="font-bold">Bank Card</span>
-              </li> */}
-              {/* <li className="grid grid-cols-2 gap-2 bg-[#F9F8F2] p-3 px-6">
-                <span className="text-[#797979]">Views</span>
-                <span className="font-bold">0</span>
-              </li> */}
               <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
                 <span className="text-[#797979]">Uploaded</span>
                 <span className="font-bold">
@@ -182,7 +181,17 @@ const ProductDetails = ({ product }: { product: any }) => {
                 />
                 <div>
                   <h1 className="text-lg font-bold">@mykola888</h1>
-                  <p className="text-[#797979] text-sm">No reviews yet</p>
+                  <p className="text-[#797979] text-sm">
+                    {user?.customerAvgRating > 0 ? (
+                      <Rate
+                        disabled
+                        value={user?.customerAvgRating}
+                        style={{ color: "#FDB11A" }}
+                      />
+                    ) : (
+                      "No reviews yet"
+                    )}
+                  </p>
                 </div>
               </div>
               <Link href={"/profile"}>
