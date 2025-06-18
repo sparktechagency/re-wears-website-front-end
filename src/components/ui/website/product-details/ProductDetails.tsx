@@ -16,7 +16,6 @@ import { config } from "@/config/env-config";
 import { Rate } from "antd";
 import MakeOfferModal from "../inbox/MakeOfferModal";
 import toast from "react-hot-toast";
-import { stat } from "fs";
 import { myFetch } from "@/helpers/myFetch";
 import { revalidateTags } from "@/helpers/revalidateTags";
 
@@ -51,7 +50,6 @@ const ProductDetails = ({
         method: "POST",
         body: payload,
       });
-      console.log(res);
       if (res?.success) {
         toast.success("Reserved successfully", { id: "reserve" });
         setOpen(false);
@@ -77,12 +75,38 @@ const ProductDetails = ({
         method: "PATCH",
         body: payload,
       });
-      console.log(res);
       if (res?.success) {
         toast.success("Released successfully", { id: "release" });
         revalidateTags(["Product"]);
       } else {
         toast.error(res?.message || "Something went wrong", { id: "release" });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // handle wishlist
+  const handleWishlist = async () => {
+    toast.loading("Loading...", { id: "wishlist" });
+    const payload = {
+      product: productData?._id,
+    };
+
+    try {
+      const res = await myFetch(`/wishlist`, {
+        method: "POST",
+        body: payload,
+      });
+      console.log(res);
+      if (res?.success) {
+        toast.success("Added to wishlist", { id: "wishlist" });
+        setOpen(false);
+        revalidateTags(["Product"]);
+      } else {
+        toast.error(res?.message || "Failed to add wishlist", {
+          id: "wishlist",
+        });
       }
     } catch (error) {
       console.error(error);
@@ -240,7 +264,10 @@ const ProductDetails = ({
               </Link>
 
               <div className="" onClick={() => setIsFavorite(!isFavorite)}>
-                <OutlineButton className="uppercase w-full flex items-center justify-center gap-2">
+                <OutlineButton
+                  onClick={handleWishlist}
+                  className="uppercase w-full flex items-center justify-center gap-2"
+                >
                   {isFavorite ? (
                     <div className="flex items-center gap-1">
                       <RxHeartFilled size={24} /> remove from wishlist
@@ -306,7 +333,11 @@ const ProductDetails = ({
           setOpen={setOpen}
           action={handleReserveNow}
         />
-        <MakeOfferModal product={productData} open={makeOfferModal} setOpen={setMakeOfferModal} />
+        <MakeOfferModal
+          product={productData}
+          open={makeOfferModal}
+          setOpen={setMakeOfferModal}
+        />
       </section>
     </div>
   );
