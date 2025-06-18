@@ -1,0 +1,77 @@
+import OutlineButton from "@/components/shared/OutlineButton";
+import { myFetch } from "@/helpers/myFetch";
+import { revalidateTags } from "@/helpers/revalidateTags";
+import toast from "react-hot-toast";
+
+const SellerActions = ({
+  productData,
+}: {
+  productData: any;
+}) => {
+  // handle update product status
+  const handleUpdateStatus = async (status: string) => {
+    toast.loading("Loading...", { id: "update-product" });
+    const payload = {
+      status: status,
+    };
+
+    try {
+      const res = await myFetch(`/product/${productData?._id}`, {
+        method: "PATCH",
+        body: payload,
+      });
+      if (res?.success) {
+        toast.success("Updated successfully", { id: "update-product" });
+        revalidateTags(["Product", "products"]);
+      } else {
+        toast.error(res?.message || "Something went wrong", {
+          id: "update-product",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div className="grid gap-2 px-6">
+      {productData?.status === "Active" && (
+        <OutlineButton
+          onClick={() => {
+            handleUpdateStatus("Sold");
+          }}
+          className={`uppercase w-full`}
+        >
+          Mark as sold
+        </OutlineButton>
+      )}
+
+      <OutlineButton
+        className={`uppercase w-full cursor-default ${
+          (productData?.status === "Reserved" ||
+            productData?.status === "Sold") &&
+          "bg-[#D04555] hover:bg-[#c64251] border-[#D04555] text-white"
+        }`}
+      >
+        {productData?.status === "Active" ? "Available" : productData?.status}
+      </OutlineButton>
+
+      {productData?.status !== "Hidden" && (
+        <OutlineButton
+          onClick={() => handleUpdateStatus("Hidden")}
+          className="uppercase w-full"
+        >
+          Hide
+        </OutlineButton>
+      )}
+
+      <OutlineButton className="uppercase w-full">Edit listing</OutlineButton>
+
+      <OutlineButton className="uppercase w-full border-[#D04555] text-[#D04555] hover:bg-[#ce4555]">
+        Delete
+      </OutlineButton>
+    </div>
+  );
+};
+
+export default SellerActions;
