@@ -1,25 +1,30 @@
 "use client";
 
-import FillButton from "@/components/shared/FillButton";
 import OutlineButton from "@/components/shared/OutlineButton";
-import { Heart, Minus } from "lucide-react";
+import { Minus } from "lucide-react";
 import Link from "next/link";
 import ImageGallery from "./ImageGallery";
-import { useState } from "react";
-import ReserveNowModal from "./ReserveNowModal";
-import { RxHeartFilled } from "react-icons/rx";
 import { HiLocationMarker } from "react-icons/hi";
 import { MdWatchLater } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 import { config } from "@/config/env-config";
+import { Rate } from "antd";
+import BuyerActions from "./BuyerActions";
+import SellerActions from "./SellerActions";
 
-const ProductDetails = ({ product }: { product: any }) => {
+const ProductDetails = ({
+  product,
+  seller,
+  profile,
+}: {
+  product: any;
+  seller: any;
+  profile: any;
+}) => {
   const productData = product?.result;
-  console.log(productData);
+  const isMyProduct = productData?.user?._id === profile?._id;
 
-  const [open, setOpen] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
   return (
     <div className="container">
       {/* category breadcumb */}
@@ -33,37 +38,43 @@ const ProductDetails = ({ product }: { product: any }) => {
               <Minus className="text-primary" />
             </p>
 
-            <p className="flex items-center gap-2">
-              <Link href={""} className="link !font-normal">
-                Women
-              </Link>
-              <Minus className="text-primary" />
-            </p>
+            {productData?.category?.name && (
+              <p className="flex items-center gap-2">
+                <Link
+                  href={`/products?category=${productData?.category?._id}`}
+                  className="link !font-normal"
+                >
+                  {productData?.category?.name}
+                </Link>
+                <Minus className="text-primary" />
+              </p>
+            )}
 
-            <p className="flex items-center gap-2">
-              <Link href={""} className="link !font-normal">
-                Clothing
-              </Link>
-              <Minus className="text-primary" />
-            </p>
+            {productData?.category?.subCategory?.name && (
+              <p className="flex items-center gap-2">
+                <Link
+                  href={`/products?category=${productData?.category?.subCategory?._id}`}
+                  className="link !font-normal"
+                >
+                  {productData?.category?.subCategory?.name}
+                </Link>
+                <Minus className="text-primary" />
+              </p>
+            )}
 
-            <p className="flex items-center gap-2">
-              <Link href={""} className="link !font-normal">
-                Dresses
-              </Link>
-              <Minus className="text-primary" />
-            </p>
+            {productData?.category?.childSubCategory?.name && (
+              <p className="flex items-center gap-2">
+                <Link
+                  href={`/products?category=${productData?.category?.childSubCategory?._id}`}
+                  className="link !font-normal"
+                >
+                  {productData?.category?.childSubCategory?.name}
+                </Link>
+                <Minus className="text-primary" />
+              </p>
+            )}
 
-            <p className="flex items-center gap-2">
-              <Link href={""} className="link !font-normal  w-full">
-                Little pink dresses
-              </Link>
-              <Minus className="text-primary" />
-            </p>
-
-            <p className="flex items-center gap-2">
-              <Link href={""}>Forever 21 Little pink dresses</Link>
-            </p>
+            <p className="flex items-center gap-2">{productData?.name}</p>
           </div>
         </div>
       </section>
@@ -108,14 +119,6 @@ const ProductDetails = ({ product }: { product: any }) => {
                 <span className="text-[#797979]">Location</span>
                 <span className="font-bold">{productData?.user?.location}</span>
               </li>
-              {/* <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
-                <span className="text-[#797979]">Payment Options</span>
-                <span className="font-bold">Bank Card</span>
-              </li> */}
-              {/* <li className="grid grid-cols-2 gap-2 bg-[#F9F8F2] p-3 px-6">
-                <span className="text-[#797979]">Views</span>
-                <span className="font-bold">0</span>
-              </li> */}
               <li className="grid grid-cols-2 gap-2 bg-[#F4F2E5] p-3 px-6">
                 <span className="text-[#797979]">Uploaded</span>
                 <span className="font-bold">
@@ -134,39 +137,15 @@ const ProductDetails = ({ product }: { product: any }) => {
             </div>
 
             {/* user actions */}
-            <div className="grid gap-2 px-6">
-              <Link href={""}>
-                <span onClick={() => setOpen(true)}>
-                  <FillButton className="uppercase w-full">
-                    Reserve Now
-                  </FillButton>
-                </span>
-              </Link>
-              <Link href={""}>
-                <OutlineButton className="uppercase w-full">
-                  Make an offer
-                </OutlineButton>
-              </Link>
-              <Link href={""}>
-                <OutlineButton className="uppercase w-full">
-                  Message seller
-                </OutlineButton>
-              </Link>
-
-              <div className="" onClick={() => setIsFavorite(!isFavorite)}>
-                <OutlineButton className="uppercase w-full flex items-center justify-center gap-2">
-                  {isFavorite ? (
-                    <div className="flex items-center gap-1">
-                      <RxHeartFilled size={24} /> remove from wishlist
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1">
-                      <Heart /> add to wishlist
-                    </div>
-                  )}
-                </OutlineButton>
-              </div>
-            </div>
+            {isMyProduct ? (
+              <SellerActions productData={productData} />
+            ) : (
+              <BuyerActions
+                productData={productData}
+                profile={profile}
+                seller={seller}
+              />
+            )}
           </div>
 
           {/* user info */}
@@ -182,7 +161,17 @@ const ProductDetails = ({ product }: { product: any }) => {
                 />
                 <div>
                   <h1 className="text-lg font-bold">@mykola888</h1>
-                  <p className="text-[#797979] text-sm">No reviews yet</p>
+                  <p className="text-[#797979] text-sm">
+                    {seller?.customerAvgRating > 0 ? (
+                      <Rate
+                        disabled
+                        value={seller?.customerAvgRating}
+                        style={{ color: "#FDB11A" }}
+                      />
+                    ) : (
+                      "No reviews yet"
+                    )}
+                  </p>
                 </div>
               </div>
               <Link href={"/profile"}>
@@ -205,7 +194,6 @@ const ProductDetails = ({ product }: { product: any }) => {
             </div>
           </div>
         </section>
-        <ReserveNowModal open={open} setOpen={setOpen} />
       </section>
     </div>
   );
