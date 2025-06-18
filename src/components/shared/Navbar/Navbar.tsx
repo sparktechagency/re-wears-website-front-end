@@ -107,6 +107,11 @@ const Navbar = ({
   const singleCategories = categoriesRes?.filter(
     (item) => item?.name?.toLowerCase() === selectedCategory
   );
+
+  const handleProductData = (subCategoryId: string) => {
+    console.log("Selected SubCategory ID:", subCategoryId);
+  };
+
   // Close search bar when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -167,6 +172,7 @@ const Navbar = ({
               {selectedSubCategory?.childSubCategories?.map((item) => (
                 <div key={item._id} className="py-1">
                   <Link
+                    onClick={() => handleProductData(item._id)}
                     href="/products"
                     className="text-[#797979] hover:text-primary"
                   >

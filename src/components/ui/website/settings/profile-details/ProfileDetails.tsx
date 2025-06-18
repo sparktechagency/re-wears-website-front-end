@@ -4,36 +4,66 @@ import FillButton from "@/components/shared/FillButton";
 import Input from "@/components/shared/Input";
 import OutlineButton from "@/components/shared/OutlineButton";
 import Select from "@/components/shared/Select";
+import { config } from "@/config/env-config";
+import { locations } from "@/constants/profile/locations";
+import { months } from "@/constants/profile/months";
+import { myFetch } from "@/helpers/myFetch";
+import { revalidateTags } from "@/helpers/revalidateTags";
 import { TUser } from "@/types/TUser";
 import { ConfigProvider, Switch } from "antd";
 import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
-const locations = [
-  "Dubai, UAE",
-  "Abu Dhabi, UAE",
-  "Sharjah, UAE",
-  "Ajman, UAE",
-  "Umm Al-Quwain, UAE",
-  "Ras Al Khaimah, UAE",
-  "Fujairah, UAE",
-];
+import toast from "react-hot-toast";
 
 const ProfileDetails = ({ profile }: { profile: TUser }) => {
-  console.log(profile);
-  const [image, setImage] = useState<string | null>(null);
-  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [vacationMode, setVacationMode] = useState<boolean>(
+    profile?.isVacation
+  );
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      setImage(URL.createObjectURL(file)); // Generate preview URL
+      setFile(file);
+      setImagePreview(URL.createObjectURL(file)); // Generate preview URL
     }
   };
 
-  const handleSubmit = () => {
-    // action performs here
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const date = new Date(
+      Number(formData.get("year")),
+      Number(formData.get("month")),
+      Number(formData.get("day"))
+    ).toISOString();
+    formData.set("dob", date);
+    formData.set("isVacation", vacationMode.toString());
+    if (file) {
+      formData.set("image", file);
+    }
+
+    toast.loading("Updating profile...", { id: "update-profile" });
+    try {
+      const res = await myFetch("/users/update-profile", {
+        method: "PATCH",
+        body: formData,
+      });
+      console.log(res);
+      if (res?.success) {
+        toast.success("Profile updated successfully", { id: "update-profile" });
+        revalidateTags(["profile"]);
+      } else {
+        toast.error(res?.message || "Something went wrong", {
+          id: "update-profile",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -48,18 +78,18 @@ const ProfileDetails = ({ profile }: { profile: TUser }) => {
             <label className="font-bold py-2">Your photo</label>
             <div className="flex justify-end items-center gap-4">
               {/* Image Preview */}
-              {image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={image}
-                  alt="Preview"
-                  className="size-16 rounded-full object-cover border"
-                />
-              ) : (
-                <div className="size-16 flex justify-center items-center bg-[#465A63] text-white text-3xl font-bold rounded-full border">
-                  M
-                </div>
-              )}
+              <Image
+                src={
+                  imagePreview ||
+                  (profile?.image?.includes("http")
+                    ? profile?.image
+                    : `${config.IMAGE_URL}${profile?.image}`)
+                }
+                width={100}
+                height={100}
+                alt="profile"
+                className="size-16 rounded-full object-cover border"
+              />
               <label className="cursor-pointer px-4 py-2 text-primary border-2 border-primary rounded-full">
                 Choose photo
                 <input
@@ -71,52 +101,67 @@ const ProfileDetails = ({ profile }: { profile: TUser }) => {
               </label>
             </div>
           </div>
-
-          {/* about input */}
-          {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 justify-between">
-            <label className="font-bold py-2">About you</label>
-            <textarea
-              rows={4}
-              placeholder="Tell us more about yourself"
-              className="bg-[#F5F5F5] border-2 border-[#DCDCDC] rounded-3xl p-4 w-full"
-              style={{ resize: "none" }}
-            />
-          </div> */}
         </section>
 
         <section className="card">
           <div className="grid-between items-center">
-            <label className="font-bold py-2">Full Name</label>
-            <Input placeholder="Your name" />
+            <label className="font-bold py-2">First Name</label>
+            <Input
+              name="firstName"
+              defaultValue={profile?.firstName}
+              placeholder="Your first name"
+            />
+          </div>
+          <hr className="my-4" />
+          <div className="grid-between items-center">
+            <label className="font-bold py-2">Last Name</label>
+            <Input
+              name="lastName"
+              defaultValue={profile?.lastName}
+              placeholder="Your last name"
+            />
           </div>
           <hr className="my-4" />
           <div className="grid-between items-center">
             <label className="font-bold py-2">Gender</label>
-            <Select placeholder="Select gender" options={["Male", "Female"]} />
+
+            <Select
+              name="gender"
+              defaultValue={profile?.gender || ""}
+              placeholder="Select gender"
+              options={[
+                { label: "Male", value: "Male" },
+                { label: "Female", value: "Female" },
+              ]}
+            />
           </div>
           <hr className="my-4" />
           <div className="grid-between items-center">
             <label className="font-bold py-2">Birthday</label>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <Input placeholder="Day" />
-              <Select
-                placeholder="Month"
-                options={[
-                  "January",
-                  "February",
-                  "March",
-                  "April",
-                  "May",
-                  "June",
-                  "July",
-                  "August",
-                  "September",
-                  "October",
-                  "November",
-                  "December",
-                ]}
+              <Input
+                name="day"
+                defaultValue={
+                  profile?.dob ? new Date(profile?.dob).getDate() : ""
+                }
+                placeholder="Day"
               />
-              <Input placeholder="Year" />
+              <Select
+                name="month"
+                defaultValue={
+                  profile?.dob ? new Date(profile?.dob).getMonth() : ""
+                }
+                placeholder="Month"
+                options={months.map((item, index) => ({
+                  label: item,
+                  value: index.toString(),
+                }))}
+              />
+              <Input
+                name="year"
+                defaultValue={new Date(profile?.dob).getFullYear() || ""}
+                placeholder="Year"
+              />
             </div>
           </div>
         </section>
@@ -125,28 +170,15 @@ const ProfileDetails = ({ profile }: { profile: TUser }) => {
         <section className="bg-white p-8 rounded-xl shadow-smooth">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 justify-between">
             <label className="font-bold py-2">My Location</label>
-            <select
-              value={selectedLocation}
-              onChange={(e) => setSelectedLocation(e.target.value)}
-              className="w-full px-4 py-3 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-            >
-              <option value="" disabled>
-                Choose a location
-              </option>
-              {locations.map((location) => (
-                <option
-                  key={location}
-                  value={location}
-                  style={{
-                    backgroundColor:
-                      selectedLocation === location ? "#9D977A" : "white",
-                    color: selectedLocation === location ? "white" : "black",
-                  }}
-                >
-                  {location}
-                </option>
-              ))}
-            </select>
+            <Select
+              name="location"
+              defaultValue={profile?.location || ""}
+              placeholder="Choose a location"
+              options={locations?.map((item) => ({
+                label: item,
+                value: item,
+              }))}
+            />
           </div>
         </section>
 
@@ -173,7 +205,10 @@ const ProfileDetails = ({ profile }: { profile: TUser }) => {
               },
             }}
           >
-            <Switch />
+            <Switch
+              defaultValue={vacationMode}
+              onChange={(checked) => setVacationMode(checked)}
+            />
           </ConfigProvider>
         </section>
         {/* Google */}
@@ -207,5 +242,4 @@ const ProfileDetails = ({ profile }: { profile: TUser }) => {
     </div>
   );
 };
-
 export default ProfileDetails;

@@ -2,7 +2,7 @@ import ProfileDetails from "@/components/ui/website/settings/profile-details/Pro
 import { myFetch } from "@/helpers/myFetch";
 
 const ProfileDetailsPage = async () => {
-  const res = await myFetch("/users/profile");
+  const res = await myFetch("/users/profile", { tags: ["profile"] });
 
   return (
     <div>
