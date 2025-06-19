@@ -4,6 +4,7 @@ import { revalidateTags } from "@/helpers/revalidateTags";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import ProductDeleteModal from "./DeleteModal";
+import Link from "next/link";
 
 const SellerActions = ({ productData }: { productData: any }) => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -82,11 +83,13 @@ const SellerActions = ({ productData }: { productData: any }) => {
           onClick={() => handleUpdateStatus("Hidden")}
           className="uppercase w-full"
         >
-          Hide
+          Hides
         </OutlineButton>
       )}
 
-      <OutlineButton className="uppercase w-full">Edit listing</OutlineButton>
+      <Link href={`/products/edit/${productData?._id}`}>
+        <OutlineButton className="uppercase w-full">Edit listing</OutlineButton>
+      </Link>
 
       <OutlineButton
         onClick={() => setDeleteModal(true)}
