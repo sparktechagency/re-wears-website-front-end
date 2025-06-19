@@ -21,6 +21,17 @@ const items: MenuProps["items"] = [
   },
 ];
 
+
+// interface SubCategory {
+//   icon: JSX.Element;
+//   items: string[];
+// }
+
+// interface SubCategories {
+//   [key: string]: SubCategory;
+// }
+
+
 type ChildSubCategory = {
   _id: string;
   name: string;
@@ -47,6 +58,15 @@ const Navbar = ({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
+
+
+  // const singleCategories = categoriesData?.filter(
+  //   (item) => item?.name?.toLowerCase() === selectedCategory
+  // );
+
+  // const handleProductData = (subChildCategoryId: string) => {
+  //   console.log("Selected SubChildCategory ID:", subChildCategoryId);
+  // };
 
   // Close search bar when clicking outside
   useEffect(() => {
@@ -290,6 +310,7 @@ const Navbar = ({
               </Dropdown>
             </Menu.Item>
             <Menu.Item key="BEAUTY">
+
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}

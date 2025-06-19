@@ -31,7 +31,7 @@ const Products = ({
 
   const options = categories
     ?.find((item: any) => item?.name === filters?.category)
-    ?.subCategories.map((subItem: any) => ({
+    ?.subCategories?.map((subItem: any) => ({
       value: subItem?.name,
       label: subItem?.name,
       children: subItem?.childSubCategories?.map((childSubItem: any) => ({
