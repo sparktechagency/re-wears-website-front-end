@@ -1,12 +1,46 @@
+import { myFetch } from "@/helpers/myFetch";
+import { revalidateTags } from "@/helpers/revalidateTags";
 import { Form, Input, Modal } from "antd";
+import toast from "react-hot-toast";
 
 const MakeOfferModal = ({
   open,
   setOpen,
+  product,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
+  product: any;
 }) => {
+  const [form] = Form.useForm();
+
+  // handle make offer
+  const handleMakeOffer = async (values: any) => {
+    toast.loading("Loading...", { id: "make-offer" });
+    const payload = {
+      product: product?._id,
+      price: Number(values?.price),
+    };
+
+    try {
+      const res = await myFetch(`/offer/create`, {
+        method: "POST",
+        body: payload,
+      });
+      if (res?.success) {
+        toast.success("Offer created successfully", { id: "make-offer" });
+        setOpen(false);
+        revalidateTags(["Product"]);
+      } else {
+        toast.error(res?.message || "Something went wrong", {
+          id: "make-offer",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Modal
       open={open}
@@ -17,7 +51,7 @@ const MakeOfferModal = ({
     >
       <p className="text-center text-[25px] font-bold pb-4"> Make an offer </p>
 
-      <Form layout="vertical" className="">
+      <Form form={form} layout="vertical" onFinish={handleMakeOffer}>
         <Form.Item
           name="price"
           rules={[
@@ -28,9 +62,9 @@ const MakeOfferModal = ({
           ]}
           label={<p className="text-[14px] font-normal ">Offer your price </p>}
         >
-          <Input 
-          type="number"
-            placeholder={` 45.00`}
+          <Input
+            type="number"
+            placeholder={`0.00`}
             style={{
               height: 50,
               border: "1px solid #d9d9d9",
@@ -39,8 +73,10 @@ const MakeOfferModal = ({
               boxShadow: "none",
               backgroundColor: "white",
               borderRadius: "40px",
-            }} 
-            prefix={<p className="text-[14px] font-normal text-gray-500 ">AED</p>}
+            }}
+            prefix={
+              <p className="text-[14px] font-normal text-gray-500 ">AED</p>
+            }
           />
         </Form.Item>
 

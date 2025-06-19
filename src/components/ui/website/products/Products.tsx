@@ -1,61 +1,44 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import { Breadcrumb, Cascader, ConfigProvider, Pagination, Select } from "antd";
 import React from "react";
-import productsData from "@/data/products.json";
 import ProductCard from "@/components/shared/ProductCard";
+import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
+import { conditions } from "@/constants/product/conditions";
+import { capitalizeSentence } from "@/utils/capitalizeSentence";
+import Link from "next/link";
 
-const categories = {
-  All: [
-    "Jeans",
-    "Tops & T-Shirts",
-    "Sweaters & Sweatshirts",
-    "Shorts",
-    "Sleepwear",
-    "Skirts",
-    "Suits & blazers",
-    "Activewear",
-    "Other men's clothing",
-    "Jumpsuits & rompers",
-  ],
-  Clothing: ["Jackets", "Coats", "Parkas"],
-  Shoes: ["Formal Suits", "Casual Blazers"],
-  Bags: ["Chinos", "Dress Pants", "Joggers"],
-  Accessories: ["Socks", "Boxers", "Briefs"],
-  Beauty: ["Swim Shorts", "Swim Trunks"],
-};
+const Products = ({
+  data = [],
+  meta,
+  filters,
+  categories = [],
+  sizes = [],
+  brands = [],
+  colors = [],
+  materials = [],
+}: {
+  data: any;
+  meta?: any;
+  filters?: any;
+  categories?: any;
+  sizes?: any;
+  brands?: any;
+  colors?: any;
+  materials?: any;
+}) => {
+  const updateSearchParams = useUpdateSearchParams();
 
-const selectOptions = {
-  Size: ["Size 1", "Size 2", "Size 3", "Size 4"],
-  Brand: ["Brand 1", "Brand 2", "Brand 3", "Brand 4"],
-  Condition: ["Condition 1", "Condition 2", "Condition 3", "Condition 4"],
-  Colors: ["Red", "Yellow", "Pink", "Purple"],
-  Material: ["Material 1", "Material 2", "Material 3", "Material 4"],
-  SortBy: ["low price", "high price"],
-};
-
-const options = Object.entries(categories).map(([category, items]) => ({
-  value: category,
-  label: category,
-  children: items.map((item) => ({ value: item, label: item })),
-}));
-
-const Products = () => {
-  const renderSelect = (
-    placeholder: keyof typeof selectOptions,
-    mode?: "multiple"
-  ) => (
-    <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
-      <Select
-        placeholder={placeholder}
-        mode={mode}
-        style={{ width: "100%", height: "35px" }}
-        options={selectOptions[placeholder].map((value) => ({
-          value,
-          label: value,
-        }))}
-      />
-    </ConfigProvider>
-  );
+  const options = categories
+    ?.find((item: any) => item?.name === filters?.category)
+    ?.subCategories?.map((subItem: any) => ({
+      value: subItem?.name,
+      label: subItem?.name,
+      children: subItem?.childSubCategories?.map((childSubItem: any) => ({
+        value: childSubItem?.name,
+        label: childSubItem?.name,
+      })),
+    }));
 
   return (
     <div className="container pt-[30px] pb-[100px]">
@@ -63,32 +46,146 @@ const Products = () => {
         items={[
           {
             title: (
-              <a href="/home" className="text-primary text-[14px] font-normal">
+              <Link href="/" className="text-primary text-[14px] font-normal">
                 Home
-              </a>
+              </Link>
             ),
           },
           {
             title: (
-              <p className="text-secondary text-[14px] font-normal">Women</p>
+              <p className="text-secondary text-[14px] font-normal">
+                {capitalizeSentence(
+                  filters?.category?.toLowerCase() || "Products"
+                )}
+              </p>
             ),
           },
         ]}
       />
       <div className="py-7">
-        <p className="text-secondary text-[25px] font-bold pb-3">Women</p>
+        <p className="text-secondary text-[25px] font-bold pb-3">
+          {capitalizeSentence(filters?.category?.toLowerCase() || "Products")}
+        </p>
         <div className="card flex flex-wrap lg:flex-nowrap items-center gap-4">
           <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
             <Cascader
               options={options}
+              defaultValue={[filters?.subCategory, filters?.childSubCategory]}
               placeholder="Category"
               className="rounded-md"
               style={{ height: "35px", width: "100%" }}
+              onChange={(subItem) =>
+                updateSearchParams({
+                  subCategory: subItem?.[0] as string,
+                  childSubCategory: subItem?.[1] as string,
+                })
+              }
             />
           </ConfigProvider>
-          {Object.keys(selectOptions).map((key: any) =>
-            renderSelect(key, key === "Colors" ? "multiple" : undefined)
-          )}
+
+          <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
+            <Select
+              defaultValue={filters?.size}
+              onSelect={(value) => updateSearchParams({ size: value })}
+              placeholder={"Size"}
+              style={{ width: "100%", height: "35px" }}
+              showSearch
+              allowClear
+              onClear={() => updateSearchParams({ size: null })}
+            >
+              {sizes?.map((item: any) => (
+                <Select.Option key={item.name} value={item.name}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </ConfigProvider>
+          <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
+            <Select
+              defaultValue={filters?.brand}
+              onSelect={(value) => updateSearchParams({ brand: value })}
+              placeholder={"Brand"}
+              style={{ width: "100%", height: "35px" }}
+              showSearch
+              allowClear
+              onClear={() => updateSearchParams({ brand: null })}
+            >
+              {brands?.map((item: any) => (
+                <Select.Option key={item.name} value={item.name}>
+                  {item.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </ConfigProvider>
+          <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
+            <Select
+              defaultValue={filters?.condition}
+              onSelect={(value) => updateSearchParams({ condition: value })}
+              placeholder={"Condition"}
+              style={{ width: "100%", height: "35px" }}
+              showSearch
+              allowClear
+              onClear={() => updateSearchParams({ condition: null })}
+            >
+              {conditions?.map((item: any) => (
+                <Select.Option key={item} value={item}>
+                  {item}
+                </Select.Option>
+              ))}
+            </Select>
+          </ConfigProvider>
+          <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
+            <Select
+              defaultValue={filters?.colors}
+              onSelect={(value) => updateSearchParams({ colors: value })}
+              placeholder={"Color"}
+              style={{ width: "100%", height: "35px" }}
+              showSearch
+              allowClear
+              onClear={() => updateSearchParams({ colors: null })}
+            >
+              {colors?.map((item: any) => (
+                <Select.Option key={item?.name} value={item?.name}>
+                  {item?.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </ConfigProvider>
+          <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
+            <Select
+              defaultValue={filters?.material}
+              onSelect={(value) => updateSearchParams({ material: value })}
+              placeholder={"Material"}
+              style={{ width: "100%", height: "35px" }}
+              showSearch
+              allowClear
+              onClear={() => updateSearchParams({ material: null })}
+            >
+              {materials?.map((item: any) => (
+                <Select.Option key={item?.name} value={item?.name}>
+                  {item?.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </ConfigProvider>
+          <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
+            <Select
+              defaultValue={filters?.sortBy}
+              onSelect={(value) => updateSearchParams({ sortBy: value })}
+              placeholder={"Sort by"}
+              style={{ width: "100%", height: "35px" }}
+              showSearch
+              allowClear
+              onClear={() => updateSearchParams({ sortBy: null })}
+            >
+              <Select.Option key={"High Price"} value={"High Price"}>
+                High Price
+              </Select.Option>
+              <Select.Option key={"Low Price"} value={"Low Price"}>
+                Low Price
+              </Select.Option>
+            </Select>
+          </ConfigProvider>
         </div>
       </div>
 
@@ -97,7 +194,7 @@ const Products = () => {
         <section className="">
           <h1 className="text-[14px] font-normal text-start">500+ results.</h1>
           <div className="  my-5 grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {productsData.map((item) => (
+            {data?.map((item: any) => (
               <ProductCard key={item.id} product={item} />
             ))}
           </div>
@@ -115,7 +212,12 @@ const Products = () => {
               },
             }}
           >
-            <Pagination align="center" defaultCurrent={1} total={50} />
+            <Pagination
+              align="center"
+              pageSize={meta?.limit}
+              current={meta?.page}
+              total={meta?.total}
+            />
           </ConfigProvider>
         </section>
       </div>

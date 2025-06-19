@@ -5,6 +5,7 @@ import FillButton from "@/components/shared/FillButton";
 import Label from "@/components/shared/Label";
 import { ConfigProvider, Segmented } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 
 const Closet = () => {
   return (
@@ -47,7 +48,9 @@ const Closet = () => {
           Sell your used clothes effortlessly, earning cash without hidden fees.
         </p>
         <div className="flex justify-center ">
-          <FillButton className=" uppercase">Sell Now</FillButton>
+          <Link href={"/sell-now"}>
+            <FillButton className=" uppercase">Sell Now</FillButton>
+          </Link>
         </div>
       </section>
     </div>

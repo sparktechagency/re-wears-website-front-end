@@ -1,6 +1,6 @@
 import BackButton from "@/components/shared/BackButton";
 
-const SellingPage = () => {
+const SellingPage = async () => {
   return (
     <div>
       <section className="flex items-center gap-6">

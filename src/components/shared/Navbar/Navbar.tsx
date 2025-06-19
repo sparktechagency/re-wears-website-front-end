@@ -11,6 +11,8 @@ import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
 import { config } from "@/config/env-config";
+import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
+import { useGetSearchParams } from "@/helpers/getSearchParams";
 
 const items: MenuProps["items"] = [
   {
@@ -18,6 +20,7 @@ const items: MenuProps["items"] = [
     label: <Notifications />,
   },
 ];
+
 
 // interface SubCategory {
 //   icon: JSX.Element;
@@ -27,6 +30,7 @@ const items: MenuProps["items"] = [
 // interface SubCategories {
 //   [key: string]: SubCategory;
 // }
+
 
 type ChildSubCategory = {
   _id: string;
@@ -40,76 +44,29 @@ type SubCategory = {
   childSubCategories: ChildSubCategory[];
 };
 
-// type Category = {
-//   _id: string;
-//   name: string;
-//   createdAt: string;
-//   updatedAt: string;
-//   subCategories: SubCategory[];
-// };
-
-// const subCategories: SubCategories = {
-//   All: {
-//     icon: <TbGridDots color=" #9d977a" className="text-lg" />,
-//     items: [
-//       "Jeans",
-//       "Tops & T-Shirts",
-//       "Sweaters & Sweatshirts",
-//       "Shorts",
-//       "Sleepwear",
-//       "Skirts",
-//       "Suits & blazers",
-//       "Activewear",
-//       "Other men's clothing",
-//       "Jumpsuits & rompers",
-//     ],
-//   },
-//   Clothing: {
-//     icon: <FaTshirt color=" #9d977a" className="text-lg" />,
-//     items: ["Jackets", "Coats", "Parkas"],
-//   },
-//   Shoes: {
-//     icon: <GiConverseShoe color=" #9d977a" className="text-lg" />,
-//     items: ["Formal Suits", "Casual Blazers"],
-//   },
-//   Bags: {
-//     icon: <SlHandbag color=" #9d977a" className="text-lg" />,
-//     items: ["Chinos", "Dress Pants", "Joggers"],
-//   },
-//   Accessories: {
-//     icon: <GiDoubleNecklace color=" #9d977a" className="text-lg" />,
-//     items: ["Socks", "Boxers", "Briefs"],
-//   },
-//   Beauty: {
-//     icon: <GiLipstick color=" #9d977a" className="text-lg" />,
-//     items: ["Swim Shorts", "Swim Trunks"],
-//   },
-// };
-
 const Navbar = ({
   profile,
-  categoriesRes,
+  categoriesData,
 }: {
   profile: any;
-  categoriesRes: Array<{ name?: string; [key: string]: any }>;
+  categoriesData: Array<{ name?: string; [key: string]: any }>;
 }) => {
+  const { searchTerm } = useGetSearchParams();
+  const updateSearchParams = useUpdateSearchParams();
   const [isSearchbarVisible, setSearchbarVisible] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState("");
   const searchRef = useRef<HTMLDivElement>(null);
   const [selectedCategory, setSelectedCategory] = useState("");
-  // const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(
-  //   "All"
-  // );
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
 
-  const singleCategories = categoriesRes?.filter(
-    (item) => item?.name?.toLowerCase() === selectedCategory
-  );
 
-  const handleProductData = (subChildCategoryId: string) => {
-    console.log("Selected SubChildCategory ID:", subChildCategoryId);
-  };
+  // const singleCategories = categoriesData?.filter(
+  //   (item) => item?.name?.toLowerCase() === selectedCategory
+  // );
+
+  // const handleProductData = (subChildCategoryId: string) => {
+  //   console.log("Selected SubChildCategory ID:", subChildCategoryId);
+  // };
 
   // Close search bar when clicking outside
   useEffect(() => {
@@ -131,38 +88,40 @@ const Navbar = ({
   const menuItems = (
     <Menu style={{ width: "650px", padding: "25px" }}>
       <div className="grid grid-cols-6 gap-3">
-        {/* Categories List */}
+        {/* sub Categories List */}
         <div className="col-span-2 border-e border-gray-300">
-          {singleCategories?.[0]?.subCategories?.map((sub: SubCategory) => (
-            <div
-              key={sub._id}
-              onClick={() => setSelectedSubCategory(sub)}
-              className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
-                selectedSubCategory?._id === sub?._id
-                  ? "text-black font-bold"
-                  : "text-primary"
-              }`}
-            >
-              <Image
-                width={16}
-                height={16}
-                src={
-                  sub?.icon
-                    ? sub.icon.includes("http")
-                      ? sub.icon
-                      : `${config?.IMAGE_URL}${sub.icon}`
-                    : "/placeholder.svg"
-                }
-                alt={sub.name || "subcategory"}
-                className="w-4 h-4 object-contain"
-                unoptimized
-              />
-              {sub.name}
-            </div>
-          ))}
+          {categoriesData
+            ?.filter((item) => item?.name === selectedCategory)?.[0]
+            ?.subCategories?.map((sub: SubCategory) => (
+              <div
+                key={sub._id}
+                onClick={() => setSelectedSubCategory(sub)}
+                className={`flex items-center gap-2 cursor-pointer py-2 font-medium transition-all ${
+                  selectedSubCategory?._id === sub?._id
+                    ? "text-black font-bold"
+                    : "text-primary"
+                }`}
+              >
+                <Image
+                  width={16}
+                  height={16}
+                  src={
+                    sub?.icon
+                      ? sub.icon.includes("http")
+                        ? sub.icon
+                        : `${config?.IMAGE_URL}${sub.icon}`
+                      : "/placeholder.svg"
+                  }
+                  alt={sub.name || "subcategory"}
+                  className="w-4 h-4 object-contain"
+                  unoptimized
+                />
+                {sub.name}
+              </div>
+            ))}
         </div>
 
-        {/* Items List (Only visible if a category is selected) */}
+        {/* child sub categories List */}
         <div className="col-span-4 ps-2 pe-6">
           {selectedSubCategory &&
           (selectedSubCategory as any)?.childSubCategories?.length > 0 ? (
@@ -170,10 +129,7 @@ const Navbar = ({
               {selectedSubCategory?.childSubCategories?.map((item) => (
                 <div key={item._id} className="py-1">
                   <Link
-                    onClick={() => {
-                      handleProductData(item._id);
-                    }}
-                    href="/products"
+                    href={`/products?category=${selectedCategory}&subCategory=${selectedSubCategory?.name}&childSubCategory=${item.name}`}
                     className="text-[#797979] hover:text-primary"
                   >
                     {item.name}
@@ -218,6 +174,9 @@ const Navbar = ({
               className="absolute"
             />
             <input
+              onChange={(e) =>
+                updateSearchParams({ searchTerm: e.target.value })
+              }
               placeholder="Search for items"
               className="p-8 py-3 text-base placeholder:text-[#797979] focus:outline-none border-b border-black"
             />
@@ -323,7 +282,7 @@ const Navbar = ({
             }}
             onSelect={({ key }) => setSelectedCategory(key as string)}
           >
-            <Menu.Item key="women">
+            <Menu.Item key="WOMEN">
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
@@ -332,7 +291,7 @@ const Navbar = ({
                 <span>WOMEN</span>
               </Dropdown>
             </Menu.Item>
-            <Menu.Item key="men">
+            <Menu.Item key="MEN">
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
@@ -341,7 +300,7 @@ const Navbar = ({
                 <span>MEN</span>
               </Dropdown>
             </Menu.Item>
-            <Menu.Item key="kids">
+            <Menu.Item key="KIDS">
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
@@ -350,7 +309,8 @@ const Navbar = ({
                 <span>KIDS</span>
               </Dropdown>
             </Menu.Item>
-            <Menu.Item key="beauty/grooming">
+            <Menu.Item key="BEAUTY">
+
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}
@@ -364,7 +324,7 @@ const Navbar = ({
 
         {/* menu for small screen */}
         <div className="lg:hidden">
-          <MenuVertical categoriesRes={categoriesRes as any} />
+          <MenuVertical categoriesData={categoriesData as any} />
         </div>
 
         {/* search field for small screen */}
@@ -379,13 +339,15 @@ const Navbar = ({
               />
               <input
                 placeholder="Search for items"
-                value={searchKeyword}
-                onChange={(e) => setSearchKeyword(e.target.value)}
+                value={searchTerm || ""}
+                onChange={(e) =>
+                  updateSearchParams({ searchTerm: e.target.value })
+                }
                 className="w-full p-8 py-3 text-base safari-only:text-base placeholder:text-[#797979] focus:outline-none border-b rounded-none border-black"
               />
-              {searchKeyword && (
+              {searchTerm && (
                 <XIcon
-                  onClick={() => setSearchKeyword("")}
+                  onClick={() => updateSearchParams({ searchTerm: null })}
                   className="text-[#797979] absolute right-3 top-2 z-50"
                 />
               )}

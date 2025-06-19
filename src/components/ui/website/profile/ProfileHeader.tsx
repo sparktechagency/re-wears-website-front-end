@@ -5,14 +5,13 @@ import OutlineButton from "@/components/shared/OutlineButton";
 import { Rate } from "antd";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import { BsPatchCheckFill } from "react-icons/bs";
 import { FaClock } from "react-icons/fa";
 import { FaCircleCheck } from "react-icons/fa6";
 import { HiMapPin } from "react-icons/hi2";
 
-const ProfileHeader = () => {
-  const [value, setValue] = useState(3);
+const ProfileHeader = ({ user }: { user: any }) => {
+  console.log(user);
 
   return (
     <section className="card">
@@ -25,12 +24,7 @@ const ProfileHeader = () => {
           <div className="lg:hidden block">
             <Label className="text-[16px] pb-2">@mykola888</Label>
             <div className="flex items-center gap-4">
-              <Rate
-                disabled
-                onChange={setValue}
-                value={value}
-                style={{ color: "#FDB11A" }}
-              />
+              <Rate disabled value={5} style={{ color: "#FDB11A" }} />
               <span className="text-[#797979] text-[14px]">20 reviews</span>
             </div>
           </div>
@@ -41,12 +35,7 @@ const ProfileHeader = () => {
           <div className="hidden lg:block ">
             <Label className="text-xl lg:block hidden">@mykola888</Label>
             <div className="flex items-center gap-4 ">
-              <Rate
-                disabled
-                onChange={setValue}
-                value={value}
-                style={{ color: "#FDB11A" }}
-              />
+              <Rate disabled value={5} style={{ color: "#FDB11A" }} />
               <span className="text-[#797979]">20 reviews</span>
             </div>
           </div>

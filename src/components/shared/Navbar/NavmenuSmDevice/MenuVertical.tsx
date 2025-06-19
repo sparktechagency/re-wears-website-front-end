@@ -8,9 +8,9 @@ import Image from "next/image";
 const { Panel } = Collapse;
 
 export default function Navbar({
-  categoriesRes,
+  categoriesData,
 }: {
-  categoriesRes: Array<{
+  categoriesData: Array<{
     _id: string;
     name: string;
     subCategories: Array<{
@@ -41,7 +41,7 @@ export default function Navbar({
   return (
     <nav>
       <div className="flex justify-center items-center gap-2 p-4 py-2 text-sm font-medium relative">
-        {categoriesRes.map((category) => (
+        {categoriesData?.map((category) => (
           <div key={category._id} className="menu-item">
             {/* Main Category Button */}
             <button
