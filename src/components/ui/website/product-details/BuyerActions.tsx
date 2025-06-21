@@ -1,10 +1,12 @@
+"use client";
+
 import FillButton from "@/components/shared/FillButton";
 import OutlineButton from "@/components/shared/OutlineButton";
 import { myFetch } from "@/helpers/myFetch";
 import { revalidateTags } from "@/helpers/revalidateTags";
 import { Heart } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { RxHeartFilled } from "react-icons/rx";
 import ReserveNowModal from "./ReserveNowModal";
@@ -21,6 +23,23 @@ const BuyerActions = ({
 }) => {
   const [reserveOpen, setReserveOpen] = useState(false);
   const [makeOfferModal, setMakeOfferModal] = useState(false);
+  const [wishlist, setWishlist] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const res = await myFetch(`/wishlist/${productData?._id}`, {
+          tags: ["Wishlist"],
+        });
+        if (res?.success) {
+          setWishlist(res?.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchWishlist();
+  }, [productData?._id, wishlist]);
 
   // handle reserving
   const handleReserveNow = async () => {
@@ -86,10 +105,10 @@ const BuyerActions = ({
         method: "POST",
         body: payload,
       });
-      console.log(res);
       if (res?.success) {
-        toast.success("Added to wishlist", { id: "wishlist" });
-        revalidateTags(["Product"]);
+        toast.success("Wishlist updated", { id: "wishlist" });
+        revalidateTags(["Product", "Wishlist"]);
+        setWishlist("hello");
       } else {
         toast.error(res?.message || "Failed to add wishlist", {
           id: "wishlist",
@@ -139,12 +158,15 @@ const BuyerActions = ({
           onClick={handleWishlist}
           className="uppercase w-full flex items-center justify-center gap-2"
         >
-          <div className="flex items-center gap-1">
-            <RxHeartFilled size={24} /> remove from wishlist
-          </div>
-          <div className="flex items-center gap-1">
-            <Heart /> add to wishlist
-          </div>
+          {wishlist ? (
+            <div className="flex items-center gap-1">
+              <RxHeartFilled size={24} /> remove from wishlist
+            </div>
+          ) : (
+            <div className="flex items-center gap-1">
+              <Heart /> add to wishlist
+            </div>
+          )}
         </OutlineButton>
       </div>
 

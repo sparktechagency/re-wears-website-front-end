@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client"
-import { config } from "@/config/env-config";
+import { config, IMAGE_URL } from "@/config/env-config";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -27,7 +27,7 @@ const ProductCard = ({ product }: { product: any }) => {
         </button>
         <Link href={`/product-details/${product?._id}`}>
           <Image
-            src={`${config.IMAGE_URL}${product?.productImage[0]}`}
+            src={`${IMAGE_URL}${product?.productImage[0]}`}
             alt="img"
             width={250}
             height={300}
@@ -44,7 +44,7 @@ const ProductCard = ({ product }: { product: any }) => {
         </div>
         <div className="flex items-center gap-3 bg-[#F5F5F5] p-2 px-4 rounded-b-xl">
           <Image
-            src={product.user.image}
+            src={`${IMAGE_URL}${product.user.image}`}
             alt="image"
             width={30}
             height={30}

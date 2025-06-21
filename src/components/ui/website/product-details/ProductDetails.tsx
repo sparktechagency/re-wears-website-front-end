@@ -8,7 +8,7 @@ import { HiLocationMarker } from "react-icons/hi";
 import { MdWatchLater } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
-import { config } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { Rate } from "antd";
 import BuyerActions from "./BuyerActions";
 import SellerActions from "./SellerActions";
@@ -153,7 +153,7 @@ const ProductDetails = ({
             <div className="flex flex-col md:flex-row lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <Image
-                  src={`${config.IMAGE_URL}${productData?.user?.image}`}
+                  src={`${IMAGE_URL}${productData?.user?.image}`}
                   alt="user"
                   width={50}
                   height={50}
