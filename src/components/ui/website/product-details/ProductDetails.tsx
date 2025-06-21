@@ -38,13 +38,13 @@ const ProductDetails = ({
               <Minus className="text-primary" />
             </p>
 
-            {productData?.category?.name && (
+            {productData?.category?.category?.name && (
               <p className="flex items-center gap-2">
                 <Link
-                  href={`/products?category=${productData?.category?._id}`}
+                  href={`/products?category=${productData?.category?.category?.name}`}
                   className="link !font-normal"
                 >
-                  {productData?.category?.name}
+                  {productData?.category?.category?.name}
                 </Link>
                 <Minus className="text-primary" />
               </p>
@@ -53,7 +53,7 @@ const ProductDetails = ({
             {productData?.category?.subCategory?.name && (
               <p className="flex items-center gap-2">
                 <Link
-                  href={`/products?category=${productData?.category?.subCategory?._id}`}
+                  href={`/products?category=${productData?.category?.category?.name}&subCategory=${productData?.category?.subCategory?.name}`}
                   className="link !font-normal"
                 >
                   {productData?.category?.subCategory?.name}
@@ -65,7 +65,7 @@ const ProductDetails = ({
             {productData?.category?.childSubCategory?.name && (
               <p className="flex items-center gap-2">
                 <Link
-                  href={`/products?category=${productData?.category?.childSubCategory?._id}`}
+                  href={`/products?category=${productData?.category?.category?.name}&subCategory=${productData?.category?.subCategory?.name}&childSubCategory=${productData?.category?.childSubCategory?.name}`}
                   className="link !font-normal"
                 >
                   {productData?.category?.childSubCategory?.name}
