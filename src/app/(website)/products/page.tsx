@@ -1,7 +1,10 @@
+// "use client"
 import Products from "@/components/ui/website/products/Products";
 import { myFetch } from "@/helpers/myFetch";
+// import { useSearchParams } from "next/navigation";
 
 const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
+
   const {
     searchTerm,
     page,
@@ -19,17 +22,17 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
   const queryParams = new URLSearchParams({
     ...(searchTerm && { searchTerm }),
     ...(page && { page }),
-    ...(category && { category }),
-    ...(subCategory && { subCategory }),
-    ...(childSubCategory && { childSubCategory }),
+    ...(category && { "category.category": category }),
+    ...(subCategory && { "category.subCategory": subCategory }),
+    ...(childSubCategory && { "category.childSubCategory": childSubCategory }),
     ...(size && { size }),
     ...(brand && { brand }),
     ...(colors && { colors }),
     ...(condition && { condition }),
     ...(material && { material }),
     ...(sortBy && { sortBy }),
-  });
-
+  });  
+  console.log(queryParams.toString());
   const res = await myFetch(`/product?${queryParams.toString()}`, {
     tags: ["products"],
     cache: "no-store",
