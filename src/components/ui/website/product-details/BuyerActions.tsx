@@ -23,7 +23,8 @@ const BuyerActions = ({
 }) => {
   const [reserveOpen, setReserveOpen] = useState(false);
   const [makeOfferModal, setMakeOfferModal] = useState(false);
-  const [wishlist, setWishlist] = useState<any>(null);
+  const [wishlist, setWishlist] = useState<any>({});
+  const [triggerWishListData, setTriggerWishListData] = useState(false);
 
   useEffect(() => {
     const fetchWishlist = async () => {
@@ -39,7 +40,7 @@ const BuyerActions = ({
       }
     };
     fetchWishlist();
-  }, [productData?._id, wishlist]);
+  }, [productData?._id, triggerWishListData]);
 
   // handle reserving
   const handleReserveNow = async () => {
@@ -108,7 +109,7 @@ const BuyerActions = ({
       if (res?.success) {
         toast.success("Wishlist updated", { id: "wishlist" });
         revalidateTags(["Product", "Wishlist"]);
-        setWishlist("hello");
+        setTriggerWishListData(!triggerWishListData);
       } else {
         toast.error(res?.message || "Failed to add wishlist", {
           id: "wishlist",
