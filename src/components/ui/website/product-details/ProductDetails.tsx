@@ -174,7 +174,7 @@ const ProductDetails = ({
                   </p>
                 </div>
               </div>
-              <Link href={"/profile"}>
+              <Link href={`/profile?id=${seller?.user?._id}`}>
                 <OutlineButton>See profile</OutlineButton>
               </Link>
             </div>
