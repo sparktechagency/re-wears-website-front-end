@@ -3,7 +3,7 @@
 import Label from "@/components/shared/Label";
 import OutlineButton from "@/components/shared/OutlineButton";
 import { Rate } from "antd";
-import { Divide, Pencil } from "lucide-react";
+import { Heart, Pencil } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { BsPatchCheckFill } from "react-icons/bs";
@@ -13,14 +13,16 @@ import { HiMapPin } from "react-icons/hi2";
 import { config } from "@/config/env-config";
 import { formatDistanceToNow } from "date-fns";
 
-const ProfileHeader = ({ user }: { user: any }) => {
-  console.log(user);
+const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
   let lastActiveStatus = "Unknown";
   const lastSeenAt = user?.user?.lastSeenAt;
+  
   if (lastSeenAt && !isNaN(new Date(lastSeenAt).getTime())) {
-    lastActiveStatus = formatDistanceToNow(new Date(lastSeenAt), { addSuffix: true });
+    lastActiveStatus = formatDistanceToNow(new Date(lastSeenAt), {
+      addSuffix: true,
+    });
   }
-  console.log(user);
+
   return (
     <section className="card">
       <div className=" flex flex-col lg:flex-row lg:gap-6 gap-2">
@@ -125,15 +127,23 @@ const ProfileHeader = ({ user }: { user: any }) => {
 
         {/* action button */}
         <div className="flex flex-row lg:flex-col gap-4">
+          {userId === user?.user?._id ? (
+            <Link href={"/settings/profile-details"}>
+              <OutlineButton className="flex justify-center items-center gap-2">
+                <Pencil size={20} /> Edit Profile
+              </OutlineButton>
+            </Link>
+          ) : (
+            <Link href={"#"}>
+              <OutlineButton className="flex justify-center items-center gap-2">
+                <Heart size={20} /> Follow
+              </OutlineButton>
+            </Link>
+          )}
           {/* <OutlineButton className="flex justify-center items-center gap-2">
             <IoMail size={20} /> Message
           </OutlineButton>
           <FillButton>Follow</FillButton> */}
-          <Link href={"/settings/profile-details"}>
-            <OutlineButton className="flex justify-center items-center gap-2">
-              <Pencil size={20} /> Edit Profile
-            </OutlineButton>
-          </Link>
         </div>
       </div>
       {/* <div className="max-w-screen-lg mx-auto">

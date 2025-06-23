@@ -10,11 +10,11 @@ const ProfilePage = async ({
 }: {
   searchParams: Record<string, string>;
 }) => {
-  const userId = searchParams.id
-    ? searchParams.id
-    : (await myFetch("/users/profile"))?.data?._id;
-  console.log(userId);
-  const profileRes = await myFetch(`/users/${userId}`, {
+  const userId = (await myFetch("/users/profile"))?.data?._id;
+
+  const profileId = searchParams.id ? searchParams.id : userId;
+
+  const profileRes = await myFetch(`/users/${profileId}`, {
     cache: "no-store",
   });
 
@@ -42,7 +42,7 @@ const ProfilePage = async ({
     <div className="container my-12 grid gap-6">
       {/* profile header */}
       <section>
-        <ProfileHeader user={profileRes?.data} />
+        <ProfileHeader user={profileRes?.data} userId={userId} />
       </section>
 
       {/* profile content */}
