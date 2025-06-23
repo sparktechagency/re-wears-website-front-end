@@ -1,3 +1,5 @@
+"use client";
+
 import OutlineButton from "@/components/shared/OutlineButton";
 import { myFetch } from "@/helpers/myFetch";
 import { revalidateTags } from "@/helpers/revalidateTags";
@@ -5,9 +7,11 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import ProductDeleteModal from "./DeleteModal";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const SellerActions = ({ productData }: { productData: any }) => {
   const [deleteModal, setDeleteModal] = useState(false);
+  const router = useRouter();
 
   // handle update product status
   const handleUpdateStatus = async (status: string) => {
@@ -43,8 +47,9 @@ const SellerActions = ({ productData }: { productData: any }) => {
         method: "DELETE",
       });
       if (res?.success) {
-        toast.success("Deleted successfully", { id: "delete-product" });
+        router.push("/products");
         revalidateTags(["Product", "products"]);
+        toast.success("Deleted successfully", { id: "delete-product" });
       } else {
         toast.error(res?.message || "Something went wrong", {
           id: "delete-product",

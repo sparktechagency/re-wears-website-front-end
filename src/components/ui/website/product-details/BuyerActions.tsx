@@ -1,10 +1,12 @@
+"use client";
+
 import FillButton from "@/components/shared/FillButton";
 import OutlineButton from "@/components/shared/OutlineButton";
 import { myFetch } from "@/helpers/myFetch";
 import { revalidateTags } from "@/helpers/revalidateTags";
 import { Heart } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { RxHeartFilled } from "react-icons/rx";
 import ReserveNowModal from "./ReserveNowModal";
@@ -21,6 +23,24 @@ const BuyerActions = ({
 }) => {
   const [reserveOpen, setReserveOpen] = useState(false);
   const [makeOfferModal, setMakeOfferModal] = useState(false);
+  const [wishlist, setWishlist] = useState<any>({});
+  const [triggerWishListData, setTriggerWishListData] = useState(false);
+
+  useEffect(() => {
+    const fetchWishlist = async () => {
+      try {
+        const res = await myFetch(`/wishlist/${productData?._id}`, {
+          tags: ["Wishlist"],
+        });
+        if (res?.success) {
+          setWishlist(res?.data);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchWishlist();
+  }, [productData?._id, triggerWishListData]);
 
   // handle reserving
   const handleReserveNow = async () => {
@@ -31,7 +51,6 @@ const BuyerActions = ({
       product: productData?._id,
       status: "Reserved",
     };
-    console.log(payload);
 
     try {
       const res = await myFetch(`/order/create`, {
@@ -54,12 +73,11 @@ const BuyerActions = ({
   const handleRelease = async () => {
     toast.loading("Loading...", { id: "release" });
     const payload = {
-      product: productData?._id,
       status: "Released",
     };
 
     try {
-      const res = await myFetch(`/order/update`, {
+      const res = await myFetch(`/order/${productData?._id}`, {
         method: "PATCH",
         body: payload,
       });
@@ -86,10 +104,10 @@ const BuyerActions = ({
         method: "POST",
         body: payload,
       });
-      console.log(res);
       if (res?.success) {
-        toast.success("Added to wishlist", { id: "wishlist" });
-        revalidateTags(["Product"]);
+        toast.success("Wishlist updated", { id: "wishlist" });
+        revalidateTags(["Product", "Wishlist"]);
+        setTriggerWishListData(!triggerWishListData);
       } else {
         toast.error(res?.message || "Failed to add wishlist", {
           id: "wishlist",
@@ -102,7 +120,8 @@ const BuyerActions = ({
 
   return (
     <div className="grid gap-2 px-6">
-      {productData?.status === "Active" && (
+      {(productData?.status === "Active" ||
+        productData?.status === "Released") && (
         <FillButton
           onClick={() => setReserveOpen(true)}
           className="uppercase w-full"
@@ -111,7 +130,7 @@ const BuyerActions = ({
         </FillButton>
       )}
       {productData?.status === "Reserved" && (
-        <FillButton className="uppercase w-full bg-[#D04555] hover:bg-[#c64251] cursor-not-allowed">
+        <FillButton className="uppercase w-full !bg-[#cf4555] hover:!bg-[#c03f4e] cursor-not-allowed">
           Reserved
         </FillButton>
       )}
@@ -139,12 +158,15 @@ const BuyerActions = ({
           onClick={handleWishlist}
           className="uppercase w-full flex items-center justify-center gap-2"
         >
-          <div className="flex items-center gap-1">
-            <RxHeartFilled size={24} /> remove from wishlist
-          </div>
-          <div className="flex items-center gap-1">
-            <Heart /> add to wishlist
-          </div>
+          {wishlist ? (
+            <div className="flex items-center gap-1">
+              <RxHeartFilled size={24} /> remove from wishlist
+            </div>
+          ) : (
+            <div className="flex items-center gap-1">
+              <Heart /> add to wishlist
+            </div>
+          )}
         </OutlineButton>
       </div>
 

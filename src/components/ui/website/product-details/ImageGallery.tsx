@@ -16,7 +16,7 @@ import { Swiper as SwiperType } from "swiper/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { NavigationOptions } from "swiper/types";
 import Image from "next/image";
-import { config } from "@/config/env-config";
+import { config, IMAGE_URL } from "@/config/env-config";
 
 const ImageGallery = ({ product }: { product: any }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
@@ -40,7 +40,7 @@ const ImageGallery = ({ product }: { product: any }) => {
         {product?.productImage?.map((image: any, idx: number) => (
           <SwiperSlide key={idx} className="!h-32">
             <Image
-              src={`${config.IMAGE_URL}${image}`}
+              src={`${IMAGE_URL}${image}`}
               alt="product image"
               width={100}
               height={100}
@@ -74,7 +74,7 @@ const ImageGallery = ({ product }: { product: any }) => {
           {product?.productImage?.map((image: any, idx: number) => (
             <SwiperSlide key={idx}>
               <Image
-                src={`${config.IMAGE_URL}${image}`}
+                src={`${IMAGE_URL}${image}`}
                 alt="product image"
                 width={500}
                 height={600}

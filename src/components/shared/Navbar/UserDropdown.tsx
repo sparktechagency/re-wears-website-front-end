@@ -1,6 +1,6 @@
 "use client";
 
-import { config } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { useAuthContext } from "@/contexts/AuthContext";
 import Image from "next/image";
 import Link from "next/link";
@@ -37,7 +37,7 @@ const UserDropdown = ({ profile }: { profile: any }) => {
         src={
           profile?.image?.includes("http")
             ? profile?.image
-            : `${config.IMAGE_URL}${profile?.image}`
+            : `${IMAGE_URL}${profile?.image}`
         }
         alt="profile-img"
         width={60}

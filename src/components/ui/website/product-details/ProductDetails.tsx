@@ -8,10 +8,11 @@ import { HiLocationMarker } from "react-icons/hi";
 import { MdWatchLater } from "react-icons/md";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
-import { config } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { Rate } from "antd";
 import BuyerActions from "./BuyerActions";
 import SellerActions from "./SellerActions";
+import { useEffect, useState } from "react";
 
 const ProductDetails = ({
   product,
@@ -22,8 +23,22 @@ const ProductDetails = ({
   seller: any;
   profile: any;
 }) => {
+  const [lastseen, setLastseen] = useState("");
   const productData = product?.result;
   const isMyProduct = productData?.user?._id === profile?._id;
+
+  useEffect(() => {
+    const updateTime = () => {
+      setLastseen(
+        formatDistanceToNow(new Date(productData?.user?.lastSeenAt), {
+          addSuffix: true,
+        })
+      );
+    };
+    updateTime(); // initial
+    const interval = setInterval(updateTime, 60000); // every minute
+    return () => clearInterval(interval);
+  }, [productData?.user?.lastSeenAt]);
 
   return (
     <div className="container">
@@ -38,13 +53,13 @@ const ProductDetails = ({
               <Minus className="text-primary" />
             </p>
 
-            {productData?.category?.name && (
+            {productData?.category?.category?.name && (
               <p className="flex items-center gap-2">
                 <Link
-                  href={`/products?category=${productData?.category?._id}`}
+                  href={`/products?category=${productData?.category?.category?.name}`}
                   className="link !font-normal"
                 >
-                  {productData?.category?.name}
+                  {productData?.category?.category?.name}
                 </Link>
                 <Minus className="text-primary" />
               </p>
@@ -53,7 +68,7 @@ const ProductDetails = ({
             {productData?.category?.subCategory?.name && (
               <p className="flex items-center gap-2">
                 <Link
-                  href={`/products?category=${productData?.category?.subCategory?._id}`}
+                  href={`/products?category=${productData?.category?.category?.name}&subCategory=${productData?.category?.subCategory?.name}`}
                   className="link !font-normal"
                 >
                   {productData?.category?.subCategory?.name}
@@ -65,7 +80,7 @@ const ProductDetails = ({
             {productData?.category?.childSubCategory?.name && (
               <p className="flex items-center gap-2">
                 <Link
-                  href={`/products?category=${productData?.category?.childSubCategory?._id}`}
+                  href={`/products?category=${productData?.category?.category?.name}&subCategory=${productData?.category?.subCategory?.name}&childSubCategory=${productData?.category?.childSubCategory?.name}`}
                   className="link !font-normal"
                 >
                   {productData?.category?.childSubCategory?.name}
@@ -153,14 +168,16 @@ const ProductDetails = ({
             <div className="flex flex-col md:flex-row lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <Image
-                  src={`${config.IMAGE_URL}${productData?.user?.image}`}
+                  src={`${IMAGE_URL}${productData?.user?.image}`}
                   alt="user"
                   width={50}
                   height={50}
                   className="rounded-full"
                 />
                 <div>
-                  <h1 className="text-lg font-bold">@mykola888</h1>
+                  <h1 className="text-lg font-bold">
+                    @{productData?.user?.userName}
+                  </h1>
                   <p className="text-[#797979] text-sm">
                     {seller?.customerAvgRating > 0 ? (
                       <Rate
@@ -189,7 +206,7 @@ const ProductDetails = ({
                 <span>
                   <MdWatchLater size={20} color="#9d977a" />
                 </span>
-                <span> Last seen 10 hours ago (static time) </span>
+                <span>Last seen {lastseen} </span>
               </p>
             </div>
           </div>

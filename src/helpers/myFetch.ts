@@ -39,7 +39,7 @@ export const myFetch = async (
     cache = "force-cache",
   }: FetchOptions = {}
 ): Promise<FetchResponse> => {
-  const accessToken = token || (await getAccessToken());
+  const accessToken = await getAccessToken();
 
   const isFormData = body instanceof FormData;
   const hasBody = body !== undefined && method !== "GET";
@@ -48,6 +48,7 @@ export const myFetch = async (
     Accept: "application/json",
     ...headers,
     ...(isFormData ? {} : { "Content-Type": "application/json" }),
+    ...(token ? { Authorization: `${token}` } : {}),
     ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
   };
 
