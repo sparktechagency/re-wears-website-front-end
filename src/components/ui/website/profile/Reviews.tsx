@@ -6,9 +6,10 @@ import { Rate } from "antd";
 import { useState } from "react";
 import { FaCircleUser } from "react-icons/fa6";
 
-const Reviews = () => {
+const Reviews = ({ reviews }: { reviews: any }) => {
   const [value, setValue] = useState(3);
-
+  console.log(reviews);
+  
   return (
     <div className="grid gap-6 font-poppins">
       <section className="flex gap-6 items-center text-base lg:py-4">
