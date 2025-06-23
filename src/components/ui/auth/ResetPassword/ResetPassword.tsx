@@ -18,7 +18,7 @@ const ResetPassword = () => {
       const res = await myFetch("/auth/reset-password", {
         method: "POST",
         body: values,
-        token: token as string,
+        token: `${token}` as string,
       });
       if (res.success) {
         toast.success("Password reset successfully", { id: "reset-password" });

@@ -1,6 +1,6 @@
 "use client";
 
-import { config, IMAGE_URL } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { useAuthContext } from "@/contexts/AuthContext";
 import Image from "next/image";
 import Link from "next/link";

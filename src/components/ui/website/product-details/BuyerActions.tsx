@@ -51,7 +51,6 @@ const BuyerActions = ({
       product: productData?._id,
       status: "Reserved",
     };
-    console.log(payload);
 
     try {
       const res = await myFetch(`/order/create`, {
@@ -74,12 +73,11 @@ const BuyerActions = ({
   const handleRelease = async () => {
     toast.loading("Loading...", { id: "release" });
     const payload = {
-      product: productData?._id,
       status: "Released",
     };
 
     try {
-      const res = await myFetch(`/order/update`, {
+      const res = await myFetch(`/order/${productData?._id}`, {
         method: "PATCH",
         body: payload,
       });
@@ -122,7 +120,8 @@ const BuyerActions = ({
 
   return (
     <div className="grid gap-2 px-6">
-      {productData?.status === "Active" && (
+      {(productData?.status === "Active" ||
+        productData?.status === "Released") && (
         <FillButton
           onClick={() => setReserveOpen(true)}
           className="uppercase w-full"
@@ -131,7 +130,7 @@ const BuyerActions = ({
         </FillButton>
       )}
       {productData?.status === "Reserved" && (
-        <FillButton className="uppercase w-full bg-[#D04555] hover:bg-[#c64251] cursor-not-allowed">
+        <FillButton className="uppercase w-full !bg-[#cf4555] hover:!bg-[#c03f4e] cursor-not-allowed">
           Reserved
         </FillButton>
       )}

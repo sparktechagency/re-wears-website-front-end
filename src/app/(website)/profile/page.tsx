@@ -24,7 +24,10 @@ const items: TabsProps["items"] = [
 ];
 
 const ProfilePage = async () => {
-  const res = await myFetch("/users/profile");
+  const res = await myFetch("/users/profile", {
+    tags: ["profile"],
+    cache: "no-store",
+  });
 
   return (
     <div className="container my-12 grid gap-6">
