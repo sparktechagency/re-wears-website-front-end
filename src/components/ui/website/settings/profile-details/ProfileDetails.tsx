@@ -4,7 +4,7 @@ import FillButton from "@/components/shared/FillButton";
 import Input from "@/components/shared/Input";
 import OutlineButton from "@/components/shared/OutlineButton";
 import Select from "@/components/shared/Select";
-import { config, IMAGE_URL } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { locations } from "@/constants/profile/locations";
 import { months } from "@/constants/profile/months";
 import { myFetch } from "@/helpers/myFetch";

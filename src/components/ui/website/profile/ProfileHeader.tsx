@@ -3,20 +3,22 @@
 import Label from "@/components/shared/Label";
 import OutlineButton from "@/components/shared/OutlineButton";
 import { Rate } from "antd";
-import { Heart, Pencil } from "lucide-react";
+import { Pencil } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { BsPatchCheckFill } from "react-icons/bs";
 import { FaClock } from "react-icons/fa";
 import { FaCircleCheck } from "react-icons/fa6";
 import { HiMapPin } from "react-icons/hi2";
-import { config } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { formatDistanceToNow } from "date-fns";
+import { IoMail } from "react-icons/io5";
+import FillButton from "@/components/shared/FillButton";
 
 const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
   let lastActiveStatus = "Unknown";
   const lastSeenAt = user?.user?.lastSeenAt;
-  
+
   if (lastSeenAt && !isNaN(new Date(lastSeenAt).getTime())) {
     lastActiveStatus = formatDistanceToNow(new Date(lastSeenAt), {
       addSuffix: true,
@@ -32,7 +34,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
               src={
                 user.user.image.includes("http")
                   ? user.user.image
-                  : `${config.IMAGE_URL}${user.user.image}`
+                  : `${IMAGE_URL}${user.user.image}`
               }
               alt="User image"
               width={112}
@@ -45,8 +47,8 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
             </div>
           )}
 
-          <div className="lg:hidden block">
-            <Label className="text-[16px] pb-2">{user?.user?.userName}</Label>
+          <div className="block lg:hidden">
+            <Label className="text-[16px] pb-2">@{user?.user?.userName}</Label>
             <div className="flex items-center gap-4">
               <Rate
                 disabled
@@ -64,7 +66,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
         <div className="flex-1">
           <div className="hidden lg:block ">
             <Label className="text-xl lg:block hidden">
-              {user?.user?.userName}
+              @{user?.user?.userName}
             </Label>
             <div className="flex items-center gap-4 ">
               <Rate
@@ -134,24 +136,15 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
               </OutlineButton>
             </Link>
           ) : (
-            <Link href={"#"}>
+            <>
               <OutlineButton className="flex justify-center items-center gap-2">
-                <Heart size={20} /> Follow
+                <IoMail size={20} /> Message
               </OutlineButton>
-            </Link>
+              <FillButton>Follow</FillButton>
+            </>
           )}
-          {/* <OutlineButton className="flex justify-center items-center gap-2">
-            <IoMail size={20} /> Message
-          </OutlineButton>
-          <FillButton>Follow</FillButton> */}
         </div>
       </div>
-      {/* <div className="max-w-screen-lg mx-auto">
-        <Accordian
-          title="clothes/ shoes that have been laying around for a while just want to get rid of and make space..."
-          text="clothes/ shoes that have been laying around for a while just want to get rid of and make space clothes/ shoes that have been laying around for a while just want to get rid of and make space clothes/ shoes that have been laying around for a while just want to get rid of and make space clothes/ shoes that have been laying around for a while just want to get rid of and make space"
-        />
-      </div> */}
     </section>
   );
 };

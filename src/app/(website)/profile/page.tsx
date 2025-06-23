@@ -12,13 +12,6 @@ const ProfilePage = async ({
 }) => {
   const userId = (await myFetch("/users/profile"))?.data?._id;
 
-<<<<<<< HEAD
-const ProfilePage = async () => {
-  const res = await myFetch("/users/profile", {
-    tags: ["profile"],
-    cache: "no-store",
-  });
-=======
   const profileId = searchParams.id ? searchParams.id : userId;
 
   const profileRes = await myFetch(`/users/${profileId}`, {
@@ -44,7 +37,6 @@ const ProfilePage = async () => {
       children: <Reviews reviews={reviewsRes} />,
     },
   ];
->>>>>>> b301a309b8562cd8e18f0dc34c8bd0f28353e7e2
 
   return (
     <div className="container my-12 grid gap-6">
