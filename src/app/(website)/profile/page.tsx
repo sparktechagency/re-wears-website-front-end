@@ -5,32 +5,44 @@ import Reviews from "@/components/ui/website/profile/Reviews";
 import { myFetch } from "@/helpers/myFetch";
 import { ConfigProvider, Tabs, TabsProps } from "antd";
 
-const items: TabsProps["items"] = [
-  {
-    key: "1",
-    label: <p className="font-bold"> Closet </p>,
-    children: <Closet />,
-  },
-  {
-    key: "2",
-    label: <p className="font-bold">My Orders</p>,
-    children: <MyOrders />,
-  },
-  {
-    key: "3",
-    label: <p className="font-bold">Reviews</p>,
-    children: <Reviews />,
-  },
-];
+const ProfilePage = async ({
+  searchParams,
+}: {
+  searchParams: Record<string, string>;
+}) => {
+  const userId = searchParams.id
+    ? searchParams.id
+    : (await myFetch("/users/profile"))?.data?._id;
+  console.log(userId);
+  const profileRes = await myFetch(`/users/${userId}`, {
+    cache: "no-store",
+  });
 
-const ProfilePage = async () => {
-  const res = await myFetch("/users/profile");
+  const reviewsRes = await myFetch("/review");
+
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: <p className="font-bold"> Closet </p>,
+      children: <Closet />,
+    },
+    {
+      key: "2",
+      label: <p className="font-bold">My Orders</p>,
+      children: <MyOrders />,
+    },
+    {
+      key: "3",
+      label: <p className="font-bold">Reviews</p>,
+      children: <Reviews reviews={reviewsRes} />,
+    },
+  ];
 
   return (
     <div className="container my-12 grid gap-6">
       {/* profile header */}
       <section>
-        <ProfileHeader user={res.data} />
+        <ProfileHeader user={profileRes?.data} />
       </section>
 
       {/* profile content */}
