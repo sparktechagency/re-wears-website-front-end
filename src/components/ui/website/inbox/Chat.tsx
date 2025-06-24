@@ -5,7 +5,7 @@ import { useGetSearchParams } from "@/helpers/getSearchParams";
 import { ConfigProvider, Popover, Rate } from "antd";
 import { Camera } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoLocationSharp, IoSendSharp } from "react-icons/io5";
 import { MdOutlineWatchLater } from "react-icons/md";
@@ -13,10 +13,11 @@ import MakeOfferModal from "./MakeOfferModal";
 import { myFetch } from "@/helpers/myFetch";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import Image from "next/image";
-import { IMAGE_URL } from "@/config/env-config";
+import { config, IMAGE_URL } from "@/config/env-config";
 import { formatDistanceToNow } from "date-fns";
 import { revalidateTags } from "@/helpers/revalidateTags";
 import toast from "react-hot-toast";
+import { io } from "socket.io-client";
 
 const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const [open, setOpen] = useState(false);
@@ -69,6 +70,28 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
     fetchChats();
   }, [room, partnerId, trigger]);
 
+  // handle live chatting
+  const socket = useMemo(() => io(IMAGE_URL), []);
+  socket.on("connect", () => {
+    console.log("Connected to socket");
+  });
+  useEffect(() => {
+    const eventName = `getMessages::${partnerId}`;
+    if (!partnerId) return;
+
+    const handleGetMessage = () => {
+      console.log("New message received");
+      revalidateTags(["chats"]);
+      setTrigger((prev) => !prev);
+    };
+
+    socket.on(eventName, handleGetMessage);
+
+    return () => {
+      socket.off(eventName, handleGetMessage);
+    };
+  }, [socket, partnerId]);
+
   // Update last seen time every minute
   useEffect(() => {
     const updateTime = () => {
@@ -111,7 +134,6 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
         method: "POST",
         body: formData,
       });
-      console.log(response);
       if (response?.success) {
         revalidateTags(["chats"]);
         setTrigger(!trigger); // Trigger re-render to fetch new messages
@@ -273,15 +295,22 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
                   }`}
                 >
                   <div
-                    className={`lg:w-3/5 w-2/3 lg:px-4 px-2 py-3 flex-col gap-4 ${
+                    className={`lg:px-4 px-2 py-3 flex-col gap-4 ${
                       item?.sender === partnerId
                         ? "border border-[#dcdcdc] rounded-t-xl rounded-br-xl"
                         : "border bg-[#F8F8F8] rounded-t-xl rounded-bl-xl"
                     }`}
                   >
+                    {item?.image && (
+                      <Image
+                        src={`${IMAGE_URL}${item?.image}`}
+                        alt="image"
+                        width={220}
+                        height={100}
+                      />
+                    )}
                     <p className="text-sm">{item?.text}</p>
-                    
-                    <p className="text-end text-[12px] text-[#918d8d]">
+                    <p className="text-end text-xs text-[#918d8d]">
                       {new Date(item?.createdAt).toLocaleTimeString([], {
                         hour: "2-digit",
                         minute: "2-digit",
