@@ -1,9 +1,14 @@
 import Inbox from "@/components/ui/website/inbox/Inbox";
+import { myFetch } from "@/helpers/myFetch";
 
-const InboxPage = () => {
+const InboxPage = async () => {
+  const roomRes = await myFetch("/room", {
+    cache: "no-store",
+  });
+
   return (
     <div>
-      <Inbox />
+      <Inbox rooms={roomRes?.data} />
     </div>
   );
 };

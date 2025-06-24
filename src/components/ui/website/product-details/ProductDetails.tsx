@@ -27,19 +27,6 @@ const ProductDetails = ({
   const productData = product?.result;
   const isMyProduct = productData?.user?._id === profile?._id;
 
-  useEffect(() => {
-    const updateTime = () => {
-      setLastseen(
-        formatDistanceToNow(new Date(productData?.user?.lastSeenAt), {
-          addSuffix: true,
-        })
-      );
-    };
-    updateTime(); // initial
-    const interval = setInterval(updateTime, 60000); // every minute
-    return () => clearInterval(interval);
-  }, [productData?.user?.lastSeenAt]);
-
   return (
     <div className="container">
       {/* category breadcumb */}
