@@ -4,8 +4,9 @@
 import FillButton from "@/components/shared/FillButton";
 import Label from "@/components/shared/Label";
 import OutlineButton from "@/components/shared/OutlineButton";
+import { IMAGE_URL } from "@/config/env-config";
 import CountdownTimer from "@/utils/countDownTimer";
-import { ConfigProvider, Segmented, Table, Tooltip } from "antd";
+import { ConfigProvider, Rate, Segmented, Table, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,10 +18,11 @@ interface Order {
   image: string;
   price: string;
   name: string;
-  seller: string;
+  seller: any;
   reviews: string;
   initial: string;
   date: string;
+  product: any;
 }
 
 // Define table columns
@@ -29,41 +31,57 @@ const columns: ColumnsType<Order> = [
     title: "Order",
     dataIndex: "order",
     key: "order",
-    render: (_, record: Order) => (
-      <div className="flex items-center gap-4 font-poppins">
-        <figure className="w-20 h-24 rounded-lg border relative">
-          <Image
-            src={record.image}
-            alt="img"
-            width={84}
-            height={84}
-            className="w-full h-full rounded-lg"
-          />
-          <div className="text-xs lg:text-[8px] px-2 bg-white text-primary rounded-b-lg absolute w-full bottom-0">
-            {record.price}
+    render: (_, record: Order) => {
+      return (
+        <div className="flex items-center gap-4 font-poppins">
+          <figure className="w-20 h-24 rounded-lg border relative">
+            {record?.product?.productImage?.[0] && (
+              <Image
+                src={
+                  record?.product?.productImage?.[0]?.includes("http")
+                    ? record?.product?.productImage?.[0]
+                    : `${IMAGE_URL}${record?.product?.productImage?.[0]}`
+                }
+                alt="img"
+                width={84}
+                height={84}
+                className="w-full h-full rounded-lg"
+              />
+            )}
+            <div className="text-xs lg:text-[8px] px-2 bg-white text-primary rounded-b-lg absolute w-full bottom-0">
+              {record?.product?.price}
+            </div>
+          </figure>
+          <div>
+            <p className="font-bold text-sm whitespace-nowrap">
+              {record?.product?.name}
+            </p>
           </div>
-        </figure>
-        <div>
-          <p className="font-bold text-sm whitespace-nowrap">{record.name}</p>
         </div>
-      </div>
-    ),
+      );
+    },
   },
   {
     title: "Seller",
     dataIndex: "seller",
     key: "seller",
-    render: (_, record) => (
-      <div className="flex items-center gap-2 font-poppins">
-        <div className="size-14 flex justify-center items-center bg-[#465A63] text-white text-xl font-bold rounded-full border">
-          {record.initial}
+    render: (_, record) => {
+      return (
+        <div className="flex items-center gap-2 font-poppins">
+          <div className="size-14 flex justify-center items-center bg-[#465A63] text-white text-xl font-bold rounded-full border">
+            {record?.product?.size?.name}
+          </div>
+          <div className="grid gap-1">
+            <h3 className="text-sm font-bold">{record?.seller?.userName}</h3>
+            <Rate
+              disabled
+              defaultValue={record?.product?.reviewsRating}
+              style={{ color: "#FDB11A" }}
+            />
+          </div>
         </div>
-        <div className="grid gap-1">
-          <h3 className="text-sm font-bold">{record.seller}</h3>
-          <p className="text-xs text-[#797979]">{record.reviews}</p>
-        </div>
-      </div>
-    ),
+      );
+    },
   },
   {
     title: "Action",
@@ -123,21 +141,22 @@ const columns: ColumnsType<Order> = [
 ];
 
 // Sample data
-const data: Order[] = [
-  // {
-  //   key: "1",
-  //   image:
-  //     "https://media-hosting.imagekit.io//1312446cfd0b4e77/dress-1.png?Expires=1836362388&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=SY2DBe8Gbzh2-1eKUrGKd9~fl2v-Wr04fTswOqEi7atU088Jz9XawD1xS1oNw0733XiA9P8ITwrlP40GWTDZeoqv8U8Txx8cptJvA85WjEynitzhcKrMJFv0KEOgi~~6WZUCGCIdqd3JnxdB34T3v~huDc~ENQxuuMG-xW33dBiLWjPiE0ckFidCBGgzOLhhZ6RvJRM~1duhZGFR9pH3QYf1iEYdgzDAyfloaSeLuWK1xGu6sBvJR-h19gD~Jw1G5~dpbxOtXsQZMhwEOD755DQ0Yv~MGqm-HHtpJdC1Gw7lDXkurBNTUoHbjYi-cGZ8G6MXW7OSKLvTBB5vlKsLOA__",
-  //   price: "AED 30.00",
-  //   name: "Long pink dress",
-  //   seller: "@mykola888",
-  //   reviews: "No reviews yet",
-  //   initial: "M",
-  //   date: "12 January 2025",
-  // },
-];
+// const data: Order[] = [
+//   {
+//     key: "1",
+//     image:
+//       "https://media-hosting.imagekit.io//1312446cfd0b4e77/dress-1.png?Expires=1836362388&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=SY2DBe8Gbzh2-1eKUrGKd9~fl2v-Wr04fTswOqEi7atU088Jz9XawD1xS1oNw0733XiA9P8ITwrlP40GWTDZeoqv8U8Txx8cptJvA85WjEynitzhcKrMJFv0KEOgi~~6WZUCGCIdqd3JnxdB34T3v~huDc~ENQxuuMG-xW33dBiLWjPiE0ckFidCBGgzOLhhZ6RvJRM~1duhZGFR9pH3QYf1iEYdgzDAyfloaSeLuWK1xGu6sBvJR-h19gD~Jw1G5~dpbxOtXsQZMhwEOD755DQ0Yv~MGqm-HHtpJdC1Gw7lDXkurBNTUoHbjYi-cGZ8G6MXW7OSKLvTBB5vlKsLOA__",
+//     price: "AED 30.00",
+//     name: "Long pink dress",
+//     seller: "@mykola888",
+//     reviews: "No reviews yet",
+//     initial: "M",
+//     date: "12 January 2025",
+//   },
+// ];
 
-const MyOrders = () => {
+const MyOrders = ({ orders }: { orders: any }) => {
+  console.log(orders);
   return (
     <div className="font-poppins grid gap-4">
       {/* filter buttons */}
@@ -164,7 +183,7 @@ const MyOrders = () => {
 
       {/* orders table */}
       <div className="w-full max-w-[calc(82vw)] overflow-x-scroll no-scrollbar">
-        {data.length > 0 ? (
+        {orders?.data?.length > 0 ? (
           <ConfigProvider
             theme={{
               components: {
@@ -176,7 +195,7 @@ const MyOrders = () => {
           >
             <Table
               columns={columns}
-              dataSource={data}
+              dataSource={orders?.data}
               pagination={false}
               className="min-w-[600px]"
               scroll={{ x: "100%" }}
@@ -184,23 +203,30 @@ const MyOrders = () => {
             />
           </ConfigProvider>
         ) : (
-          <section className="grid justify-center gap-4 py-8 lg:py-16">
-            <Image
-              src="/order.png"
-              alt="icon"
-              width={90}
-              height={90}
-              className="mx-auto"
-            />
-            <Label className="text-xl lg:text-2xl text-center">
-              Discover preloved gems
-            </Label>
-            <p className="text-[#797979] text-center text-sm lg:text-base">
-              Shop pre-owned fashion. Embrace sustainable living.
-            </p>
-            <div className="flex justify-center ">
-              <FillButton className="uppercase">Browse</FillButton>
-            </div>
+          <section>
+            {orders?.data?.map((order: any) => (
+              <div
+                key={order?._id}
+                className="grid justify-center gap-4 py-8 lg:py-16"
+              >
+                <Image
+                  src="/order.png"
+                  alt="icon"
+                  width={90}
+                  height={90}
+                  className="mx-auto"
+                />
+                <Label className="text-xl lg:text-2xl text-center">
+                  Discover preloved gems
+                </Label>
+                <p className="text-[#797979] text-center text-sm lg:text-base">
+                  Shop pre-owned fashion. Embrace sustainable living.
+                </p>
+                <div className="flex justify-center ">
+                  <FillButton className="uppercase">Browse</FillButton>
+                </div>
+              </div>
+            ))}
           </section>
         )}
       </div>

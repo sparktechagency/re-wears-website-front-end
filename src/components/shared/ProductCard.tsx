@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-"use client"
-import { config, IMAGE_URL } from "@/config/env-config";
+"use client";
+import { IMAGE_URL } from "@/config/env-config";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import { FaHeart } from "react-icons/fa";
 
 const ProductCard = ({ product }: { product: any }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  console.log(product?.productImage?.[0]);
   return (
     <div className="rounded-xl border">
       <figure className="relative">
@@ -26,14 +27,20 @@ const ProductCard = ({ product }: { product: any }) => {
           <span> {isFavorite ? 8 + 1 : 8}</span>
         </button>
         <Link href={`/product-details/${product?._id}`}>
-          <Image
-            src={`${IMAGE_URL}${product?.productImage[0]}`}
-            alt="img"
-            width={250}
-            height={300}
-            className="rounded-t-xl w-full object-cover"
-            style={{ aspectRatio: "12/14" }}
-          />
+          {product?.productImage?.length > 0 && (
+            <Image
+              src={
+                product?.productImage?.[0]?.startsWith("http")
+                  ? product?.productImage?.[0]
+                  : `${IMAGE_URL}${product?.productImage?.[0]}`
+              }
+              alt="img"
+              width={250}
+              height={300}
+              className="rounded-t-xl w-full object-cover"
+              style={{ aspectRatio: "12/14" }}
+            />
+          )}
         </Link>
       </figure>
       <Link href={`/product-details/${product?._id}`}>
@@ -43,8 +50,13 @@ const ProductCard = ({ product }: { product: any }) => {
           <h4 className="font-bold">{product?.name}</h4>
         </div>
         <div className="flex items-center gap-3 bg-[#F5F5F5] p-2 px-4 rounded-b-xl">
-          <Image
-            src={`${IMAGE_URL}${product.user.image}`}
+          <Image 
+          src={
+                product.user.image?.startsWith("http")
+                  ? product.user.image
+                  : `${IMAGE_URL}${product.user.image}`
+              }
+
             alt="image"
             width={30}
             height={30}
