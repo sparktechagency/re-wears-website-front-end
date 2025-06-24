@@ -137,9 +137,11 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
             </Link>
           ) : (
             <>
-              <OutlineButton className="flex justify-center items-center gap-2">
-                <IoMail size={20} /> Message
-              </OutlineButton>
+              <Link href={`/inbox?recipient=${user?.user?._id}`}>
+                <OutlineButton className="flex justify-center items-center gap-2">
+                  <IoMail size={20} /> Message
+                </OutlineButton>
+              </Link>
               <FillButton>Follow</FillButton>
             </>
           )}
