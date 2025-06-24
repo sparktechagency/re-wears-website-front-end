@@ -8,16 +8,18 @@ import { useState } from "react";
 import { FaCircleUser } from "react-icons/fa6";
 
 const Reviews = ({ reviews }: { reviews: any }) => {
-  const [value, setValue] = useState(3);
+  // const [value, setValue] = useState(3);
   console.log(reviews);
 
   return (
     <div className="grid gap-6 font-poppins">
       <section className="flex gap-6 items-center text-base lg:py-4">
-        <h1 className="text-7xl font-medium text-black">4.0</h1>
+        <h1 className="text-7xl font-medium text-black">{reviews?.meta?.averageRating}</h1>
         <div className="">
-          <Rate disabled defaultValue={value} style={{ color: "#FDB11A" }} />
-          <p className="text-[#797979] font-medium">20 reviews</p>
+          <Rate disabled defaultValue={reviews?.meta?.averageRating} style={{ color: "#FDB11A" }} />
+          <p className="text-[#797979] font-medium">
+            {reviews?.meta?.totalRatingCount} reviews
+          </p>
         </div>
       </section>
 

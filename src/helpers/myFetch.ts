@@ -15,6 +15,7 @@ export interface FetchResponse {
     totalPage: number;
   };
   error?: string | null;
+  meta?: any;
 }
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -70,6 +71,7 @@ export const myFetch = async (
         data: data?.data,
         pagination: data?.pagination,
         error: null,
+        meta: data?.meta,
       };
     }
 
