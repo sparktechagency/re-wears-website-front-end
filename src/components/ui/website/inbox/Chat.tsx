@@ -9,18 +9,17 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoLocationSharp, IoSendSharp } from "react-icons/io5";
 import { MdOutlineWatchLater } from "react-icons/md";
-import MakeOfferModal from "./MakeOfferModal";
 import { myFetch } from "@/helpers/myFetch";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import Image from "next/image";
-import { config, IMAGE_URL } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { formatDistanceToNow } from "date-fns";
 import { revalidateTags } from "@/helpers/revalidateTags";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import ProductInfo from "./ProductInfo";
 
 const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
-  const [open, setOpen] = useState(false);
   const updateSearchParams = useUpdateSearchParams();
   const { recipient: partnerId, room } = useGetSearchParams();
   const [chatsData, setChatsData] = useState([]);
@@ -29,8 +28,6 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const [trigger, setTrigger] = useState(false); // to trigger re-render
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
-
-  console.log(chatsData);
 
   // Fetch partner data
   useEffect(() => {
@@ -243,41 +240,8 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
           </div>
         </div>
 
-        {/* offers */}
-        <div className="flex flex-col md:flex-row justify-between gap-4 p-4 border border-[#DCDCDC] bg-[#f8f8f8] rounded-lg mt-4">
-          <div className="flex items-center gap-4">
-            <img
-              src="/user1.png"
-              alt=""
-              className=" lg:w-[70px] w-[64px] lg:h-[76px] h-[70px] rounded-lg "
-            />
-
-            <div className="flex flex-col  items-start gap-2">
-              <p className="text-[16px] text-secondary font-bold ">
-                Lorem Ipsum
-              </p>
-              <p className="text-[14px] text-secondary font-normal ">
-                AED 45.00
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between lg:justify-end gap-x-4">
-            <div onClick={() => setOpen(true)}>
-              <OutlineButton className="!px-4 lg:text-sm text-[12px] uppercase w-full">
-                Make an offer
-              </OutlineButton>
-            </div>
-
-            <Link href={"/order"}>
-              <Popover content=" Changed your mind? Head to the item page to release it for someone else to re-wear.">
-                <button className=" h-12  bg-primary text-white font-normal rounded-full  transition-all duration-300 hover:bg-[#D04555]  !px-4 lg:text-sm text-[12px] uppercase">
-                  Reserve Now
-                </button>
-              </Popover>
-            </Link>
-          </div>
-        </div>
+        {/* product info */}
+        <ProductInfo />
       </div>
 
       <div className="bg-white w-full rounded-lg relative">
@@ -365,8 +329,6 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
           </div>
         </div>
       </div>
-
-      {/* <MakeOfferModal open={open} setOpen={setOpen} /> */}
     </section>
   );
 };
