@@ -17,8 +17,9 @@ const ProfilePage = async ({
   const profileRes = await myFetch(`/users/${profileId}`, {
     cache: "no-store",
   });
+  const orderRes = await myFetch(`/user-product/my-orders`);
 
-  const reviewsRes = await myFetch("/review", { cache: "no-store" });
+  const reviewsRes = await myFetch("/review");
 
   const items: TabsProps["items"] = [
     {
@@ -29,7 +30,7 @@ const ProfilePage = async ({
     {
       key: "2",
       label: <p className="font-bold">My Orders</p>,
-      children: <MyOrders />,
+      children: <MyOrders orders={orderRes} />,
     },
     {
       key: "3",
