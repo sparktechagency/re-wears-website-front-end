@@ -10,9 +10,11 @@ import Notifications from "./Notifications";
 import FillButton from "../FillButton";
 import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
-import { config } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
-import { useGetSearchParams } from "@/helpers/getSearchParams";
+import { useGetSearchParams } from "@/helpers/getSearchParams"; 
+
+export const image = "http://10.0.70.188:5005"
 
 const items: MenuProps["items"] = [
   {
@@ -83,7 +85,7 @@ const Navbar = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, []); 
 
   const menuItems = (
     <Menu style={{ width: "650px", padding: "25px" }}>
@@ -105,12 +107,9 @@ const Navbar = ({
                 <Image
                   width={16}
                   height={16}
-                  src={
-                    sub?.icon
-                      ? sub.icon.includes("http")
+                  src={ sub.icon.startsWith("https")
                         ? sub.icon
-                        : `${config?.IMAGE_URL}${sub.icon}`
-                      : "/placeholder.svg"
+                        : `${IMAGE_URL}${sub.icon}`               
                   }
                   alt={sub.name || "subcategory"}
                   className="w-4 h-4 object-contain"

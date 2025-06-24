@@ -18,7 +18,7 @@ const ProfilePage = async ({
     cache: "no-store",
   });
 
-  const reviewsRes = await myFetch("/review");
+  const reviewsRes = await myFetch("/review", { cache: "no-store" });
 
   const items: TabsProps["items"] = [
     {
