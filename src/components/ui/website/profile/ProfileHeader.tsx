@@ -14,8 +14,12 @@ import { IMAGE_URL } from "@/config/env-config";
 import { formatDistanceToNow } from "date-fns";
 import { IoMail } from "react-icons/io5";
 import FillButton from "@/components/shared/FillButton";
+import { myFetch } from "@/helpers/myFetch";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
+  const [isFollowing, setIsFollowing] = useState(false);
   let lastActiveStatus = "Unknown";
   const lastSeenAt = user?.user?.lastSeenAt;
 
@@ -25,9 +29,32 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
     });
   }
 
-  const handleFollow = () => {
-    console.log(user?.user?._id, userId);
-    // have to call follow api
+  const handleFollow = async () => {
+    try {
+      console.log("Sending follow/unfollow request for user:", user?.user?._id);
+
+      const response = await myFetch(`/review/${user?.user?._id}`, {
+        method: "GET",
+      });
+
+      console.log("API Response:", response);
+
+      if (response?.success) {
+        setIsFollowing((prev) => !prev); // Toggle follow state
+        toast.success(
+          isFollowing ? "Unfollowed successfully" : "Followed successfully"
+        );
+        console.log(
+          isFollowing ? "User has been unfollowed." : "User has been followed."
+        );
+      } else {
+        toast.error(response?.message || "Failed to process follow action");
+        console.error("Follow request failed:", response?.message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+      console.error("Error in follow/unfollow:", error);
+    }
   };
 
   return (
@@ -147,7 +174,9 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
                   <IoMail size={20} /> Message
                 </OutlineButton>
               </Link>
-              <FillButton onClick={handleFollow}>Follow</FillButton>
+              <FillButton onClick={handleFollow}>
+                {isFollowing ? "Unfollow" : "Follow"}
+              </FillButton>
             </>
           )}
         </div>

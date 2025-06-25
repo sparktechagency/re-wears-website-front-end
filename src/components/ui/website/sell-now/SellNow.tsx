@@ -8,6 +8,7 @@ import { conditions } from "@/constants/product/conditions";
 import toast from "react-hot-toast";
 import { myFetch } from "@/helpers/myFetch";
 import { revalidateTags } from "@/helpers/revalidateTags";
+import { useRouter } from "next/navigation";
 
 const { TextArea } = Input;
 
@@ -26,7 +27,7 @@ const SellNow = ({
 }) => {
   const [fileList, setFileList] = useState<any[]>([]);
   const [form] = Form.useForm();
-
+  const router = useRouter();
   const formatedCategories = categories?.map((category: any) => ({
     value: category?._id,
     label: category?.name,
@@ -91,6 +92,10 @@ const SellNow = ({
         });
         form.resetFields();
         revalidateTags(["products"]);
+        const productId = res?.data?._id;
+        if (productId) {
+          router.push(`/product-details/${productId}`);
+        }
       } else {
         toast.error(res?.message || "Something went wrong", {
           id: "create-product",
