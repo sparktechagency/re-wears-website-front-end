@@ -19,7 +19,10 @@ const ProfilePage = async ({
   const profileRes = await myFetch(`/users/${profileId}`, {
     cache: "no-store",
   });
-  const orderRes = await myFetch(`/user-product/my-orders?status=${status}`, {tags: ["Orders"]});
+  // TODO: update this route for fetch orders data by rakib
+  const orderRes = await myFetch(`/user-product/order?status=Reserved`, {
+    tags: ["Orders"],
+  });
 
   const productsRes = await myFetch(
     `/user-product/${profileId}?status=${status}`

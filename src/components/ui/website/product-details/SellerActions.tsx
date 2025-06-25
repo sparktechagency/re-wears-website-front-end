@@ -58,7 +58,7 @@ const SellerActions = ({ productData }: { productData: any }) => {
     } catch (error) {
       console.error(error);
     }
-  };
+  };  
 
   return (
     <div className="grid gap-2 px-6">

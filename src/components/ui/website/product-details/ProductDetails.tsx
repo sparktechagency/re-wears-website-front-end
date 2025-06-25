@@ -12,7 +12,7 @@ import { IMAGE_URL } from "@/config/env-config";
 import { Rate } from "antd";
 import BuyerActions from "./BuyerActions";
 import SellerActions from "./SellerActions";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const ProductDetails = ({
   product,
