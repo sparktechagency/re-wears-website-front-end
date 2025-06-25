@@ -16,6 +16,7 @@ import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { myFetch } from "@/helpers/myFetch";
 import { format } from "date-fns";
+import { revalidateTags } from "@/helpers/revalidateTags";
 
 interface Order {
   key: string;
@@ -49,6 +50,9 @@ const MyOrders = ({ orders }: { orders: any }) => {
       body: { status: "Active" },
     });
     console.log(res?.success);
+    if (res?.success) {
+      revalidateTags(["Orders"]);
+    }
   };
 
   const columns: ColumnsType<Order> = [
@@ -130,9 +134,11 @@ const MyOrders = ({ orders }: { orders: any }) => {
       render: (_, record) => {
         return (
           <div className="flex items-center gap-2 font-poppins">
-            <FillButton className="text-sm px-4 h-8 !bg-[#D04555] !hover:bg-[#a32937] text-white whitespace-nowrap">
-              Message seller
-            </FillButton>
+            <Link href={`/inbox?recipient=${record?.seller?._id}`}>
+              <FillButton className="text-sm px-4 h-8 !bg-[#D04555] !hover:bg-[#a32937] text-white whitespace-nowrap">
+                Message seller
+              </FillButton>
+            </Link>
             {query === "Reserved" && (
               <div onClick={() => handleStatus(record?.product?._id)}>
                 <OutlineButton className="text-sm px-4 h-8">
@@ -163,8 +169,8 @@ const MyOrders = ({ orders }: { orders: any }) => {
         return (
           <div className="flex flex-col gap-6 justify-between h-full">
             <span className="text-sm text-[#797979] font-poppins whitespace-nowrap">
-            {format(new Date(createdAt), "dd MMMM yyyy")}
-          </span>
+              {format(new Date(createdAt), "dd MMMM yyyy")}
+            </span>
             <p className="flex items-center gap-1 text-xs text-[#797979] font-poppins">
               <ConfigProvider
                 theme={{
