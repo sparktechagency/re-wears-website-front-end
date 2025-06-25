@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 
 const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
+  console.log("User data", user);
   const [isFollowing, setIsFollowing] = useState(false);
   let lastActiveStatus = "Unknown";
   const lastSeenAt = user?.user?.lastSeenAt;
@@ -80,7 +81,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
           )}
 
           <div className="block lg:hidden">
-            <Label className="text-[16px] pb-2">@{user?.user?.userName}</Label>
+            <Label className="text-[16px] pb-2">@{user?.userName}</Label>
             <div className="flex items-center gap-4">
               <Rate
                 disabled
