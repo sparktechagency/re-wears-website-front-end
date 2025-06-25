@@ -15,7 +15,6 @@ const ProfilePage = async ({
   const userId = (await myFetch("/users/profile"))?.data?._id;
 
   const profileId = searchParams.id ? searchParams.id : userId;
-
   const profileRes = await myFetch(`/users/${profileId}`, {
     cache: "no-store",
   });

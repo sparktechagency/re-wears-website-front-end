@@ -19,7 +19,6 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 
 const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
-  console.log("User data", user);
   const [isFollowing, setIsFollowing] = useState(false);
   let lastActiveStatus = "Unknown";
   const lastSeenAt = user?.user?.lastSeenAt;
@@ -32,29 +31,19 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
 
   const handleFollow = async () => {
     try {
-      console.log("Sending follow/unfollow request for user:", user?.user?._id);
-
-      const response = await myFetch(`/review/${user?.user?._id}`, {
-        method: "GET",
+      const res = await myFetch(`/user/${user?._id}`, {
+        method: "PATCH",
       });
-
-      console.log("API Response:", response);
-
-      if (response?.success) {
-        setIsFollowing((prev) => !prev); // Toggle follow state
-        toast.success(
-          isFollowing ? "Unfollowed successfully" : "Followed successfully"
-        );
-        console.log(
-          isFollowing ? "User has been unfollowed." : "User has been followed."
-        );
-      } else {
-        toast.error(response?.message || "Failed to process follow action");
-        console.error("Follow request failed:", response?.message);
+      if (res.success === true) {
+        setIsFollowing(!isFollowing);
+        isFollowing
+          ? toast.success("Followed Successfully")
+          : toast.success("Unfollowed successfully");
       }
+
+      console.log(res);
     } catch (error) {
-      toast.error("Something went wrong!");
-      console.error("Error in follow/unfollow:", error);
+      toast.error("Something went wrong");
     }
   };
 
@@ -66,7 +55,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
             <Image
               src={
                 user.user.image.includes("http")
-                  ? user.user.image
+                  ? user.image
                   : `${IMAGE_URL}${user.user.image}`
               }
               alt="User image"
@@ -176,7 +165,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
                 </OutlineButton>
               </Link>
               <FillButton onClick={handleFollow}>
-                {isFollowing ? "Unfollow" : "Follow"}
+                {!isFollowing ? "Unfollow" : "Follow"}
               </FillButton>
             </>
           )}
