@@ -11,8 +11,7 @@ const ProfilePage = async ({
   searchParams: Record<string, string>;
 }) => {
   const status = searchParams.status;
-  console.log(status);
-  
+
   const userId = (await myFetch("/users/profile"))?.data?._id;
 
   const profileId = searchParams.id ? searchParams.id : userId;
@@ -20,15 +19,17 @@ const ProfilePage = async ({
   const profileRes = await myFetch(`/users/${profileId}`, {
     cache: "no-store",
   });
-  const orderRes = await myFetch(`/user-product/my-orders`);
+  const orderRes = await myFetch(`/user-product/my-orders?status=${status}`);
 
   const reviewsRes = await myFetch("/review");
+
+  const productsRes = await myFetch(`/user-product/${userId}?status=${status}`);
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: <p className="font-bold"> Closet </p>,
-      children: <Closet />,
+      children: <Closet products={productsRes} />,
     },
     {
       key: "2",

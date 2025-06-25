@@ -14,6 +14,8 @@ import { useState } from "react";
 import { MdInfo } from "react-icons/md";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { myFetch } from "@/helpers/myFetch";
+import { format } from "date-fns";
 
 interface Order {
   key: string;
@@ -30,7 +32,6 @@ interface Order {
 
 const MyOrders = ({ orders }: { orders: any }) => {
   const [query, setQuery] = useState("Reserved");
-  const [initialOrders, setInitialOrders] = useState(orders?.data);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -41,6 +42,14 @@ const MyOrders = ({ orders }: { orders: any }) => {
     router.replace(`?${params.toString()}`, { scroll: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
+
+  const handleStatus = async (id: string) => {
+    const res = await myFetch(`/order/${id}`, {
+      method: "PATCH",
+      body: { status: "Active" },
+    });
+    console.log(res?.success);
+  };
 
   const columns: ColumnsType<Order> = [
     {
@@ -85,7 +94,23 @@ const MyOrders = ({ orders }: { orders: any }) => {
         return (
           <div className="flex items-center gap-2 font-poppins">
             <div className="size-14 flex justify-center items-center bg-[#465A63] text-white text-xl font-bold rounded-full border">
-              {record?.seller?.userName}
+              {record?.seller?.image ? (
+                <Image
+                  src={
+                    record.seller.image.includes("http")
+                      ? record.seller.image
+                      : `${IMAGE_URL}${record.seller.image}`
+                  }
+                  alt="Seller image"
+                  width={112}
+                  height={112}
+                  className="object-cover rounded-full"
+                />
+              ) : (
+                <div className="lg:size-28 size-[69px] flex justify-center items-center bg-[#465A63] text-white text-3xl font-bold rounded-full border">
+                  {record.seller.firstName.charAt(0).toUpperCase()}
+                </div>
+              )}
             </div>
             <div className="grid gap-1">
               <h3 className="text-sm font-bold">{record?.seller?.userName}</h3>
@@ -109,7 +134,7 @@ const MyOrders = ({ orders }: { orders: any }) => {
               Message seller
             </FillButton>
             {query === "Reserved" && (
-              <div>
+              <div onClick={() => handleStatus(record?.product?._id)}>
                 <OutlineButton className="text-sm px-4 h-8">
                   Release
                 </OutlineButton>
@@ -137,9 +162,9 @@ const MyOrders = ({ orders }: { orders: any }) => {
         const createdAt = record?.createdAt;
         return (
           <div className="flex flex-col gap-6 justify-between h-full">
-            {/* <span className="text-sm text-[#797979] font-poppins whitespace-nowrap">
-            {text}
-          </span> */}
+            <span className="text-sm text-[#797979] font-poppins whitespace-nowrap">
+            {format(new Date(createdAt), "dd MMMM yyyy")}
+          </span>
             <p className="flex items-center gap-1 text-xs text-[#797979] font-poppins">
               <ConfigProvider
                 theme={{
@@ -211,7 +236,7 @@ const MyOrders = ({ orders }: { orders: any }) => {
           >
             <Table
               columns={columns}
-              dataSource={initialOrders}
+              dataSource={orders?.data}
               pagination={false}
               className="min-w-[600px]"
               scroll={{ x: "100%" }}
@@ -234,9 +259,9 @@ const MyOrders = ({ orders }: { orders: any }) => {
               <p className="text-[#797979] text-center text-sm lg:text-base">
                 Shop pre-owned fashion. Embrace sustainable living.
               </p>
-              <div className="flex justify-center ">
+              <Link href={"/products"} className="flex justify-center">
                 <FillButton className="uppercase">Browse</FillButton>
-              </div>
+              </Link>
             </div>
           </section>
         )}

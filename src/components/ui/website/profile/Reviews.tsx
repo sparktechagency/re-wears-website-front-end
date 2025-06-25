@@ -4,19 +4,35 @@ import Label from "@/components/shared/Label";
 import OutlineButton from "@/components/shared/OutlineButton";
 import { Rate } from "antd";
 import { formatDistanceToNow } from "date-fns";
+import { useEffect, useState } from "react";
 import { FaCircleUser } from "react-icons/fa6";
 
 const Reviews = ({ reviews }: { reviews: any }) => {
+  const [show, setShow] = useState(false);
+  const [reviewData, setReviewData] = useState([]);
+
+  const handleLoadMore = () => {
+    setReviewData(reviews?.data);
+    setShow(true);
+  };
+
+  useEffect(() => {
+    if (reviews?.data?.length > 5) {
+      const data = reviews?.data?.slice(0, 5);
+      setReviewData(data);
+    }
+  }, [reviews]);
+
   return (
     <div className="grid gap-6 font-poppins">
       <section className="flex gap-6 items-center text-base lg:py-4">
         <h1 className="text-7xl font-medium text-black">
-          {reviews?.meta?.averageRating}
+          {reviews?.meta?.averageRating?.toFixed(1)}
         </h1>
         <div className="">
           <Rate
             disabled
-            defaultValue={reviews?.meta?.averageRating}
+            defaultValue={reviews?.meta?.averageRating.toFixed(1)}
             style={{ color: "#FDB11A" }}
           />
           <p className="text-[#797979] font-medium">
@@ -27,7 +43,7 @@ const Reviews = ({ reviews }: { reviews: any }) => {
 
       <section>
         <ul className="grid gap-4">
-          {reviews?.data?.map((reviewContent: any) => (
+          {reviewData?.map((reviewContent: any) => (
             <li
               key={reviewContent?._id}
               className="flex flex-col lg:flex-row justify-between gap-4 bg-[#F5F5F5] p-5 rounded-xl"
@@ -55,12 +71,12 @@ const Reviews = ({ reviews }: { reviews: any }) => {
         </ul>
       </section>
 
-      {reviews?.data?.length >= 10 && (
-        <section className="flex justify-center">
+      {reviews?.data?.length > 5 && !show && (
+        <div onClick={handleLoadMore} className="flex justify-center">
           <OutlineButton className="uppercase w-full lg:w-auto">
             Load More
           </OutlineButton>
-        </section>
+        </div>
       )}
     </div>
   );
