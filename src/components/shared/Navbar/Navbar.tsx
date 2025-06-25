@@ -50,8 +50,8 @@ const Navbar = ({
   profile,
   categoriesData,
 }: {
-  profile: any;
-  categoriesData: Array<{ name?: string; [key: string]: any }>;
+  profile?: any;
+  categoriesData?: Array<{ name?: string; [key: string]: any }>;
 }) => {
   const { searchTerm } = useGetSearchParams();
   const updateSearchParams = useUpdateSearchParams();
@@ -60,7 +60,6 @@ const Navbar = ({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
-
 
   // const singleCategories = categoriesData?.filter(
   //   (item) => item?.name?.toLowerCase() === selectedCategory
@@ -85,7 +84,7 @@ const Navbar = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []); 
+  }, []);
 
   const menuItems = (
     <Menu style={{ width: "650px", padding: "25px" }}>
@@ -107,9 +106,10 @@ const Navbar = ({
                 <Image
                   width={16}
                   height={16}
-                  src={ sub.icon.startsWith("https")
-                        ? sub.icon
-                        : `${IMAGE_URL}${sub.icon}`               
+                  src={
+                    sub.icon.startsWith("https")
+                      ? sub.icon
+                      : `${IMAGE_URL}${sub.icon}`
                   }
                   alt={sub.name || "subcategory"}
                   className="w-4 h-4 object-contain"
@@ -309,7 +309,6 @@ const Navbar = ({
               </Dropdown>
             </Menu.Item>
             <Menu.Item key="BEAUTY">
-
               <Dropdown
                 trigger={["click"]}
                 overlay={menuItems}

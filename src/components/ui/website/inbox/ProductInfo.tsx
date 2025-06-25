@@ -58,7 +58,7 @@ const ProductInfo = () => {
           id: "reserve-product",
         });
         revalidateTags(["Product", "products", "Order"]);
-        router.push(`/order`);
+        router.push(`/order/${productData?.result?._id}`);
       }
     } catch (error) {
       console.error("Error reserving product:", error);

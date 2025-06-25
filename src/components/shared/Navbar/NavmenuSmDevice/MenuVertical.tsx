@@ -1,5 +1,5 @@
 "use client";
-import { config } from "@/config/env-config";
+import { IMAGE_URL } from "@/config/env-config";
 import { useState, useEffect } from "react";
 import { Collapse } from "antd";
 import Link from "next/link";
@@ -82,7 +82,7 @@ export default function Navbar({
                               subCategory?.icon
                                 ? subCategory.icon.includes("http")
                                   ? subCategory.icon
-                                  : `${config?.IMAGE_URL}${subCategory.icon}`
+                                  : `${IMAGE_URL}${subCategory.icon}`
                                 : "/placeholder.svg"
                             }
                             alt={subCategory.name || "subcategory"}

@@ -96,7 +96,9 @@ const Inbox = ({ rooms }: { rooms: any }) => {
                             .join(", ")}
                         </p>
                         <p className="text-[#6A6A6A] text-[14px]">
-                          {room?.lastMessage?.text}
+                          {room?.lastMessage?.text?.length >= 20
+                            ? room?.lastMessage?.text?.slice(0, 20) + "..."
+                            : room?.lastMessage?.text}
                         </p>
                       </div>
                     </div>

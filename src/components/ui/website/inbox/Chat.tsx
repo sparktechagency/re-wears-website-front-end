@@ -1,8 +1,7 @@
 "use client";
 
-import OutlineButton from "@/components/shared/OutlineButton";
 import { useGetSearchParams } from "@/helpers/getSearchParams";
-import { ConfigProvider, Popover, Rate } from "antd";
+import { ConfigProvider, Rate } from "antd";
 import { Camera, X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -20,7 +19,6 @@ import { io } from "socket.io-client";
 import ProductInfo from "./ProductInfo";
 
 const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
-  // const socket = io(IMAGE_URL);
   const updateSearchParams = useUpdateSearchParams();
   const { recipient: partnerId, room } = useGetSearchParams();
   const [chatsData, setChatsData] = useState([]);
@@ -30,6 +28,8 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const [trigger, setTrigger] = useState(false); // to trigger re-render
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
+
+  console.log(chatsData);
 
   // Fetch partner data
   useEffect(() => {
@@ -148,6 +148,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
     }
     formData.append("chatId", room);
     formData.append("receiver", partnerId);
+    formData.append("type", "text");
 
     try {
       const response = await myFetch(`/chat`, {
@@ -299,7 +300,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
                     className="rounded"
                   />
                 )}
-                {item?.text && <p className="text-sm">{item?.text}</p>}
+                {item?.text && <p className="text-sm mt-2">{item?.text}</p>}
                 <p className="text-end text-xs text-[#918d8d] mt-2">
                   {new Date(item?.createdAt).toLocaleTimeString([], {
                     hour: "2-digit",
@@ -359,7 +360,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
               onSubmit={handleSendMessage}
               className="flex justify-between items-center gap-4 w-full relative"
             >
-              <textarea
+              <input
                 name="text"
                 id="text"
                 className="w-full h-[48px] resize-none py-2 rounded-l-full px-4 rounded-r-full border bg-[#F8F8F8] border-[#DCDCDC] placeholder:text-[#797979]"
