@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import OTPInput from "react-otp-input";
+import Cookies from "js-cookie";
 
 const VerifyOtp = () => {
   const router = useRouter();
@@ -20,13 +21,14 @@ const VerifyOtp = () => {
         method: "POST",
         body: { email: email, oneTimeCode: otp },
       });
-      if (res.success) {
+      if (res?.success) {
         toast.success("OTP verified successfully", { id: "otp-verify" });
         // redirect based on flow
         if (userType === "forgot-password") {
           router.push(`/reset-password?token=${res.data}`);
         } else {
-          router.push(`/complete-registration?token=${res.data}`);
+          Cookies.set("accessToken", res?.data?.accessToken);
+          router.push(`/complete-registration`);
         }
       } else {
         toast.error(res?.message || "Failed to verify", { id: "otp-verify" });
