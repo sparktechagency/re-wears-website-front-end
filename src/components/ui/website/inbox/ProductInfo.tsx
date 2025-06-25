@@ -3,7 +3,6 @@
 
 import OutlineButton from "@/components/shared/OutlineButton";
 import { Popover } from "antd";
-import Link from "next/link";
 import MakeOfferModal from "./MakeOfferModal";
 import { useEffect, useState } from "react";
 import { useGetSearchParams } from "@/helpers/getSearchParams";
@@ -59,12 +58,14 @@ const ProductInfo = () => {
           id: "reserve-product",
         });
         revalidateTags(["Product", "products", "Order"]);
-        router.push(`/order`);
+        router.push(`/order/${productData?.result?._id}`);
       }
     } catch (error) {
       console.error("Error reserving product:", error);
     }
   };
+
+  if (!productData) return null;
 
   return (
     <div className="flex flex-col md:flex-row justify-between gap-4 p-4 border border-[#DCDCDC] bg-[#f8f8f8] rounded-lg mt-4">

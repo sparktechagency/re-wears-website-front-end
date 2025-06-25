@@ -1,9 +1,8 @@
 "use client";
 
-import OutlineButton from "@/components/shared/OutlineButton";
 import { useGetSearchParams } from "@/helpers/getSearchParams";
-import { ConfigProvider, Popover, Rate } from "antd";
-import { Camera } from "lucide-react";
+import { ConfigProvider, Rate } from "antd";
+import { Camera, X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -24,19 +23,28 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const { recipient: partnerId, room } = useGetSearchParams();
   const [chatsData, setChatsData] = useState([]);
   const [partnerData, setPartnerData] = useState<any>(null);
+  const [profileData, setProfileData] = useState<any>(null);
   const [lastseen, setLastseen] = useState("");
   const [trigger, setTrigger] = useState(false); // to trigger re-render
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
+
+  console.log(chatsData);
 
   // Fetch partner data
   useEffect(() => {
     const fetchPartner = async () => {
       try {
         const response = await myFetch(`/users/${partnerId}`, {
+          // fetch partner by partnerId
           cache: "no-store",
         });
         setPartnerData(response?.data);
+        const profileRes = await myFetch(`/users/profile`, {
+          // fetch profile data
+          cache: "no-store",
+        });
+        setProfileData(profileRes?.data);
       } catch (error) {
         console.error("Error fetching chat data:", error);
       }
@@ -50,12 +58,14 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
       try {
         if (!room) {
           const res = await myFetch(`/room/${partnerId}`, {
+            // fetch room by partnerId
             method: "POST",
             cache: "no-store",
           });
           updateSearchParams({ room: res?.data?._id });
         }
         const response = await myFetch(`/chat/${room}`, {
+          // fetch messages by room
           cache: "no-store",
           tags: ["chats"],
         });
@@ -69,25 +79,23 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
 
   // handle live chatting
   const socket = useMemo(() => io(IMAGE_URL), []);
-  socket.on("connect", () => {
-    console.log("Connected to socket");
-  });
-  useEffect(() => {
-    const eventName = `getMessages::${partnerId}`;
-    if (!partnerId) return;
+  // socket.on("connect", () => {
+  //   console.log("Connected to socket");
+  // });
 
+  useEffect(() => {
     const handleGetMessage = () => {
-      console.log("New message received");
       revalidateTags(["chats"]);
       setTrigger((prev) => !prev);
     };
 
-    socket.on(eventName, handleGetMessage);
+    const eventName = `getMessages::${profileData?._id}`;
 
+    socket.on(eventName, handleGetMessage);
     return () => {
       socket.off(eventName, handleGetMessage);
     };
-  }, [socket, partnerId]);
+  }, [socket, profileData?._id]);
 
   // Update last seen time every minute
   useEffect(() => {
@@ -107,6 +115,21 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
     return () => clearInterval(interval);
   }, [partnerData?.user?.lastSeenAt]);
 
+  // Add ref for chat messages container
+  const chatMessagesRef = useRef<HTMLDivElement>(null);
+
+  // Function to scroll to bottom
+  const scrollToBottom = () => {
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    }
+  };
+
+  // Scroll to bottom when chatsData changes
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatsData]);
+
   // Handle sending a message
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -125,6 +148,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
     }
     formData.append("chatId", room);
     formData.append("receiver", partnerId);
+    formData.append("type", "text");
 
     try {
       const response = await myFetch(`/chat`, {
@@ -157,9 +181,9 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   };
 
   return (
-    <section className="lg:h-[calc(60vh)] h-auto">
+    <section className="">
       {/* header */}
-      <div className="h-auto">
+      <div className="">
         <div className="flex items-center justify-between lg:gap-8 gap-0 lg:p-4  border-b border-[#DCDCDC] ">
           <div className=" lg:w-full flex flex-col lg:flex-row lg:items-center  justify-between ">
             <div className="flex items-center lg:justify-center gap-2">
@@ -246,47 +270,70 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
 
       <div className="bg-white w-full rounded-lg relative">
         {/* Chat messages */}
-        <div className="py-6 lg:px-8 px-3 lg:h-[calc(60vh)] h-[calc(55vh)] overflow-y-scroll no-scrollbar pb-16">
-          {chatsData?.map(
-            (item: any, index) =>
-              item?.text && (
-                <div
-                  key={index}
-                  className={`flex mb-5 w-full ${
-                    item?.sender === partnerId
-                      ? "items-end justify-start"
-                      : "items-start justify-end"
-                  }`}
-                >
-                  <div
-                    className={`lg:px-4 px-2 py-3 flex-col gap-4 ${
-                      item?.sender === partnerId
-                        ? "border border-[#dcdcdc] rounded-t-xl rounded-br-xl"
-                        : "border bg-[#F8F8F8] rounded-t-xl rounded-bl-xl"
-                    }`}
-                  >
-                    {item?.image && (
-                      <Image
-                        src={`${IMAGE_URL}${item?.image}`}
-                        alt="image"
-                        width={220}
-                        height={100}
-                      />
-                    )}
-                    <p className="text-sm">{item?.text}</p>
-                    <p className="text-end text-xs text-[#918d8d]">
-                      {new Date(item?.createdAt).toLocaleTimeString([], {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              )
-          )}
+
+        <div
+          ref={chatMessagesRef}
+          className="py-6 lg:px-8 px-3 lg:h-[calc(60vh)] h-[calc(55vh)] overflow-y-scroll no-scrollbar pb-16"
+        >
+          {chatsData?.map((item: any, index) => (
+            <div
+              key={index}
+              className={`flex mb-5 w-full ${
+                item?.sender === partnerId
+                  ? "items-end justify-start"
+                  : "items-start justify-end"
+              }`}
+            >
+              <div
+                className={`lg:px-4 px-2 py-3 flex-col gap-4 ${
+                  item?.sender === partnerId
+                    ? "border border-[#dcdcdc] rounded-t-xl rounded-br-xl"
+                    : "border bg-[#F8F8F8] rounded-t-xl rounded-bl-xl"
+                }`}
+              >
+                {item?.image && (
+                  <Image
+                    src={`${IMAGE_URL}${item?.image}`}
+                    alt="image"
+                    width={220}
+                    height={100}
+                    className="rounded"
+                  />
+                )}
+                {item?.text && <p className="text-sm mt-2">{item?.text}</p>}
+                <p className="text-end text-xs text-[#918d8d] mt-2">
+                  {new Date(item?.createdAt).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
         {/* input section */}
         <div className="absolute bottom-0 w-full py-1  bg-white border-t border-[#DCDCDC]">
+          {/* show the image preview */}
+          {file && (
+            <div className="w-fit flex items-center gap-2 px-3 py-2 relative">
+              <Image
+                src={URL.createObjectURL(file)}
+                alt="Selected"
+                width={80}
+                height={80}
+                className="rounded-md object-cover"
+              />
+              <button
+                type="button"
+                className="absolute top-1 right-1 bg-white rounded-full p-1 shadow"
+                onClick={() => setFile(null)}
+                style={{ lineHeight: 0 }}
+                aria-label="Remove image"
+              >
+                <X size={16} className="text-red-500" />
+              </button>
+            </div>
+          )}
           <div className="flex items-center justify-center gap-3 w-full px-3 mt-3">
             {/* file input */}
             <div className="flex items-center gap-4">
@@ -313,7 +360,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
               onSubmit={handleSendMessage}
               className="flex justify-between items-center gap-4 w-full relative"
             >
-              <textarea
+              <input
                 name="text"
                 id="text"
                 className="w-full h-[48px] resize-none py-2 rounded-l-full px-4 rounded-r-full border bg-[#F8F8F8] border-[#DCDCDC] placeholder:text-[#797979]"
