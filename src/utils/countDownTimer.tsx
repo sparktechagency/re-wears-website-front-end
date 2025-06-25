@@ -1,45 +1,41 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { addHours, differenceInSeconds } from "date-fns";
 
 interface CountdownTimerProps {
-  hours: number;
-  minutes: number;
-  seconds: number;
+  backendTime: string;
   className?: string;
 }
 
-const CountdownTimer: React.FC<CountdownTimerProps> = ({
-  hours,
-  minutes,
-  seconds,
-  className,
-}) => {
-  const totalTimeInSeconds = hours * 3600 + minutes * 60 + seconds;
+export default function CountdownTimer({ backendTime, className }: CountdownTimerProps) {
+  const startDate = new Date(backendTime);
+  const endDate   = addHours(startDate, 24);
 
-  const [timeLeft, setTimeLeft] = useState<number>(totalTimeInSeconds);
+  const initialLeft = Math.max(differenceInSeconds(endDate, new Date()), 0);
+  const [secondsLeft, setSecondsLeft] = useState(initialLeft);
 
   useEffect(() => {
-    if (timeLeft <= 0) return; // Stop the countdown when time reaches 0
-
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => prevTime - 1);
+    if (secondsLeft === 0) return;
+    const id = setInterval(() => {
+      setSecondsLeft(prev => {
+        const next = prev - 1;
+        return next < 0 ? 0 : next;
+      });
     }, 1000);
 
-    return () => clearInterval(timer);
-  }, [timeLeft]);
+    return () => clearInterval(id);
+  }, [secondsLeft]);
 
-  const formatTime = (seconds: number): string => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const remainingSeconds = seconds % 60;
+  // 4️⃣ Format hh:mm:ss
+  const hours   = Math.floor(secondsLeft / 3600);
+  const minutes = Math.floor((secondsLeft % 3600) / 60);
+  const seconds = secondsLeft % 60;
 
-    return `${hours.toString().padStart(2, "0")}:${minutes
-      .toString()
-      .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
-  };
+  const formatted =
+    `${hours.toString().padStart(2, "0")}:` +
+    `${minutes.toString().padStart(2, "0")}:` +
+    `${seconds.toString().padStart(2, "0")}`;
 
-  return <span className={className}>{formatTime(timeLeft)}</span>;
-};
-
-export default CountdownTimer;
+  return <span className={className}>{secondsLeft === 0 ? "Time's up!" : formatted}</span>;
+}

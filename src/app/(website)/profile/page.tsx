@@ -10,6 +10,9 @@ const ProfilePage = async ({
 }: {
   searchParams: Record<string, string>;
 }) => {
+  const status = searchParams.status;
+  console.log(status);
+  
   const userId = (await myFetch("/users/profile"))?.data?._id;
 
   const profileId = searchParams.id ? searchParams.id : userId;

@@ -9,4 +9,4 @@ export const config = {
   BASE_URL: process.env.BASE_URL,
 };
 
-export const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL || "http://10.0.70.188:5006";
+export const IMAGE_URL = process.env.NEXT_PUBLIC_IMAGE_URL || "http://10.0.70.188:5005";
