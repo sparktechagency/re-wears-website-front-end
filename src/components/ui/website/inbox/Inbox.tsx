@@ -39,7 +39,7 @@ const Inbox = ({ rooms }: { rooms: any }) => {
         <div className="grid grid-cols-12 gap-4">
           {/* Message List */}
           <div
-            className={`lg:col-span-4 col-span-12 bg-white  rounded-xl px-2 py-4   overflow-y-auto ${
+            className={`lg:col-span-4 col-span-12 bg-white  rounded-xl px-2 py-4 h-[calc(88vh)] overflow-y-scroll no-scrollbar ${
               isChatVisible ? "hidden lg:block" : ""
             }`}
             style={{
