@@ -21,9 +21,13 @@ const ProfilePage = async ({
   });
   const orderRes = await myFetch(`/user-product/my-orders?status=${status}`);
 
+  const productsRes = await myFetch(
+    `/user-product/${profileId}?status=${status}`
+  );
+  
   const reviewsRes = await myFetch("/review");
 
-  const productsRes = await myFetch(`/user-product/${userId}?status=${status}`);
+  const isOwnProfile = userId === profileId;
 
   const items: TabsProps["items"] = [
     {
@@ -31,11 +35,15 @@ const ProfilePage = async ({
       label: <p className="font-bold"> Closet </p>,
       children: <Closet products={productsRes} />,
     },
-    {
-      key: "2",
-      label: <p className="font-bold">My Orders</p>,
-      children: <MyOrders orders={orderRes} />,
-    },
+    ...(isOwnProfile
+      ? [
+          {
+            key: "2",
+            label: <p className="font-bold">My Orders</p>,
+            children: <MyOrders orders={orderRes} />,
+          },
+        ]
+      : []),
     {
       key: "3",
       label: <p className="font-bold">Reviews</p>,

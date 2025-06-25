@@ -25,6 +25,11 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
     });
   }
 
+  const handleFollow = () => {
+    console.log(user?.user?._id, userId);
+    // have to call follow api
+  };
+
   return (
     <section className="card">
       <div className=" flex flex-col lg:flex-row lg:gap-6 gap-2">
@@ -142,7 +147,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
                   <IoMail size={20} /> Message
                 </OutlineButton>
               </Link>
-              <FillButton>Follow</FillButton>
+              <FillButton onClick={handleFollow}>Follow</FillButton>
             </>
           )}
         </div>
