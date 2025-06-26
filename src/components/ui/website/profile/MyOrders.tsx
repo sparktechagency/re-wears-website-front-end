@@ -17,6 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { myFetch } from "@/helpers/myFetch";
 import { format } from "date-fns";
 import { revalidateTags } from "@/helpers/revalidateTags";
+import toast from "react-hot-toast";
 
 interface Order {
   key: string;
@@ -49,9 +50,9 @@ const MyOrders = ({ orders }: { orders: any }) => {
       method: "PATCH",
       body: { status: "Active" },
     });
-    console.log(res?.success);
     if (res?.success) {
       revalidateTags(["Orders"]);
+      toast.success("Reservation cancelled successfully");
     }
   };
 
