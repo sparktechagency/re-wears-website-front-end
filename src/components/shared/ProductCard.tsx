@@ -2,26 +2,20 @@
 "use client";
 import { IMAGE_URL } from "@/config/env-config";
 import { myFetch } from "@/helpers/myFetch";
+import { revalidateTags } from "@/helpers/revalidateTags";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FaHeart } from "react-icons/fa";
 
-const ProductCard = ({ product }: { product: any }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
-  const [wishlistCount, setWishlistCount] = useState(
-    product?.wishlist?.length || 0
-  );
-  console.log("IsFavorite", isFavorite);
-
-  useEffect(() => {
-    setIsFavorite(
-      product?.wishlist?.some((item: any) => item.user === product?.user?._id)
-    );
-  }, [product?.wishlist, product?.user?._id]);
-
+const ProductCard = ({
+  product,
+  isWishlist,
+}: {
+  product: any;
+  isWishlist?: boolean;
+}) => {
   const toggleFavorite = async () => {
     try {
       const res = await myFetch(`/wishlist`, {
@@ -31,10 +25,7 @@ const ProductCard = ({ product }: { product: any }) => {
         },
       });
       if (res.success) {
-        toast.success("Product added to wishlist");
-        setIsFavorite(res.data.wishlistCount);
-        setWishlistCount(res.data.wishlistCount);
-        console.log("isFavorite", isFavorite);
+        revalidateTags(["wishlist", "products"]);
       } else {
         toast.error("Something went wrong");
       }
@@ -51,12 +42,12 @@ const ProductCard = ({ product }: { product: any }) => {
           className={`flex items-center gap-2 p-2 bg-[#9D977A] bg-opacity-60 text-white rounded-lg absolute top-3 left-3`}
           onClick={toggleFavorite}
         >
-          {isFavorite ? (
+          {isWishlist ? (
             <FaHeart size={20} color="#ffffff" />
           ) : (
             <Heart size={20} color="#ffffff" />
           )}
-          <span> {product.wishlistCount}</span>
+          <span> {product?.wishlistCount}</span>
         </button>
         <Link href={`/product-details/${product?._id}`}>
           {product?.productImage?.length > 0 && (

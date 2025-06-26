@@ -17,6 +17,7 @@ const Products = ({
   brands = [],
   colors = [],
   materials = [],
+  wishlist = [],
 }: {
   data: any;
   meta?: any;
@@ -26,6 +27,7 @@ const Products = ({
   brands?: any;
   colors?: any;
   materials?: any;
+  wishlist?: any;
 }) => {
   const updateSearchParams = useUpdateSearchParams();
 
@@ -66,7 +68,10 @@ const Products = ({
         <p className="text-secondary text-[25px] font-bold pb-3">
           {capitalizeSentence(filters?.category?.toLowerCase() || "Products")}
         </p>
+
+        {/* filter section */}
         <div className="card flex flex-wrap lg:flex-nowrap items-center gap-4">
+          {/* category filter */}
           <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
             <Cascader
               options={options}
@@ -83,6 +88,7 @@ const Products = ({
             />
           </ConfigProvider>
 
+          {/* size filter */}
           <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
             <Select
               defaultValue={filters?.size}
@@ -94,12 +100,14 @@ const Products = ({
               onClear={() => updateSearchParams({ size: null })}
             >
               {sizes?.map((item: any) => (
-                <Select.Option key={item.name} value={item.name}>
+                <Select.Option key={item.name} value={item._id}>
                   {item.name}
                 </Select.Option>
               ))}
             </Select>
           </ConfigProvider>
+
+          {/* brand filter */}
           <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
             <Select
               defaultValue={filters?.brand}
@@ -111,12 +119,14 @@ const Products = ({
               onClear={() => updateSearchParams({ brand: null })}
             >
               {brands?.map((item: any) => (
-                <Select.Option key={item.name} value={item.name}>
+                <Select.Option key={item.name} value={item._id}>
                   {item.name}
                 </Select.Option>
               ))}
             </Select>
           </ConfigProvider>
+
+          {/* condition filter */}
           <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
             <Select
               defaultValue={filters?.condition}
@@ -134,6 +144,8 @@ const Products = ({
               ))}
             </Select>
           </ConfigProvider>
+
+          {/* color filter */}
           <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
             <Select
               defaultValue={filters?.colors}
@@ -145,12 +157,14 @@ const Products = ({
               onClear={() => updateSearchParams({ colors: null })}
             >
               {colors?.map((item: any) => (
-                <Select.Option key={item?.name} value={item?.name}>
+                <Select.Option key={item?.name} value={item?._id}>
                   {item?.name}
                 </Select.Option>
               ))}
             </Select>
           </ConfigProvider>
+
+          {/* material filter */}
           <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
             <Select
               defaultValue={filters?.material}
@@ -162,26 +176,28 @@ const Products = ({
               onClear={() => updateSearchParams({ material: null })}
             >
               {materials?.map((item: any) => (
-                <Select.Option key={item?.name} value={item?.name}>
+                <Select.Option key={item?.name} value={item?._id}>
                   {item?.name}
                 </Select.Option>
               ))}
             </Select>
           </ConfigProvider>
+
+          {/* sorting */}
           <ConfigProvider theme={{ token: { borderRadius: 10 } }}>
             <Select
-              defaultValue={filters?.sortBy}
-              onSelect={(value) => updateSearchParams({ sortBy: value })}
+              defaultValue={filters?.sort}
+              onSelect={(value) => updateSearchParams({ sort: value })}
               placeholder={"Sort by"}
               style={{ width: "100%", height: "35px" }}
               showSearch
               allowClear
-              onClear={() => updateSearchParams({ sortBy: null })}
+              onClear={() => updateSearchParams({ sort: null })}
             >
-              <Select.Option key={"High Price"} value={"High Price"}>
+              <Select.Option key={"High Price"} value={"-price"}>
                 High Price
               </Select.Option>
-              <Select.Option key={"Low Price"} value={"Low Price"}>
+              <Select.Option key={"Low Price"} value={"price"}>
                 Low Price
               </Select.Option>
             </Select>
@@ -195,7 +211,13 @@ const Products = ({
           <h1 className="text-[14px] font-normal text-start">500+ results.</h1>
           <div className="  my-5 grid grid-cols-2 lg:grid-cols-4 gap-4">
             {data?.map((item: any) => (
-              <ProductCard key={item.id} product={item} />
+              <ProductCard
+                key={item._id}
+                product={item}
+                isWishlist={wishlist?.some(
+                  (wish: any) => wish?.product?._id === item?._id
+                )}
+              />
             ))}
           </div>
 
@@ -214,9 +236,9 @@ const Products = ({
           >
             <Pagination
               align="center"
-              pageSize={meta?.limit}
-              current={meta?.page}
-              total={meta?.total}
+              pageSize={meta?.limit || 10}
+              current={meta?.page || 1}
+              total={meta?.total || 0}
             />
           </ConfigProvider>
         </section>

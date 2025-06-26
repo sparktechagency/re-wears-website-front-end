@@ -49,7 +49,7 @@ const SellerActions = ({ productData }: { productData: any }) => {
       if (res?.success) {
         toast.success("Deleted successfully", { id: "delete-product" });
         revalidateTags(["Product", "products"]);
-        location.href = "/products";
+        location.href = "/products?category=WOMEN";
         router.refresh();
       } else {
         toast.error(res?.message || "Something went wrong", {
