@@ -29,7 +29,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
 
-  console.log(chatsData);
+  // console.log(chatsData);
 
   // Fetch partner data
   useEffect(() => {
