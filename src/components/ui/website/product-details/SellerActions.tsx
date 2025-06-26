@@ -21,7 +21,7 @@ const SellerActions = ({ productData }: { productData: any }) => {
     };
 
     try {
-      const res = await myFetch(`/product/${productData?._id}`, {
+      const res = await myFetch(`/product/update-status/${productData?._id}`, {
         method: "PATCH",
         body: payload,
       });
@@ -58,10 +58,11 @@ const SellerActions = ({ productData }: { productData: any }) => {
     } catch (error) {
       console.error(error);
     }
-  };  
+  };
 
   return (
     <div className="grid gap-2 px-6">
+      {/* mark as sold */}
       {productData?.status === "Active" && (
         <OutlineButton
           onClick={() => {
@@ -73,6 +74,7 @@ const SellerActions = ({ productData }: { productData: any }) => {
         </OutlineButton>
       )}
 
+      {/* product status */}
       <OutlineButton
         className={`uppercase w-full cursor-default ${
           (productData?.status === "Reserved" ||
@@ -83,19 +85,32 @@ const SellerActions = ({ productData }: { productData: any }) => {
         {productData?.status === "Active" ? "Available" : productData?.status}
       </OutlineButton>
 
+      {/* make available product */}
+      {productData?.status === "Draft" && (
+        <OutlineButton
+          onClick={() => handleUpdateStatus("Active")}
+          className="uppercase w-full"
+        >
+          Make Available
+        </OutlineButton>
+      )}
+
+      {/* hide product */}
       {productData?.status !== "Hidden" && (
         <OutlineButton
           onClick={() => handleUpdateStatus("Hidden")}
           className="uppercase w-full"
         >
-          Hides
+          Hide
         </OutlineButton>
       )}
 
+      {/* edit product */}
       <Link href={`/products/edit/${productData?._id}`}>
         <OutlineButton className="uppercase w-full">Edit listing</OutlineButton>
       </Link>
 
+      {/* delete product */}
       <OutlineButton
         onClick={() => setDeleteModal(true)}
         className="uppercase w-full border-[#D04555] text-[#D04555] hover:bg-[#ce4555]"

@@ -185,7 +185,7 @@ const ProductDetails = ({
                 />
                 <div>
                   <h1 className="text-lg font-bold">
-                    @{productData?.user?.userName}
+                    {`@${productData?.user?.userName}` || "Unknown"}
                   </h1>
                   <p className="text-[#797979] text-sm">
                     {seller?.customerAvgRating > 0 ? (

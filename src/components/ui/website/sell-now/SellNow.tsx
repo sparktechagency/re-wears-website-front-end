@@ -26,6 +26,7 @@ const SellNow = ({
   materials: any;
 }) => {
   const [fileList, setFileList] = useState<any[]>([]);
+  const [productStatus, setProductStatus] = useState<string>("Active");
   const [form] = Form.useForm();
   const router = useRouter();
   const formatedCategories = categories?.map((category: any) => ({
@@ -73,11 +74,8 @@ const SellNow = ({
         );
       }
     });
-
-    console.log(values);
-    // for (let pair of formData.entries()) {
-    //   console.log(pair[0] + ":", pair[1]);
-    // }
+    // append product status
+    formData.append("status", productStatus);
 
     // send data to server
     try {
@@ -92,9 +90,8 @@ const SellNow = ({
         });
         form.resetFields();
         revalidateTags(["products"]);
-        const productId = res?.data?._id;
-        if (productId) {
-          router.push(`/product-details/${productId}`);
+        if (res?.data?._id) {
+          router.push(`/product-details/${res?.data?._id}`);
         }
       } else {
         toast.error(res?.message || "Something went wrong", {
@@ -325,7 +322,10 @@ const SellNow = ({
 
             {/* Buttons */}
             <div className="flex flex-col lg:flex-row justify-end gap-4 mt-8">
-              <OutlineButton className="w-full md:w-auto">
+              <OutlineButton
+                onClick={() => setProductStatus("Draft")}
+                className="w-full md:w-auto"
+              >
                 SAVE DRAFT
               </OutlineButton>
               <FillButton className="w-full md:w-auto">UPLOAD</FillButton>
