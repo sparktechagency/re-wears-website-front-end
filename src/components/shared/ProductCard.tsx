@@ -82,17 +82,20 @@ const ProductCard = ({ product }: { product: any }) => {
           <h4 className="font-bold">{product?.name}</h4>
         </div>
         <div className="flex items-center gap-3 bg-[#F5F5F5] p-2 px-4 rounded-b-xl">
-          <Image
-            src={
-              product.user.image?.startsWith("http")
-                ? product.user.image
-                : `${IMAGE_URL}${product.user.image}`
-            }
-            alt="image"
-            width={30}
-            height={30}
-            className="rounded-full size-8"
-          />
+          {product?.user?.image && (
+            <Image
+              src={
+                product?.user?.image?.startsWith("http")
+                  ? product?.user?.image
+                  : `${IMAGE_URL}${product?.user?.image}`
+              }
+              alt="image"
+              width={30}
+              height={30}
+              className="rounded-full size-8"
+            />
+          )}
+
           <h5>
             {product.user.firstName} {product.user.lastName}
           </h5>

@@ -370,7 +370,9 @@ const EditProduct = ({
               >
                 SAVE DRAFT
               </OutlineButton>
-              <FillButton className="w-full md:w-auto">UPDATE</FillButton>
+              <FillButton className="w-full md:w-auto">
+                UPDATE & ACTIVE
+              </FillButton>
             </div>
           </Form>
         </div>

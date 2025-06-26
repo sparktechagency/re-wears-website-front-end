@@ -47,9 +47,10 @@ const SellerActions = ({ productData }: { productData: any }) => {
         method: "DELETE",
       });
       if (res?.success) {
-        router.push("/products");
-        revalidateTags(["Product", "products"]);
         toast.success("Deleted successfully", { id: "delete-product" });
+        revalidateTags(["Product", "products"]);
+        location.href = "/products";
+        router.refresh();
       } else {
         toast.error(res?.message || "Something went wrong", {
           id: "delete-product",
@@ -102,6 +103,16 @@ const SellerActions = ({ productData }: { productData: any }) => {
           className="uppercase w-full"
         >
           Hide
+        </OutlineButton>
+      )}
+
+      {/* unhide product */}
+      {productData?.status === "Hidden" && (
+        <OutlineButton
+          onClick={() => handleUpdateStatus("Active")}
+          className="uppercase w-full"
+        >
+          Unhide
         </OutlineButton>
       )}
 

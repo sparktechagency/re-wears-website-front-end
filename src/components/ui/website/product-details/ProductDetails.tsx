@@ -172,17 +172,20 @@ const ProductDetails = ({
           <div className="card !p-6 grid gap-4">
             <div className="flex flex-col md:flex-row lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <Image
-                  src={
-                    productData.user.image.includes("http")
-                      ? productData.user.image
-                      : `${IMAGE_URL}${productData.user.image}`
-                  }
-                  alt="user"
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                />
+                {productData?.user?.image && (
+                  <Image
+                    src={
+                      productData?.user?.image?.includes("http")
+                        ? productData?.user?.image
+                        : `${IMAGE_URL}${productData?.user?.image}`
+                    }
+                    alt="user"
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                  />
+                )}
+
                 <div>
                   <h1 className="text-lg font-bold">
                     {`@${productData?.user?.userName}` || "Unknown"}
