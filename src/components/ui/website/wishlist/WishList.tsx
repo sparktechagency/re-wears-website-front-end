@@ -4,8 +4,14 @@ import Label from "@/components/shared/Label";
 import Image from "next/image";
 import productsData from "@/data/products.json";
 import ProductCard from "@/components/shared/ProductCard";
+import { myFetch } from "@/helpers/myFetch";
 
-const WishList = () => {
+const WishList = async () => {
+  const res = await myFetch(`/wishlist`, {
+    method: "GET",
+  });
+  const data = res.data;
+
   return (
     <div className="bg-[#FDFDFD]">
       {/* show empty message when no items added */}
@@ -32,7 +38,7 @@ const WishList = () => {
       <section className="my-16 px-4">
         <h1 className="text-2xl font-bold text-center">Your wishlist</h1>
         <div className="container card my-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {productsData.map((item) => (
+          {data.map((item: any) => (
             <ProductCard key={item.id} product={item} />
           ))}
         </div>

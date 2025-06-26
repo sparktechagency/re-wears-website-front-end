@@ -20,7 +20,7 @@ const ProfilePage = async ({
   });
   // console.log("Profile Response:", profileRes);
   // TODO: update this route for fetch orders data by rakib
-  const orderRes = await myFetch(`/user-product/order?status=Reserved`, {
+  const orderRes = await myFetch(`/user-product/my-orders?status=${status}`, {
     tags: ["Orders"],
   });
 
