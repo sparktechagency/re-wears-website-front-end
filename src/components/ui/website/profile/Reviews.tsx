@@ -15,7 +15,7 @@ const Reviews = ({ reviews }: { reviews: any }) => {
     setReviewData(reviews?.data);
     setShow(true);
   };
-
+   
   useEffect(() => {
     if (reviews?.data?.length > 5) {
       const data = reviews?.data?.slice(0, 5);

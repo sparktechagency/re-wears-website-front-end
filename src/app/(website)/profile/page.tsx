@@ -15,20 +15,32 @@ const ProfilePage = async ({
   const userId = (await myFetch("/users/profile"))?.data?._id;
 
   const profileId = searchParams.id ? searchParams.id : userId;
+
   const profileRes = await myFetch(`/users/${profileId}`, {
     cache: "no-store",
+    tags: ["Profile"],
   });
-  // console.log("Profile Response:", profileRes);
-  // TODO: update this route for fetch orders data by rakib
+
   const orderRes = await myFetch(`/user-product/my-orders?status=${status}`, {
     tags: ["Orders"],
   });
 
   const productsRes = await myFetch(
-    `/user-product/${profileId}?status=${status}`
+    `/user-product/${profileId}?status=${status}`,
+    {
+      tags: ["Products"],
+    }
   );
 
-  const reviewsRes = await myFetch("/review");
+  const reviewsRes = await myFetch(`/review/${profileId}`, {
+    tags: ["Reviews"],
+    cache: "no-store",
+  });
+
+  const followRes = await myFetch(`/user/${profileId}`, {
+    tags: ["Follow"],
+    cache: "no-store",
+  });
 
   const isOwnProfile = userId === profileId;
 
@@ -58,7 +70,11 @@ const ProfilePage = async ({
     <div className="container my-12 grid gap-6">
       {/* profile header */}
       <section>
-        <ProfileHeader user={profileRes?.data} userId={userId} />
+        <ProfileHeader
+          user={profileRes?.data}
+          userId={userId}
+          followRes={followRes}
+        />
       </section>
 
       {/* profile content */}

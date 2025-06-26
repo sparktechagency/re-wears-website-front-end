@@ -16,9 +16,18 @@ import { IoMail } from "react-icons/io5";
 import FillButton from "@/components/shared/FillButton";
 import { myFetch } from "@/helpers/myFetch";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { revalidateTags } from "@/helpers/revalidateTags";
 
-const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
+const ProfileHeader = ({
+  user,
+  userId,
+  followRes,
+}: {
+  user: any;
+  userId: string;
+  followRes: any;
+}) => {
   const [isFollowing, setIsFollowing] = useState(false);
   let lastActiveStatus = "Unknown";
   const lastSeenAt = user?.user?.lastSeenAt;
@@ -31,21 +40,29 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
 
   const handleFollow = async () => {
     try {
-      const res = await myFetch(`/user/${user?._id}`, {
+      const res = await myFetch(`/user/${user?.user?._id}`, {
         method: "PATCH",
       });
-      if (res.success === true) {
-        setIsFollowing(!isFollowing);
-        isFollowing
-          ? toast.success("Followed Successfully")
-          : toast.success("Unfollowed successfully");
-      }
 
-      console.log(res);
+      if (res.success && res?.data?.follower?.includes(userId)) {
+        revalidateTags(["Profile"]);
+        setIsFollowing(true);
+        toast.success("Followed Successfully");
+      } else {
+        revalidateTags(["Profile"]);
+        setIsFollowing(false);
+        toast.success("Unfollowed Successfully");
+      }
     } catch (error) {
       toast.error("Something went wrong");
     }
   };
+
+  useEffect(() => {
+    if (followRes?.success && followRes?.data?.follower?.includes(userId)) {
+      setIsFollowing(true);
+    }
+  }, [followRes, userId]);
 
   return (
     <section className="card">
@@ -165,7 +182,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
                 </OutlineButton>
               </Link>
               <FillButton onClick={handleFollow}>
-                {!isFollowing ? "Unfollow" : "Follow"}
+                {isFollowing ? "Unfollow" : "Follow"}
               </FillButton>
             </>
           )}
