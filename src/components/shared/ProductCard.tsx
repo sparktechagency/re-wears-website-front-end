@@ -1,30 +1,62 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { IMAGE_URL } from "@/config/env-config";
+import { myFetch } from "@/helpers/myFetch";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FaHeart } from "react-icons/fa";
 
 const ProductCard = ({ product }: { product: any }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  console.log(product?.productImage?.[0]);
+  const [wishlistCount, setWishlistCount] = useState(
+    product?.wishlist?.length || 0
+  );
+  console.log("IsFavorite", isFavorite);
+
+  useEffect(() => {
+    setIsFavorite(
+      product?.wishlist?.some((item: any) => item.user === product?.user?._id)
+    );
+  }, [product?.wishlist, product?.user?._id]);
+
+  const toggleFavorite = async () => {
+    try {
+      const res = await myFetch(`/wishlist`, {
+        method: "POST",
+        body: {
+          product: product._id,
+        },
+      });
+      if (res.success) {
+        toast.success("Product added to wishlist");
+        setIsFavorite(res.data.wishlistCount);
+        setWishlistCount(res.data.wishlistCount);
+        console.log("isFavorite", isFavorite);
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (err) {
+      console.error("Wishlist toggle failed", err);
+    }
+  };
+
   return (
     <div className="rounded-xl border">
       <figure className="relative">
         {/* favourite button */}
         <button
           className={`flex items-center gap-2 p-2 bg-[#9D977A] bg-opacity-60 text-white rounded-lg absolute top-3 left-3`}
-          onClick={() => setIsFavorite(!isFavorite)}
+          onClick={toggleFavorite}
         >
           {isFavorite ? (
             <FaHeart size={20} color="#ffffff" />
           ) : (
-            <Heart size={20} />
+            <Heart size={20} color="#ffffff" />
           )}
-
-          <span> {isFavorite ? 8 + 1 : 8}</span>
+          <span> {product.wishlistCount}</span>
         </button>
         <Link href={`/product-details/${product?._id}`}>
           {product?.productImage?.length > 0 && (
@@ -50,13 +82,12 @@ const ProductCard = ({ product }: { product: any }) => {
           <h4 className="font-bold">{product?.name}</h4>
         </div>
         <div className="flex items-center gap-3 bg-[#F5F5F5] p-2 px-4 rounded-b-xl">
-          <Image 
-          src={
-                product.user.image?.startsWith("http")
-                  ? product.user.image
-                  : `${IMAGE_URL}${product.user.image}`
-              }
-
+          <Image
+            src={
+              product.user.image?.startsWith("http")
+                ? product.user.image
+                : `${IMAGE_URL}${product.user.image}`
+            }
             alt="image"
             width={30}
             height={30}

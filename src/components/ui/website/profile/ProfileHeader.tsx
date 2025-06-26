@@ -14,8 +14,12 @@ import { IMAGE_URL } from "@/config/env-config";
 import { formatDistanceToNow } from "date-fns";
 import { IoMail } from "react-icons/io5";
 import FillButton from "@/components/shared/FillButton";
+import { myFetch } from "@/helpers/myFetch";
+import toast from "react-hot-toast";
+import { useState } from "react";
 
 const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
+  const [isFollowing, setIsFollowing] = useState(false);
   let lastActiveStatus = "Unknown";
   const lastSeenAt = user?.user?.lastSeenAt;
 
@@ -25,9 +29,22 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
     });
   }
 
-  const handleFollow = () => {
-    console.log(user?.user?._id, userId);
-    // have to call follow api
+  const handleFollow = async () => {
+    try {
+      const res = await myFetch(`/user/${user?._id}`, {
+        method: "PATCH",
+      });
+      if (res.success === true) {
+        setIsFollowing(!isFollowing);
+        isFollowing
+          ? toast.success("Followed Successfully")
+          : toast.success("Unfollowed successfully");
+      }
+
+      console.log(res);
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
@@ -38,7 +55,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
             <Image
               src={
                 user.user.image.includes("http")
-                  ? user.user.image
+                  ? user.image
                   : `${IMAGE_URL}${user.user.image}`
               }
               alt="User image"
@@ -53,7 +70,7 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
           )}
 
           <div className="block lg:hidden">
-            <Label className="text-[16px] pb-2">@{user?.user?.userName}</Label>
+            <Label className="text-[16px] pb-2">@{user?.userName}</Label>
             <div className="flex items-center gap-4">
               <Rate
                 disabled
@@ -147,7 +164,9 @@ const ProfileHeader = ({ user, userId }: { user: any; userId: string }) => {
                   <IoMail size={20} /> Message
                 </OutlineButton>
               </Link>
-              <FillButton onClick={handleFollow}>Follow</FillButton>
+              <FillButton onClick={handleFollow}>
+                {!isFollowing ? "Unfollow" : "Follow"}
+              </FillButton>
             </>
           )}
         </div>
