@@ -12,7 +12,7 @@ import { IMAGE_URL } from "@/config/env-config";
 import { Rate } from "antd";
 import BuyerActions from "./BuyerActions";
 import SellerActions from "./SellerActions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProductDetails = ({
   product,
@@ -26,6 +26,24 @@ const ProductDetails = ({
   const [lastseen, setLastseen] = useState("");
   const productData = product?.result;
   const isMyProduct = productData?.user?._id === profile?._id;
+
+  // Update last seen time every minute
+  useEffect(() => {
+    const updateTime = () => {
+      if (productData?.user?.lastSeenAt) {
+        setLastseen(
+          formatDistanceToNow(new Date(productData?.user?.lastSeenAt), {
+            addSuffix: true,
+          })
+        );
+      } else {
+        setLastseen("Unknown");
+      }
+    };
+    updateTime(); // initial
+    const interval = setInterval(updateTime, 60000); // every minute
+    return () => clearInterval(interval);
+  }, [productData?.user?.lastSeenAt]);
 
   return (
     <div className="container">

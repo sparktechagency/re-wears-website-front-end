@@ -29,15 +29,27 @@ const ProfileHeader = ({
   followRes: any;
 }) => {
   const [isFollowing, setIsFollowing] = useState(false);
-  let lastActiveStatus = "Unknown";
-  const lastSeenAt = user?.user?.lastSeenAt;
+  const [lastSeenAt, setLastSeenAt] = useState<string | null>(null);
 
-  if (lastSeenAt && !isNaN(new Date(lastSeenAt).getTime())) {
-    lastActiveStatus = formatDistanceToNow(new Date(lastSeenAt), {
-      addSuffix: true,
-    });
-  }
+  // Update last seen time every minute
+  useEffect(() => {
+    const updateTime = () => {
+      if (user?.user?.lastSeenAt) {
+        setLastSeenAt(
+          formatDistanceToNow(new Date(user?.user?.lastSeenAt), {
+            addSuffix: true,
+          })
+        );
+      } else {
+        setLastSeenAt("Unknown");
+      }
+    };
+    updateTime(); // initial
+    const interval = setInterval(updateTime, 60000); // every minute
+    return () => clearInterval(interval);
+  }, [user?.user?.lastSeenAt]);
 
+  // Handle follow/unfollow action
   const handleFollow = async () => {
     try {
       const res = await myFetch(`/user/${user?.user?._id}`, {
@@ -58,6 +70,7 @@ const ProfileHeader = ({
     }
   };
 
+  // Check if the user is following or not
   useEffect(() => {
     if (followRes?.success && followRes?.data?.follower?.includes(userId)) {
       setIsFollowing(true);
@@ -146,7 +159,7 @@ const ProfileHeader = ({
           <p className="flex items-center gap-3">
             <FaClock className="text-primary size-5" />{" "}
             <span className="text-[12px] lg:text-[14px] capitalize">
-              {lastActiveStatus}
+              {lastSeenAt}
             </span>
           </p>
         </div>
