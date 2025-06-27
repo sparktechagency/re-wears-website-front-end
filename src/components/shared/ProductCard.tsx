@@ -69,7 +69,7 @@ const ProductCard = ({
       <Link href={`/product-details/${product?._id}`}>
         <div className="grid gap-1 p-4 ">
           <h3 className="font-bold">${product?.price}</h3>
-          <p className="text-sm">{product?.size?.name}</p>
+          <p className="text-sm">{product?.size?.name || "Unknown Size"}</p>
           <h4 className="font-bold">{product?.name}</h4>
         </div>
         <div className="flex items-center gap-3 bg-[#F5F5F5] p-2 px-4 rounded-b-xl">

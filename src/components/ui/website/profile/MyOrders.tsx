@@ -10,49 +10,44 @@ import { ConfigProvider, Rate, Segmented, Table, Tooltip } from "antd";
 import { ColumnsType } from "antd/es/table";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import { MdInfo } from "react-icons/md";
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
 import { myFetch } from "@/helpers/myFetch";
 import { format } from "date-fns";
 import { revalidateTags } from "@/helpers/revalidateTags";
 import toast from "react-hot-toast";
+import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
+import { useEffect } from "react";
 
 interface Order {
   key: string;
-  image: string;
-  price: string;
   name: string;
   seller: any;
-  reviews: string;
-  initial: string;
-  date: string;
   product: any;
+  status: string;
   createdAt: any;
 }
 
 const MyOrders = ({ orders }: { orders: any }) => {
-  const [query, setQuery] = useState("Reserved");
+  const updateSearchParams = useUpdateSearchParams();
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
+  // reset search params on mount
   useEffect(() => {
-    const params = new URLSearchParams(searchParams?.toString() || "");
-    params.set("status", query);
-    router.replace(`?${params.toString()}`, { scroll: false });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+    updateSearchParams({ orderStatus: null });
+  }, []);
+
+  console.log(orders);
 
   const handleStatus = async (id: string) => {
     const res = await myFetch(`/order/${id}`, {
       method: "PATCH",
-      body: { status: "Active" },
+      body: { productStatus: "Active", orderStatus: "Cancelled" },
     });
+    console.log(res);
     if (res?.success) {
-      revalidateTags(["Orders"]);
+      revalidateTags(["Orders", "products", "Product"]);
       toast.success("Reservation cancelled successfully");
+    } else {
+      toast.error("Failed to release the order");
     }
   };
 
@@ -64,7 +59,10 @@ const MyOrders = ({ orders }: { orders: any }) => {
       render: (_, record: Order) => {
         return (
           <div className="flex items-center gap-4 font-poppins">
-            <figure className="w-20 h-24 rounded-lg border relative">
+            <Link
+              href={`/product-details/${record?.product?._id}`}
+              className="w-20 h-24 rounded-lg border relative"
+            >
               {record?.product?.productImage?.[0] && (
                 <Image
                   src={
@@ -81,12 +79,12 @@ const MyOrders = ({ orders }: { orders: any }) => {
               <div className="text-xs lg:text-[8px] px-2 bg-white text-primary rounded-b-lg absolute w-full bottom-0">
                 {record?.product?.price}
               </div>
-            </figure>
-            <div>
-              <p className="font-bold text-sm whitespace-nowrap">
+            </Link>
+            <Link href={`/product-details/${record?.product?._id}`}>
+              <p className="font-bold text-sm whitespace-nowrap text-black">
                 {record?.product?.name}
               </p>
-            </div>
+            </Link>
           </div>
         );
       },
@@ -98,7 +96,10 @@ const MyOrders = ({ orders }: { orders: any }) => {
       render: (_, record) => {
         return (
           <div className="flex items-center gap-2 font-poppins">
-            <div className="size-14 flex justify-center items-center bg-[#465A63] text-white text-xl font-bold rounded-full border">
+            <Link
+              href={`/profile?id=${record?.seller?._id}`}
+              className="size-14 flex justify-center items-center bg-[#465A63] text-white text-xl font-bold rounded-full border"
+            >
               {record?.seller?.image ? (
                 <Image
                   src={
@@ -113,15 +114,19 @@ const MyOrders = ({ orders }: { orders: any }) => {
                 />
               ) : (
                 <div className="lg:size-28 size-[69px] flex justify-center items-center bg-[#465A63] text-white text-3xl font-bold rounded-full border">
-                  {record.seller.firstName.charAt(0).toUpperCase()}
+                  {record?.seller?.firstName?.charAt(0)?.toUpperCase() || "U"}
                 </div>
               )}
-            </div>
+            </Link>
             <div className="grid gap-1">
-              <h3 className="text-sm font-bold">{record?.seller?.userName}</h3>
+              <Link href={""}>
+                <h3 className="text-sm font-bold text-black">
+                  {`@${record?.seller?.userName}` || "Unknown"}
+                </h3>
+              </Link>
               <Rate
                 disabled
-                defaultValue={record?.product?.reviewsRating}
+                defaultValue={record?.product?.reviewsRating || 0}
                 style={{ color: "#FDB11A" }}
               />
             </div>
@@ -135,28 +140,32 @@ const MyOrders = ({ orders }: { orders: any }) => {
       render: (_, record) => {
         return (
           <div className="flex items-center gap-2 font-poppins">
-            <Link href={`/inbox?recipient=${record?.seller?._id}`}>
-              <FillButton className="text-sm px-4 h-8 !bg-[#D04555] !hover:bg-[#a32937] text-white whitespace-nowrap">
-                Message seller
-              </FillButton>
-            </Link>
-            {query === "Reserved" && (
-              <div onClick={() => handleStatus(record?.product?._id)}>
-                <OutlineButton className="text-sm px-4 h-8">
-                  Release
-                </OutlineButton>
-              </div>
+            {record?.status === "Reserved" && (
+              <>
+                <Link href={`/inbox?recipient=${record?.seller?._id}`}>
+                  <FillButton className="text-sm px-4 h-8 !bg-[#D04555] !hover:bg-[#a32937] text-white whitespace-nowrap">
+                    Message seller
+                  </FillButton>
+                </Link>
+                <div onClick={() => handleStatus(record?.product?._id)}>
+                  <OutlineButton className="text-sm px-4 h-8">
+                    Release
+                  </OutlineButton>
+                </div>
+              </>
             )}
-            <Link
-              href={{
-                pathname: "leave-review",
-                query: { sellerId: record?.seller?._id },
-              }}
-            >
-              <OutlineButton className="text-sm px-4 h-8">
-                Review seller
-              </OutlineButton>
-            </Link>
+            {record?.status === "Completed" && (
+              <Link
+                href={{
+                  pathname: "leave-review",
+                  query: { sellerId: record?.seller?._id },
+                }}
+              >
+                <OutlineButton className="text-sm px-4 h-8">
+                  Review seller
+                </OutlineButton>
+              </Link>
+            )}
           </div>
         );
       },
@@ -221,10 +230,8 @@ const MyOrders = ({ orders }: { orders: any }) => {
         >
           <Segmented<string>
             options={["Reserved", "Completed"]}
-            value={query}
-            onChange={(value) => {
-              setQuery(value);
-            }}
+            defaultValue={"Reserved"}
+            onChange={(value) => updateSearchParams({ orderStatus: value })}
           />
         </ConfigProvider>
       </section>
