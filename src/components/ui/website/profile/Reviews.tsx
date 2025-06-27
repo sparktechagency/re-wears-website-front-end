@@ -7,45 +7,47 @@ import { formatDistanceToNow } from "date-fns";
 import { useEffect, useState } from "react";
 import { FaCircleUser } from "react-icons/fa6";
 
-const Reviews = ({ reviews }: { reviews: any }) => {
+const Reviews = ({ reviewsData }: { reviewsData: any }) => {
   const [show, setShow] = useState(false);
   const [reviewData, setReviewData] = useState([]);
 
+  console.log(reviewsData?.averageRating);
+
   const handleLoadMore = () => {
-    setReviewData(reviews?.data);
+    setReviewData(reviewsData?.result);
     setShow(true);
   };
-   
+
   useEffect(() => {
-    if (reviews?.data?.length > 5) {
-      const data = reviews?.data?.slice(0, 5);
+    if (reviewsData?.result?.length > 5) {
+      const data = reviewsData?.result?.data?.slice(0, 5);
       setReviewData(data);
     }
-  }, [reviews]);
+  }, [reviewsData]);
 
   return (
     <div className="grid gap-6 font-poppins">
       <section className="flex gap-6 items-center text-base lg:py-4">
         <h1 className="text-7xl font-medium text-black">
-          {reviews?.meta?.averageRating?.toFixed(1)}
+          {reviewsData?.averageRating?.toFixed(1)}
         </h1>
         <div className="">
           <Rate
             disabled
-            defaultValue={reviews?.meta?.averageRating.toFixed(1)}
+            defaultValue={reviewsData?.averageRating || 0}
             style={{ color: "#FDB11A" }}
           />
           <p className="text-[#797979] font-medium">
-            {reviews?.meta?.totalRatingCount} reviews
+            {reviewsData?.result?.length || 0} reviews
           </p>
         </div>
       </section>
 
       <section>
         <ul className="grid gap-4">
-          {reviewData?.map((reviewContent: any) => (
+          {reviewData?.map((item: any) => (
             <li
-              key={reviewContent?._id}
+              key={item?._id}
               className="flex flex-col lg:flex-row justify-between gap-4 bg-[#F5F5F5] p-5 rounded-xl"
             >
               <div className="flex flex-col lg:flex-row gap-4">
@@ -54,15 +56,14 @@ const Reviews = ({ reviews }: { reviews: any }) => {
                 </span>
                 <div>
                   <Label className="text-lg !py-0">
-                    {reviewContent?.customer?.firstName}{" "}
-                    {reviewContent?.customer?.lastName}
+                    {item?.customer?.firstName} {item?.customer?.lastName}
                   </Label>
-                  <p>{reviewContent?.message}</p>
+                  <p>{item?.message}</p>
                 </div>
               </div>
 
               <p className="text-[#797979] font-medium">
-                {formatDistanceToNow(new Date(reviewContent?.createdAt), {
+                {formatDistanceToNow(new Date(item?.createdAt), {
                   addSuffix: true,
                 })}
               </p>
@@ -71,7 +72,7 @@ const Reviews = ({ reviews }: { reviews: any }) => {
         </ul>
       </section>
 
-      {reviews?.data?.length > 5 && !show && (
+      {reviewsData?.result?.length > 5 && !show && (
         <div onClick={handleLoadMore} className="flex justify-center">
           <OutlineButton className="uppercase w-full lg:w-auto">
             Load More

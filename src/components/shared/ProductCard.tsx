@@ -16,6 +16,7 @@ const ProductCard = ({
   product: any;
   isWishlist?: boolean;
 }) => {
+
   const toggleFavorite = async () => {
     try {
       const res = await myFetch(`/wishlist`, {
@@ -88,7 +89,7 @@ const ProductCard = ({
           )}
 
           <h5>
-            {product.user.firstName} {product.user.lastName}
+            {product?.user?.firstName} {product?.user?.lastName}
           </h5>
         </div>
       </Link>

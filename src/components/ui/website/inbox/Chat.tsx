@@ -201,47 +201,48 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
                       : `${IMAGE_URL}${partnerData?.user?.image}`
                   }
                   alt="user"
-                  width={40}
-                  height={40}
-                  className="rounded-full lg:h-[40px] h-[36px] lg:w-[40px] w-[36px]"
+                  width={100}
+                  height={100}
+                  className="rounded-full lg:h-[60px] h-[36px] lg:w-[60px] w-[36px]"
                 />
               )}
-              <Link
-                href={`/profile?id=${partnerData?.user?._id}`}
-                className="lg:text-[20px] text-[14px] text-primary font-bold "
-              >
-                {partnerData?.user?.firstName} {partnerData?.user?.lastName}
-              </Link>
-            </div>
-
-            <Link
-              href={`/profile?id=${partnerData?.user?._id}`}
-              className="w-full"
-            >
-              <div className="flex items-center justify-center lg:gap-2 py-1">
-                <ConfigProvider
-                  theme={{
-                    components: {
-                      Rate: {
-                        starColor: "#E6A817",
-                      },
-                    },
-                    token: {
-                      marginXS: 5,
-                    },
-                  }}
+              <div>
+                <Link
+                  href={`/profile?id=${partnerData?.user?._id}`}
+                  className="lg:text-[20px] text-[14px] text-primary font-bold "
                 >
-                  <Rate
-                    disabled
-                    defaultValue={partnerData?.customerAvgRating || 0}
-                    className="scale-[0.7] lg:scale-100 mx-0"
-                  />
-                </ConfigProvider>
-                <p className=" lg:text-[14px] text-[10px] ">
-                  {partnerData?.reviewCount} reviews
-                </p>
+                  {partnerData?.user?.firstName} {partnerData?.user?.lastName}
+                </Link>
+                <Link
+                  href={`/profile?id=${partnerData?.user?._id}`}
+                  className="w-full"
+                >
+                  <div className="flex items-center justify-center lg:gap-2 py-1">
+                    <ConfigProvider
+                      theme={{
+                        components: {
+                          Rate: {
+                            starColor: "#E6A817",
+                          },
+                        },
+                        token: {
+                          marginXS: 5,
+                        },
+                      }}
+                    >
+                      <Rate
+                        disabled
+                        defaultValue={partnerData?.customerAvgRating || 0}
+                        className="scale-[0.7] lg:scale-100 mx-0"
+                      />
+                    </ConfigProvider>
+                    <p className=" lg:text-[14px] text-[10px] ">
+                      {partnerData?.reviewCount} reviews
+                    </p>
+                  </div>
+                </Link>
               </div>
-            </Link>
+            </div>
           </div>
 
           <div className=" lg:w-full flex flex-col lg:flex-row items-start justify-between gap-2.5 mt-1.5">

@@ -72,7 +72,7 @@ const ProfilePage = async ({
     {
       key: "Reviews",
       label: <p className="font-bold">Reviews</p>,
-      children: <Reviews reviews={reviewsRes} />,
+      children: <Reviews reviewsData={reviewsRes?.data} />,
     },
   ];
 

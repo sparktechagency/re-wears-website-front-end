@@ -2,20 +2,13 @@ import icon from "@/assets/icons/wishlist.svg";
 import FillButton from "@/components/shared/FillButton";
 import Label from "@/components/shared/Label";
 import Image from "next/image";
-import productsData from "@/data/products.json";
 import ProductCard from "@/components/shared/ProductCard";
-import { myFetch } from "@/helpers/myFetch";
 
-const WishList = async () => {
-  const res = await myFetch(`/wishlist`, {
-    method: "GET",
-  });
-  const data = res.data;
-
+const WishList = ({ wishlistData }: { wishlistData: any }) => {
   return (
     <div className="bg-[#FDFDFD]">
       {/* show empty message when no items added */}
-      {productsData.length < 1 && (
+      {!(wishlistData?.length > 0) && (
         <section className="card container !py-16 lg:!py-32 my-16 grid justify-center gap-2">
           <Image
             src={icon}
@@ -38,8 +31,8 @@ const WishList = async () => {
       <section className="my-16 px-4">
         <h1 className="text-2xl font-bold text-center">Your wishlist</h1>
         <div className="container card my-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {data.map((item: any) => (
-            <ProductCard key={item.id} product={item} />
+          {wishlistData?.map((item: any) => (
+            <ProductCard key={item._id} product={item?.product} />
           ))}
         </div>
       </section>
