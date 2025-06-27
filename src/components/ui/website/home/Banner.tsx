@@ -13,7 +13,7 @@ const Banner = () => {
         playsInline
       >
         <source
-          src="https://media-hosting.imagekit.io//1b02544317ca4774/video%20home%20screen.mov?Expires=1836006202&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=0BRmW4yviMiAoBQhXTo5g~M8vezvUdcU41NwPlzLS5F808luvXiI44731R3LG5yg6jQ6iY2WxOSsVhM7PQQVUMFn1cMsltt3uWKYIGzSmvvuOaQuBSGO8Fwei-g02wCmi6lcRNB-NxvB711BOt24VF-Ij9jQNAdet6yHpR5DOfSRLwH5J4vXPgbf-t52YV7~4AbQbPjmrnVXqTdLQoB5qWfEf1DuSRr-I2cYDsmH4xncPhGgr-UWnJIts-nL5MNn43BvBCXzirWDe2ThJJ4maQASYr6hutgNOfXlJHHAVN0NL9xtq33xOha07IgFyM6JQRZFdXeicbHHvPJNZb1RHw__"
+          src="https://res.cloudinary.com/dkbcx9amc/video/upload/v1751023781/video_home_screen_hy5dhi.mov"
           type="video/mp4"
         />
         Your browser does not support the video tag.

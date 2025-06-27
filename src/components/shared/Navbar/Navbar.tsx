@@ -14,25 +14,12 @@ import { IMAGE_URL } from "@/config/env-config";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
 import { useGetSearchParams } from "@/helpers/getSearchParams"; 
 
-export const image = "http://10.0.70.188:5005"
-
 const items: MenuProps["items"] = [
   {
     key: "1",
     label: <Notifications />,
   },
 ];
-
-
-// interface SubCategory {
-//   icon: JSX.Element;
-//   items: string[];
-// }
-
-// interface SubCategories {
-//   [key: string]: SubCategory;
-// }
-
 
 type ChildSubCategory = {
   _id: string;
@@ -60,14 +47,6 @@ const Navbar = ({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
-
-  // const singleCategories = categoriesData?.filter(
-  //   (item) => item?.name?.toLowerCase() === selectedCategory
-  // );
-
-  // const handleProductData = (subChildCategoryId: string) => {
-  //   console.log("Selected SubChildCategory ID:", subChildCategoryId);
-  // };
 
   // Close search bar when clicking outside
   useEffect(() => {

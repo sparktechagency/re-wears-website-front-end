@@ -31,6 +31,7 @@ const BuyerActions = ({
       try {
         const res = await myFetch(`/wishlist/${productData?._id}`, {
           tags: ["Wishlist"],
+          cache: "no-store",
         });
         if (res?.success) {
           setWishlist(res?.data);

@@ -61,16 +61,37 @@ const SellerActions = ({ productData }: { productData: any }) => {
     }
   };
 
+  // handle sold product
+  const handleSold = async () => {
+    toast.loading("Loading...", { id: "sold-product" });
+    const payload = {
+      productStatus: "Sold",
+      orderStatus: "Completed",
+    };
+
+    try {
+      const res = await myFetch(`/order/${productData?._id}`, {
+        method: "PATCH",
+        body: payload,
+      });
+      if (res?.success) {
+        toast.success("Marked as sold", { id: "sold-product" });
+        revalidateTags(["Product", "products", "Orders"]);
+      } else {
+        toast.error(res?.message || "Something went wrong", {
+          id: "sold-product",
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="grid gap-2 px-6">
       {/* mark as sold */}
       {productData?.status === "Active" && (
-        <OutlineButton
-          onClick={() => {
-            handleUpdateStatus("Sold");
-          }}
-          className={`uppercase w-full`}
-        >
+        <OutlineButton onClick={handleSold} className={`uppercase w-full`}>
           Mark as sold
         </OutlineButton>
       )}

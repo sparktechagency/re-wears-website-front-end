@@ -12,11 +12,11 @@ const ProfilePage = async ({
 }) => {
   const { productStatus, orderStatus } = searchParams;
 
-  const userId = (await myFetch("/users/profile"))?.data?._id;
+  const loggedInUser = (await myFetch("/users/profile"))?.data;
 
-  const profileId = searchParams.id ? searchParams.id : userId;
+  const userId = searchParams?.id ? searchParams?.id : loggedInUser?._id;
 
-  const profileRes = await myFetch(`/users/${profileId}`, {
+  const userRes = await myFetch(`/users/${userId}`, {
     cache: "no-store",
     tags: ["Profile"],
   });
@@ -25,34 +25,40 @@ const ProfilePage = async ({
     `/user-product/my-orders?status=${orderStatus}`,
     {
       tags: ["Orders"],
+      cache: "no-store",
     }
   );
 
   const productsRes = await myFetch(
-    `/user-product/${profileId}?status=${productStatus || "Active"}`,
+    `/user-product/${userId}?status=${productStatus || "Active"}`,
     {
       tags: ["User-Products"],
       cache: "no-store",
     }
   );
 
-  const reviewsRes = await myFetch(`/review/${profileId}`, {
+  const reviewsRes = await myFetch(`/review/${userId}`, {
     tags: ["Reviews"],
     cache: "no-store",
   });
 
-  const followRes = await myFetch(`/user/${profileId}`, {
+  const followRes = await myFetch(`/user/${userId}`, {
     tags: ["Follow"],
     cache: "no-store",
   });
 
-  const isOwnProfile = userId === profileId;
+  const isOwnProfile = userId === loggedInUser?._id;
 
   const items: TabsProps["items"] = [
     {
       key: "Closet",
       label: <p className="font-bold"> Closet </p>,
-      children: <Closet products={productsRes?.data} />,
+      children: (
+        <Closet
+          products={productsRes?.data}
+          isMyProfile={userId === loggedInUser?._id}
+        />
+      ),
     },
     ...(isOwnProfile
       ? [
@@ -66,7 +72,7 @@ const ProfilePage = async ({
     {
       key: "Reviews",
       label: <p className="font-bold">Reviews</p>,
-      children: <Reviews reviews={reviewsRes} />,
+      children: <Reviews reviewsData={reviewsRes?.data} />,
     },
   ];
 
@@ -75,8 +81,8 @@ const ProfilePage = async ({
       {/* profile header */}
       <section>
         <ProfileHeader
-          user={profileRes?.data}
-          userId={userId}
+          user={userRes?.data}
+          myId={loggedInUser?._id}
           followRes={followRes}
         />
       </section>

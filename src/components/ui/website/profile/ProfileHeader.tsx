@@ -11,7 +11,7 @@ import { FaClock } from "react-icons/fa";
 import { FaCircleCheck } from "react-icons/fa6";
 import { HiMapPin } from "react-icons/hi2";
 import { IMAGE_URL } from "@/config/env-config";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow } from "date-fns"
 import { IoMail } from "react-icons/io5";
 import FillButton from "@/components/shared/FillButton";
 import { myFetch } from "@/helpers/myFetch";
@@ -20,12 +20,12 @@ import { useEffect, useState } from "react";
 import { revalidateTags } from "@/helpers/revalidateTags";
 
 const ProfileHeader = ({
-  user,
-  userId,
+  user, // user is the user data fetched from the server
+  myId, // myId is the ID of the logged-in user
   followRes,
 }: {
   user: any;
-  userId: string;
+  myId: string;
   followRes: any;
 }) => {
   const [isFollowing, setIsFollowing] = useState(false);
@@ -56,7 +56,7 @@ const ProfileHeader = ({
         method: "PATCH",
       });
 
-      if (res.success && res?.data?.follower?.includes(userId)) {
+      if (res.success && res?.data?.follower?.includes(myId)) {
         revalidateTags(["Profile"]);
         setIsFollowing(true);
         toast.success("Followed Successfully");
@@ -72,10 +72,10 @@ const ProfileHeader = ({
 
   // Check if the user is following or not
   useEffect(() => {
-    if (followRes?.success && followRes?.data?.follower?.includes(userId)) {
+    if (followRes?.success && followRes?.data?.follower?.includes(myId)) {
       setIsFollowing(true);
     }
-  }, [followRes, userId]);
+  }, [followRes, myId]);
 
   return (
     <section className="card">
@@ -181,7 +181,7 @@ const ProfileHeader = ({
 
         {/* action button */}
         <div className="flex flex-row lg:flex-col gap-4">
-          {userId === user?.user?._id ? (
+          {myId === user?.user?._id ? (
             <Link href={"/settings/profile-details"}>
               <OutlineButton className="flex justify-center items-center gap-2">
                 <Pencil size={20} /> Edit Profile
