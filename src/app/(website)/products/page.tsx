@@ -16,7 +16,7 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
     condition,
     colors,
     material,
-    sortBy,
+    sort,
   } = await searchParams;
   // Build query parameters for the backend request
   const queryParams = new URLSearchParams({
@@ -30,8 +30,8 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
     ...(colors && { colors }),
     ...(condition && { condition }),
     ...(material && { material }),
-    ...(sortBy && { sortBy }),
-  });  
+    ...(sort && { sort }),
+  });
   console.log(queryParams.toString());
   const res = await myFetch(`/product?${queryParams.toString()}`, {
     tags: ["products"],
@@ -42,18 +42,28 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
   // fetch filtering data
   const categoryData = await myFetch("/category", {
     tags: ["categories"],
+    cache: "no-store",
   });
   const sizesData = await myFetch("/type/list/size", {
     tags: ["sizes"],
+    cache: "no-store",
   });
   const brandsData = await myFetch("/type/list/brand", {
     tags: ["brands"],
+    cache: "no-store",
   });
   const materialsData = await myFetch("/type/list/material", {
     tags: ["materials"],
+    cache: "no-store",
   });
   const colorsData = await myFetch("/color", {
     tags: ["colors"],
+    cache: "no-store",
+  });
+
+  // fetch my wishlist data
+  const wishlistRes = await myFetch("/wishlist", {
+    tags: ["wishlist"],
   });
 
   return (
@@ -70,13 +80,14 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
         condition,
         colors,
         material,
-        sortBy,
+        sort,
       }}
       categories={categoryData?.data}
       sizes={sizesData?.data}
       brands={brandsData?.data}
       colors={colorsData?.data}
       materials={materialsData?.data}
+      wishlist={wishlistRes?.data}
     />
   );
 };

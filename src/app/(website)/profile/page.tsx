@@ -10,7 +10,7 @@ const ProfilePage = async ({
 }: {
   searchParams: Record<string, string>;
 }) => {
-  const status = searchParams.status;
+  const { productStatus, orderStatus } = searchParams;
 
   const userId = (await myFetch("/users/profile"))?.data?._id;
 
@@ -21,14 +21,18 @@ const ProfilePage = async ({
     tags: ["Profile"],
   });
 
-  const orderRes = await myFetch(`/user-product/my-orders?status=${status}`, {
-    tags: ["Orders"],
-  });
+  const orderRes = await myFetch(
+    `/user-product/my-orders?status=${orderStatus}`,
+    {
+      tags: ["Orders"],
+    }
+  );
 
   const productsRes = await myFetch(
-    `/user-product/${profileId}?status=${status}`,
+    `/user-product/${profileId}?status=${productStatus || "Active"}`,
     {
-      tags: ["Products"],
+      tags: ["User-Products"],
+      cache: "no-store",
     }
   );
 
@@ -46,21 +50,21 @@ const ProfilePage = async ({
 
   const items: TabsProps["items"] = [
     {
-      key: "1",
+      key: "Closet",
       label: <p className="font-bold"> Closet </p>,
-      children: <Closet products={productsRes} />,
+      children: <Closet products={productsRes?.data} />,
     },
     ...(isOwnProfile
       ? [
           {
-            key: "2",
+            key: "Orders",
             label: <p className="font-bold">My Orders</p>,
             children: <MyOrders orders={orderRes} />,
           },
         ]
       : []),
     {
-      key: "3",
+      key: "Reviews",
       label: <p className="font-bold">Reviews</p>,
       children: <Reviews reviews={reviewsRes} />,
     },
@@ -89,7 +93,7 @@ const ProfilePage = async ({
           }}
         >
           <Tabs
-            defaultActiveKey="1"
+            defaultActiveKey="Closet"
             items={items}
             style={{ fontSize: "18px" }}
           />

@@ -266,7 +266,10 @@ const MyOrders = ({ orders }: { orders: any }) => {
               <p className="text-[#797979] text-center text-sm lg:text-base">
                 Shop pre-owned fashion. Embrace sustainable living.
               </p>
-              <Link href={"/products"} className="flex justify-center">
+              <Link
+                href={"/products?category=WOMEN"}
+                className="flex justify-center"
+              >
                 <FillButton className="uppercase">Browse</FillButton>
               </Link>
             </div>

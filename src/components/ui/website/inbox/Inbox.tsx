@@ -33,6 +33,17 @@ const Inbox = ({ rooms }: { rooms: any }) => {
     }
   }, []);
 
+  // show not found message if no rooms are available
+  if (!rooms || !(rooms?.length > 0)) {
+    return (
+      <div className="flex items-center justify-center h-[calc(100vh-100px)]">
+        <p className="text-secondary text-[18px] font-bold">
+          No messages found
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className=" lg:py-[50px] py-[20px]  bg-[#FDFDFD]">
       <div className="container mt-4">

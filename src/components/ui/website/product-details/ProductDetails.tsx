@@ -12,7 +12,7 @@ import { IMAGE_URL } from "@/config/env-config";
 import { Rate } from "antd";
 import BuyerActions from "./BuyerActions";
 import SellerActions from "./SellerActions";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProductDetails = ({
   product,
@@ -26,6 +26,24 @@ const ProductDetails = ({
   const [lastseen, setLastseen] = useState("");
   const productData = product?.result;
   const isMyProduct = productData?.user?._id === profile?._id;
+
+  // Update last seen time every minute
+  useEffect(() => {
+    const updateTime = () => {
+      if (productData?.user?.lastSeenAt) {
+        setLastseen(
+          formatDistanceToNow(new Date(productData?.user?.lastSeenAt), {
+            addSuffix: true,
+          })
+        );
+      } else {
+        setLastseen("Unknown");
+      }
+    };
+    updateTime(); // initial
+    const interval = setInterval(updateTime, 60000); // every minute
+    return () => clearInterval(interval);
+  }, [productData?.user?.lastSeenAt]);
 
   return (
     <div className="container">
@@ -154,20 +172,23 @@ const ProductDetails = ({
           <div className="card !p-6 grid gap-4">
             <div className="flex flex-col md:flex-row lg:items-center justify-between gap-4">
               <div className="flex items-center gap-4">
-                <Image
-                  src={
-                    productData.user.image.includes("http")
-                      ? productData.user.image
-                      : `${IMAGE_URL}${productData.user.image}`
-                  }
-                  alt="user"
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                />
+                {productData?.user?.image && (
+                  <Image
+                    src={
+                      productData?.user?.image?.includes("http")
+                        ? productData?.user?.image
+                        : `${IMAGE_URL}${productData?.user?.image}`
+                    }
+                    alt="user"
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                  />
+                )}
+
                 <div>
                   <h1 className="text-lg font-bold">
-                    @{productData?.user?.userName}
+                    {`@${productData?.user?.userName}` || "Unknown"}
                   </h1>
                   <p className="text-[#797979] text-sm">
                     {seller?.customerAvgRating > 0 ? (
