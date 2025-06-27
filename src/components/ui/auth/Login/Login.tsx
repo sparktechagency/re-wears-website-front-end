@@ -1,7 +1,6 @@
 "use client";
 
 import { Checkbox, Form, Input } from "antd";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import ForgetPassword from "../ForgetPassword/ForgetPassword";
 import toast from "react-hot-toast";
@@ -9,7 +8,6 @@ import { myFetch } from "@/helpers/myFetch";
 import Cookies from "js-cookie";
 
 const Login = () => {
-  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   // submit handler
@@ -24,7 +22,7 @@ const Login = () => {
         toast.success("Login successful", { id: "login" });
         Cookies.set("accessToken", res?.data?.accessToken);
         Cookies.set("refreshToken", res?.data?.refreshToken);
-        router.push("/");
+        location.href = "/";
       } else {
         toast.error(res?.message || "Failed to login", { id: "login" });
       }

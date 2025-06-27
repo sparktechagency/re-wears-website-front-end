@@ -27,6 +27,8 @@ const ProductDetails = ({
   const productData = product?.result;
   const isMyProduct = productData?.user?._id === profile?._id;
 
+  console.log(productData);
+
   // Update last seen time every minute
   useEffect(() => {
     const updateTime = () => {

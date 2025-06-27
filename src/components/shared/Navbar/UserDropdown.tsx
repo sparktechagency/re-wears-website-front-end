@@ -64,7 +64,7 @@ const UserDropdown = ({ profile }: { profile: any }) => {
               onClick={() => {
                 logout();
                 handleItemClick(); // Close dropdown on logout
-                router.push("/login");
+                router.push("/login"); // Redirect to login page
               }}
               className="text-red-500 p-2 px-4 hover:bg-stone-50 rounded-lg cursor-pointer"
             >
