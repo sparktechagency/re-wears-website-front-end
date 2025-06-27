@@ -1,44 +1,36 @@
 "use client";
 
 import FillButton from "@/components/shared/FillButton";
+import { IMAGE_URL } from "@/config/env-config";
 import { myFetch } from "@/helpers/myFetch";
 import { ConfigProvider, Modal, Rate } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { MapPin } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-const LeaveReview = () => {
+const LeaveReview = ({ userData }: { userData: any }) => {
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState("");
   const [open, setOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const sellerId = searchParams.get("sellerId");
 
-  type Seller = {
-    user?: {
-      userName?: string;
-      location?: string;
+  const handleReview = async () => {
+    const payload = {
+      user: userData?.user?._id,
+      rating,
+      message,
     };
-    customerAvgRating: any;
-    reviewCount: any;
+
+    try {
+      const res = await myFetch("/review", { method: "POST", body: payload });
+      if (res?.success) {
+        setOpen(true);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
-
-  const [seller, setSeller] = useState<Seller>({
-    user: { userName: "", location: "" },
-    customerAvgRating: 0,
-    reviewCount: 0,
-  });
-
-  useEffect(() => {
-    const getSeller = async () => {
-      const sellerRes = await myFetch(`/users/${sellerId}`);
-      setSeller(sellerRes?.data);
-    };
-
-    getSeller();
-  }, [sellerId]);
 
   const SuccessModal = ({
     open,
@@ -60,7 +52,7 @@ const LeaveReview = () => {
             Thank you for your review!
           </p>
           <p className="text-[16px] font-normal text-[#797979]">
-            Your feedback helps us create a better{" "}
+            Your feedback helps us create a better
             <span className="font-semibold">re-wears</span> experience for
             everyone. We appreciate you being part of our community.
           </p>
@@ -74,23 +66,10 @@ const LeaveReview = () => {
     );
   };
 
-  const handleReview = async (id: any) => {
-    const review = {
-      buyer: id,
-      rating,
-      message,
-    };
-
-    const res = await myFetch("/review", { method: "POST", body: review });
-    if (res?.success) {
-      setOpen(true);
-    }
-  };
   return (
     <div className=" container lg:pt-[50px] pt-6 pb-[100px]">
       <p className=" text-secondary lg:text-[25px] text-[22px] font-bold flex items-center justify-center pb-6">
-        {" "}
-        Leave a review{" "}
+        Leave a review
       </p>
 
       <div className="flex items-center justify-center">
@@ -102,10 +81,27 @@ const LeaveReview = () => {
 
               <div className="lg:w-1/2">
                 <div className="flex items-center gap-4 mb-3">
-                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white">
-                    A
+                  {userData?.user?.image ? (
+                    <Image
+                      src={
+                        userData?.user?.image?.includes("http")
+                          ? userData?.user?.image
+                          : `${IMAGE_URL}${userData?.user?.image}`
+                      }
+                      alt="profile-image"
+                      width={32}
+                      height={32}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white">
+                      A
+                    </div>
+                  )}
+
+                  <div className="font-bold">
+                    {`@${userData?.user?.userName}` || "Unknown"}
                   </div>
-                  <div className="font-bold">{seller?.user?.userName}</div>
                 </div>
                 <div>
                   <div className="flex items-center gap-2 mb-3">
@@ -120,17 +116,17 @@ const LeaveReview = () => {
                     >
                       <Rate
                         disabled
-                        defaultValue={seller?.customerAvgRating}
+                        defaultValue={userData?.customerAvgRating || 0}
                         className="text-[12px] text-[#E6A817]"
                       />
                     </ConfigProvider>
                     <span className="text-secondary text-sm">
-                      {seller?.reviewCount} reviews
+                      {userData?.reviewCount || 0} reviews
                     </span>
                   </div>
                   <div className="flex items-center gap-1 text-secondary text-sm">
                     <MapPin size={14} />
-                    <span>{seller?.user?.location}</span>
+                    <span>{userData?.user?.location}</span>
                   </div>
                 </div>
               </div>
@@ -182,10 +178,9 @@ const LeaveReview = () => {
       <div className="flex items-center justify-center mt-10">
         <button
           className="bg-primary text-white font-normal lg:text-[16px] text-[14 px] rounded-full px-10 py-3"
-          onClick={() => handleReview(sellerId)}
+          onClick={() => handleReview()}
         >
-          {" "}
-          SUBMIT{" "}
+          SUBMIT
         </button>
       </div>
       <SuccessModal open={open} setOpen={setOpen} />

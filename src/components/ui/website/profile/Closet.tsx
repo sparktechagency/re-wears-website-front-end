@@ -10,7 +10,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 
-const Closet = ({ products }: { products: any }) => {
+const Closet = ({
+  products,
+  isMyProfile,
+}: {
+  products: any;
+  isMyProfile: boolean;
+}) => {
   const updateSearchParams = useUpdateSearchParams();
 
   // reset search params on initial render
@@ -23,24 +29,26 @@ const Closet = ({ products }: { products: any }) => {
   return (
     <div className="font-poppins">
       {/* filter buttons */}
-      <section className="flex justify-end">
-        <ConfigProvider
-          theme={{
-            components: {
-              Segmented: {
-                itemSelectedBg: "#9D977A",
-                itemSelectedColor: "white",
+      {isMyProfile && (
+        <section className="flex justify-end">
+          <ConfigProvider
+            theme={{
+              components: {
+                Segmented: {
+                  itemSelectedBg: "#9D977A",
+                  itemSelectedColor: "white",
+                },
               },
-            },
-            token: {},
-          }}
-        >
-          <Segmented<string>
-            options={["Active", "Reserved", "Hidden", "Draft", "Sold"]}
-            onChange={(value) => updateSearchParams({ productStatus: value })}
-          />
-        </ConfigProvider>
-      </section>
+              token: {},
+            }}
+          >
+            <Segmented<string>
+              options={["Active", "Reserved", "Hidden", "Draft", "Sold"]}
+              onChange={(value) => updateSearchParams({ productStatus: value })}
+            />
+          </ConfigProvider>
+        </section>
+      )}
 
       {/* content body */}
       {products?.length > 0 ? (
