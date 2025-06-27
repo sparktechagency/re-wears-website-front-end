@@ -11,8 +11,6 @@ const Reviews = ({ reviewsData }: { reviewsData: any }) => {
   const [show, setShow] = useState(false);
   const [reviewData, setReviewData] = useState([]);
 
-  console.log(reviewsData?.averageRating);
-
   const handleLoadMore = () => {
     setReviewData(reviewsData?.result);
     setShow(true);
@@ -22,6 +20,8 @@ const Reviews = ({ reviewsData }: { reviewsData: any }) => {
     if (reviewsData?.result?.length > 5) {
       const data = reviewsData?.result?.data?.slice(0, 5);
       setReviewData(data);
+    } else {
+      setReviewData(reviewsData?.result);
     }
   }, [reviewsData]);
 
@@ -43,34 +43,36 @@ const Reviews = ({ reviewsData }: { reviewsData: any }) => {
         </div>
       </section>
 
-      <section>
-        <ul className="grid gap-4">
-          {reviewData?.map((item: any) => (
-            <li
-              key={item?._id}
-              className="flex flex-col lg:flex-row justify-between gap-4 bg-[#F5F5F5] p-5 rounded-xl"
-            >
-              <div className="flex flex-col lg:flex-row gap-4">
-                <span>
-                  <FaCircleUser size={40} className="text-[#797979]" />
-                </span>
-                <div>
-                  <Label className="text-lg !py-0">
-                    {item?.customer?.firstName} {item?.customer?.lastName}
-                  </Label>
-                  <p>{item?.message}</p>
+      {reviewData?.length > 0 && (
+        <section>
+          <ul className="grid gap-4">
+            {reviewData?.map((item: any) => (
+              <li
+                key={item?._id}
+                className="flex flex-col lg:flex-row justify-between gap-4 bg-[#F5F5F5] p-5 rounded-xl"
+              >
+                <div className="flex flex-col lg:flex-row gap-4">
+                  <span>
+                    <FaCircleUser size={40} className="text-[#797979]" />
+                  </span>
+                  <div>
+                    <Label className="text-base lg:text-lg text-black !py-0">
+                      {item?.buyer?.firstName} {item?.buyer?.lastName}
+                    </Label>
+                    <p className="text-base lg:text-lg">{item?.message}</p>
+                  </div>
                 </div>
-              </div>
 
-              <p className="text-[#797979] font-medium">
-                {formatDistanceToNow(new Date(item?.createdAt), {
-                  addSuffix: true,
-                })}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </section>
+                <p className="text-[#797979] font-medium text-sm">
+                  {formatDistanceToNow(new Date(item?.createdAt), {
+                    addSuffix: true,
+                  })}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {reviewsData?.result?.length > 5 && !show && (
         <div onClick={handleLoadMore} className="flex justify-center">

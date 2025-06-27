@@ -3,6 +3,7 @@ import FillButton from "@/components/shared/FillButton";
 import Label from "@/components/shared/Label";
 import Image from "next/image";
 import ProductCard from "@/components/shared/ProductCard";
+import Link from "next/link";
 
 const WishList = ({ wishlistData }: { wishlistData: any }) => {
   return (
@@ -22,20 +23,24 @@ const WishList = ({ wishlistData }: { wishlistData: any }) => {
             All your favorites will be saved here.
           </p>
           <div className="flex justify-center mt-4">
-            <FillButton className="uppercase">Add to wishlist</FillButton>
+            <Link href={`/products?category=WOMEN`}>
+              <FillButton className="uppercase">Add to wishlist</FillButton>
+            </Link>
           </div>
         </section>
       )}
 
       {/* display added items */}
-      <section className="my-16 px-4">
-        <h1 className="text-2xl font-bold text-center">Your wishlist</h1>
-        <div className="container card my-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {wishlistData?.map((item: any) => (
-            <ProductCard key={item._id} product={item?.product} />
-          ))}
-        </div>
-      </section>
+      {wishlistData?.length > 0 && (
+        <section className="my-16 px-4">
+          <h1 className="text-2xl font-bold text-center">Your wishlist</h1>
+          <div className="container card my-10 grid grid-cols-2 lg:grid-cols-4 gap-4">
+            {wishlistData?.map((item: any) => (
+              <ProductCard key={item._id} product={item?.product} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };
