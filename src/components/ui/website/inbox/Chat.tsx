@@ -181,7 +181,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   };
 
   return (
-    <section className="">
+    <section className="h-full relative">
       {/* header */}
       <div className="">
         <div className="flex items-center justify-between lg:gap-8 gap-0 lg:p-4  border-b border-[#DCDCDC] ">
@@ -203,7 +203,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
                   alt="user"
                   width={100}
                   height={100}
-                  className="rounded-full lg:h-[60px] h-[36px] lg:w-[60px] w-[36px]"
+                  className="rounded-full size-12 lg:size-14"
                 />
               )}
               <div>
@@ -269,12 +269,12 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
         <ProductInfo />
       </div>
 
-      <div className="bg-white w-full rounded-lg relative">
+      <div className="bg-white w-full rounded-lg">
         {/* Chat messages */}
 
         <div
           ref={chatMessagesRef}
-          className="py-6 lg:px-8 px-3 lg:h-[calc(60vh)] h-[calc(55vh)] overflow-y-scroll no-scrollbar pb-16"
+          className="py-6 lg:px-8 px-3 h-[calc(70vh)] overflow-y-scroll no-scrollbar pb-16"
         >
           {chatsData?.map((item: any, index) => (
             <div
@@ -312,6 +312,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
             </div>
           ))}
         </div>
+
         {/* input section */}
         <div className="absolute bottom-0 w-full py-1  bg-white border-t border-[#DCDCDC]">
           {/* show the image preview */}
