@@ -10,10 +10,15 @@ const NavbarWrapper = async () => {
     cache: "no-store",
   });
 
+   const notificationRes = await myFetch("/notification/all", {
+     tags: ["notifications"],
+     cache: "no-store",
+   });
+
 
   return (
     <>
-      <Navbar profile={res?.data} categoriesData={categoriesRes?.data} />
+      <Navbar profile={res?.data} categoriesData={categoriesRes?.data} notificationsData={notificationRes?.data} />
     </>
   );
 };

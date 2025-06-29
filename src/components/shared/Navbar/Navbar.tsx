@@ -12,14 +12,7 @@ import UserDropdown from "./UserDropdown";
 import MenuVertical from "./NavmenuSmDevice/MenuVertical";
 import { IMAGE_URL } from "@/config/env-config";
 import { useUpdateSearchParams } from "@/hooks/useUpdateSearchParams";
-import { useGetSearchParams } from "@/helpers/getSearchParams"; 
-
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: <Notifications />,
-  },
-];
+import { useGetSearchParams } from "@/helpers/getSearchParams";
 
 type ChildSubCategory = {
   _id: string;
@@ -36,9 +29,11 @@ type SubCategory = {
 const Navbar = ({
   profile,
   categoriesData,
+  notificationsData,
 }: {
   profile?: any;
   categoriesData?: Array<{ name?: string; [key: string]: any }>;
+  notificationsData?: any;
 }) => {
   const { searchTerm } = useGetSearchParams();
   const updateSearchParams = useUpdateSearchParams();
@@ -47,6 +42,18 @@ const Navbar = ({
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] =
     useState<SubCategory | null>(null);
+
+  // filter unread notifications
+  const unreadNotifications = notificationsData?.filter(
+    (item: any) => item?.read === false
+  );
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: <Notifications profile={profile} />,
+    },
+  ];
 
   // Close search bar when clicking outside
   useEffect(() => {
@@ -191,13 +198,18 @@ const Navbar = ({
             </p>
 
             {profile && (
-              <p className=" flex items-center gap-1 cursor-pointer">
+              <p className="flex items-center gap-1 cursor-pointer">
                 <Dropdown
                   menu={{ items }}
                   placement="bottomCenter"
                   arrow={{ pointAtCenter: true }}
                 >
-                  <Bell size={20} strokeWidth={1.5} />
+                  <div className="relative">
+                    <Bell size={20} strokeWidth={1.5} />
+                    {unreadNotifications?.length > 0 && (
+                      <div className="size-2 bg-green-500 rounded-full absolute -top-1 right-0" />
+                    )}
+                  </div>
                 </Dropdown>
               </p>
             )}
@@ -205,7 +217,7 @@ const Navbar = ({
             {profile && (
               <Link
                 href={"/inbox"}
-                className=" flex items-center gap-1 cursor-pointer"
+                className="flex items-center gap-1 cursor-pointer"
               >
                 <span>
                   <Mail size={20} strokeWidth={1.5} />

@@ -25,7 +25,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const [partnerData, setPartnerData] = useState<any>(null);
   const [profileData, setProfileData] = useState<any>(null);
   const [lastseen, setLastseen] = useState("");
-  const [trigger, setTrigger] = useState(false); // to trigger re-render
+  const [refetch, setRefetch] = useState(false); // to trigger re-render
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
 
@@ -75,7 +75,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
       }
     };
     fetchChats();
-  }, [room, partnerId, trigger]);
+  }, [room, partnerId, refetch]);
 
   // handle live chatting
   const socket = useMemo(() => io(IMAGE_URL), []);
@@ -86,7 +86,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   useEffect(() => {
     const handleGetMessage = () => {
       revalidateTags(["chats"]);
-      setTrigger((prev) => !prev);
+      setRefetch((prev) => !prev);
     };
 
     const eventName = `getMessages::${profileData?._id}`;
@@ -157,7 +157,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
       });
       if (response?.success) {
         revalidateTags(["chats"]);
-        setTrigger(!trigger); // Trigger re-render to fetch new messages
+        setRefetch(!refetch); // Trigger re-render to fetch new messages
         // Clear the textarea after sending the message
         const textarea = document.getElementById(
           "text"

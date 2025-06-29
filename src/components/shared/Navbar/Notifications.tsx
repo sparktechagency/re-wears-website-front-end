@@ -1,34 +1,46 @@
 import icon from "@/assets/icons/bell-notification.svg";
 import Image from "next/image";
 import Label from "../Label";
-const notifications = [
-  {
-    username: "John Doe",
-    photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    message: "has just added new item:",  
-    product:"Norma Kamali Black Jersey trench straight leg Jumpsuit RRP AED 330, The Kooples short printed floral lavender dress with frills RRP AED 295" ,
-    time: "1 day",
-  },
-  {
-    username: "John Smith",
-    photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    message: "has just added your item to their wishlist", 
-    product:"Flower sunglasses for girl 3/7 years, Maileg first kit box" ,
-    time: "2 day",
-  },
-  {
-    username: "Xein Alex",
-    photo: "https://korika.id/wp-content/uploads/2017/10/speaker3-min.jpg",
-    message: "has just changed the price", 
-    product:"Flower t-shirt " , 
-    time: "3 day",
-  },
-];
-const Notifications = () => {
+import { useEffect, useMemo, useState } from "react";
+import { revalidateTags } from "@/helpers/revalidateTags";
+import { IMAGE_URL } from "@/config/env-config";
+import { io } from "socket.io-client";
+import { formatDistanceToNow } from "date-fns";
+import Link from "next/link";
+
+const Notifications = ({
+  profile,
+  notificationsData = [],
+}: {
+  profile?: any;
+  notificationsData?: any;
+}) => {
+  const [refetch, setRefetch] = useState(false);
+
+  // handle live notifications
+  const socket = useMemo(() => io(IMAGE_URL), []);
+  // socket.on("connect", () => {
+  //   console.log("Connected to socket");
+  // });
+
+  useEffect(() => {
+    const handleGetMessage = () => {
+      revalidateTags(["notifications"]);
+      setRefetch((prev) => !prev);
+    };
+
+    const eventName = `notifications::${profile?._id}`;
+
+    socket.on(eventName, handleGetMessage);
+    return () => {
+      socket.off(eventName, handleGetMessage);
+    };
+  }, [socket, refetch, profile?._id]);
+
   return (
     <section className="max-w-[350px] max-h-[500px] font-poppins">
       {/* show empty page when no notification found */}
-      {notifications.length < 1 && (
+      {!(notificationsData?.length > 0) && (
         <div className="flex flex-col items-center p-8 ">
           <Image src={icon} alt="icon" width={45} height={53} />
           <Label className="text-lg">No notifications yet</Label>
@@ -41,25 +53,52 @@ const Notifications = () => {
       {/* display when notification found */}
       <div>
         <ul>
-          {notifications.map((item, idx) => (
+          {notificationsData?.map((item: any, idx: number) => (
             <li key={idx} className="flex gap-4 py-2 border-b">
-              <Image
-                src={item.photo}
-                alt="photo"
-                width={50}
-                height={50}
-                className="rounded-xl border h-fit mt-2"
-              />
+              {item?.sender && (
+                <Image
+                  src={
+                    item?.sender?.image?.includes("http")
+                      ? item?.sender?.image
+                      : `${IMAGE_URL}${item?.sender?.image}`
+                  }
+                  alt="photo"
+                  width={50}
+                  height={50}
+                  className="rounded-full border h-fit mt-2"
+                />
+              )}
               <div>
                 <p>
                   <span className="text-primary font-bold">
-                    {item.username}{" "}
-                  </span> 
-                  <p className=""> <span>{item.message} </span>  <span className="text-primary font-bold"> {item.product} </span>  </p>
-                  
+                    {item?.sender?.userName || item?.sender?.firstName}
+                  </span>
+                  <p className="">
+                    <span>
+                      {item?.notificationType === "createProduct" &&
+                        "has added new item: "}
+                      {item?.notificationType === "editProduct" &&
+                        "has updated his item: "}
+                      {item?.notificationType === "wishlist" &&
+                        "has added your item to their wishlist: "}
+                      {item?.notificationType === "offer" &&
+                        "has proposed an offer for your item: "}
+                    </span>
+                    <Link
+                      href={`/product-details/${item?.productId?._id}`}
+                      className="text-primary hover:text-primary-dark font-bold"
+                    >
+                      {item?.productId?.name}
+                    </Link>
+                  </p>
                 </p>
                 <p className="text-[#797979] mt-1">
-                  <span>{item.time}</span> ago
+                  <span>
+                    {formatDistanceToNow(new Date(item?.createdAt), {
+                      // addSuffix: true,
+                    })}
+                  </span>
+                  ago
                 </p>
               </div>
             </li>

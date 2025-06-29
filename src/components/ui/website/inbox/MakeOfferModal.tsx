@@ -23,7 +23,7 @@ const MakeOfferModal = ({
     };
 
     try {
-      const res = await myFetch(`/offer/create`, {
+      const res = await myFetch(`/offer/send/${product?.user?._id}`, {
         method: "POST",
         body: payload,
       });

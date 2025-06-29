@@ -236,9 +236,10 @@ const Products = ({
           >
             <Pagination
               align="center"
-              pageSize={meta?.limit || 10}
+              pageSize={meta?.limit || 12}
               current={meta?.page || 1}
               total={meta?.total || 0}
+              onChange={(page) => updateSearchParams({ page: String(page) })}
             />
           </ConfigProvider>
         </section>
