@@ -51,7 +51,12 @@ const Navbar = ({
   const items: MenuProps["items"] = [
     {
       key: "1",
-      label: <Notifications profile={profile} />,
+      label: (
+        <Notifications
+          profile={profile}
+          notificationsData={notificationsData}
+        />
+      ),
     },
   ];
 

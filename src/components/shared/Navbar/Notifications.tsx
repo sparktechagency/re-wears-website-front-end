@@ -1,7 +1,7 @@
 import icon from "@/assets/icons/bell-notification.svg";
 import Image from "next/image";
 import Label from "../Label";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { revalidateTags } from "@/helpers/revalidateTags";
 import { IMAGE_URL } from "@/config/env-config";
 import { io } from "socket.io-client";
@@ -15,18 +15,14 @@ const Notifications = ({
   profile?: any;
   notificationsData?: any;
 }) => {
-  const [refetch, setRefetch] = useState(false);
-
   // handle live notifications
   const socket = useMemo(() => io(IMAGE_URL), []);
   // socket.on("connect", () => {
   //   console.log("Connected to socket");
   // });
-
   useEffect(() => {
     const handleGetMessage = () => {
       revalidateTags(["notifications"]);
-      setRefetch((prev) => !prev);
     };
 
     const eventName = `notifications::${profile?._id}`;
@@ -35,7 +31,7 @@ const Notifications = ({
     return () => {
       socket.off(eventName, handleGetMessage);
     };
-  }, [socket, refetch, profile?._id]);
+  }, [socket, profile?._id]);
 
   return (
     <section className="max-w-[350px] max-h-[500px] font-poppins">
@@ -56,23 +52,27 @@ const Notifications = ({
           {notificationsData?.map((item: any, idx: number) => (
             <li key={idx} className="flex gap-4 py-2 border-b">
               {item?.sender && (
-                <Image
-                  src={
-                    item?.sender?.image?.includes("http")
-                      ? item?.sender?.image
-                      : `${IMAGE_URL}${item?.sender?.image}`
-                  }
-                  alt="photo"
-                  width={50}
-                  height={50}
-                  className="rounded-full border h-fit mt-2"
-                />
+                <Link href={`/profile?id=${item?.sender?._id}`}>
+                  <Image
+                    src={
+                      item?.sender?.image?.includes("http")
+                        ? item?.sender?.image
+                        : `${IMAGE_URL}${item?.sender?.image}`
+                    }
+                    alt="photo"
+                    width={50}
+                    height={50}
+                    className="rounded-full border h-fit mt-2"
+                  />
+                </Link>
               )}
               <div>
                 <p>
-                  <span className="text-primary font-bold">
-                    {item?.sender?.userName || item?.sender?.firstName}
-                  </span>
+                  <Link href={`/profile?id=${item?.sender?._id}`}>
+                    <span className="text-primary font-bold">
+                      {item?.sender?.userName || item?.sender?.firstName}
+                    </span>
+                  </Link>
                   <p className="">
                     <span>
                       {item?.notificationType === "createProduct" &&
