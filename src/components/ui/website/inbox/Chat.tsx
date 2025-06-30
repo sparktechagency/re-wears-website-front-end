@@ -17,6 +17,8 @@ import { revalidateTags } from "@/helpers/revalidateTags";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import ProductInfo from "./ProductInfo";
+import FillButton from "@/components/shared/FillButton";
+import OutlineButton from "@/components/shared/OutlineButton";
 
 const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const updateSearchParams = useUpdateSearchParams();
@@ -29,7 +31,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
 
-  // console.log(chatsData);
+  console.log(chatsData);
 
   // Fetch partner data
   useEffect(() => {
@@ -130,7 +132,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
     scrollToBottom();
   }, [chatsData]);
 
-  // Handle sending a message
+  // Handle sending a message and file
   const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -169,6 +171,25 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
       }
     } catch (error) {
       console.error("Error sending message:", error);
+    }
+  };
+
+  // handle update offer
+  const handleUpdateOffer = async (offerId: string, status: string) => {
+    try {
+      const response = await myFetch(`/offer/${offerId}`, {
+        method: "PATCH",
+        body: { offerStatus: status },
+      });
+      if (response?.success) {
+        toast.success("Offer updated successfully");
+        revalidateTags(["chats"]);
+        setRefetch(!refetch); // Trigger re-render to fetch new messages
+      } else {
+        toast.error(response?.message || "Failed to update offer");
+      }
+    } catch (error) {
+      console.error("Error updating offer:", error);
     }
   };
 
@@ -301,8 +322,61 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
                     className="rounded"
                   />
                 )}
-                {item?.text && <p className="text-sm mt-2">{item?.text}</p>}
-                <p className="text-end text-xs text-[#918d8d] mt-2">
+                {item?.type === "text" && item?.text && (
+                  <p className="text-sm mt-2">{item?.text}</p>
+                )}
+                {/* offer for buyers */}
+                {item?.type === "offer" && item?.sender !== partnerId && (
+                  <div className="grid gap-2 min-w-56">
+                    <p className="flex items-center gap-2">
+                      <span className="font-bold">AED {item?.price}</span>
+                      <span className="font-medium line-through text-[#797979]">
+                        AED {item?.offer?.product?.price}
+                      </span>
+                    </p>
+                    {item?.offer?.offerStatus === "pending" ? (
+                      <p>Offer sent!</p>
+                    ) : item?.offer?.offerStatus === "accepted" ? (
+                      <div className="flex flex-col gap-2">
+                        <p>Accepted</p>
+                        <p>
+                          All set! Sort out payment and pickup on your terms.
+                        </p>
+                      </div>
+                    ) : (
+                      <p>Declined</p>
+                    )}
+                  </div>
+                )}
+                {/* offer for sellers */}
+                {item?.type === "offer" && item?.sender === partnerId && (
+                  <div className="grid gap-2 min-w-56">
+                    <p className="flex items-center gap-2">
+                      <span className="font-bold">AED {item?.price}</span>
+                      <span className="font-medium line-through text-[#797979]">
+                        AED {item?.offer?.product?.price}
+                      </span>
+                    </p>
+                    {item?.offer?.offerStatus === "pending" ? (
+                      <>
+                        <FillButton onClick={() => handleUpdateOffer(item?.offer?._id, 'accepted')}>Accept</FillButton >
+                        <OutlineButton onClick={() => handleUpdateOffer(item?.offer?._id, 'declined')}>Decline</OutlineButton>
+                      </>
+                    ) : item?.offer?.offerStatus === "accepted" ? (
+                      <p>Accepted</p>
+                    ) : (
+                      <p>Declined</p>
+                    )}
+                  </div>
+                )}
+
+                <p className="text-end text-xs text-[#b0adad] mt-2">
+                  {new Date(item?.createdAt).toLocaleDateString([], {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                  {`, `}
                   {new Date(item?.createdAt).toLocaleTimeString([], {
                     hour: "2-digit",
                     minute: "2-digit",
