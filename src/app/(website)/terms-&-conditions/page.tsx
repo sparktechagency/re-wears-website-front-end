@@ -1,16 +1,16 @@
 import { myFetch } from "@/helpers/myFetch";
 
-const DeleteAccountPolicyPage = async () => {
-  const res = await myFetch(`/cms/delete-account-policy`, {
+const TermsAndConditionsPage = async () => {
+  const res = await myFetch(`/cms/terms-conditions`, {
     cache: "no-store",
   });
   const content = res?.data?.content;
 
   return (
-    <div>
-      <section className="flex items-center gap-6">
+    <div className="container">
+      <section className="py-4">
         <h1 className="text-2xl lg:text-3xl font-bold text-center py-4">
-          Delete Account Policy
+          Terms and Conditions
         </h1>
       </section>
 
@@ -23,4 +23,4 @@ const DeleteAccountPolicyPage = async () => {
   );
 };
 
-export default DeleteAccountPolicyPage;
+export default TermsAndConditionsPage;

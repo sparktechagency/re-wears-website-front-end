@@ -7,8 +7,8 @@ const PrivacyPolicyPage = async () => {
   const content = res?.data?.content;
 
   return (
-    <div>
-      <section className="flex items-center gap-6">
+    <div className="container">
+      <section className="py-4">
         <h1 className="text-2xl lg:text-3xl font-bold py-4 text-center">
           Privacy Policy
         </h1>

@@ -32,7 +32,7 @@ const DeleteAccount = () => {
           Deactivated accounts are only visible to re-wears team before they are
           permanently deleted. The deletion takes place within the time frames
           indicated in re-wears&apos;s{" "}
-          <Link href={""} className="link">
+          <Link href={`/privacy-policy`} className="link">
             Privacy Policy.
           </Link>
         </p>
