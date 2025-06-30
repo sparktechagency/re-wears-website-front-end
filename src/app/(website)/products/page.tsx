@@ -8,6 +8,7 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
   const {
     searchTerm,
     page,
+    limit = 12,
     category,
     subCategory,
     childSubCategory,
@@ -22,6 +23,7 @@ const ProductsPage = async ({ searchParams }: { searchParams: any }) => {
   const queryParams = new URLSearchParams({
     ...(searchTerm && { searchTerm }),
     ...(page && { page }),
+    ...(limit && { limit }),
     ...(category && { "category.category": category }),
     ...(subCategory && { "category.subCategory": subCategory }),
     ...(childSubCategory && { "category.childSubCategory": childSubCategory }),

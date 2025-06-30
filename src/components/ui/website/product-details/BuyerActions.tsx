@@ -74,7 +74,8 @@ const BuyerActions = ({
   const handleRelease = async () => {
     toast.loading("Loading...", { id: "release" });
     const payload = {
-      status: "Released",
+      productStatus: "Active",
+      orderStatus: "Cancelled",
     };
 
     try {

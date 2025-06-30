@@ -98,8 +98,8 @@ const Footer = () => {
 
       {/* Bottom Section */}
       <div className="border-t border-white/30 mt-6 pt-6 text-center text-sm text-white flex justify-start container gap-8 lg:gap-16">
-        <Link href="privacy-policy">Privacy Policy</Link>
-        <Link href="terms-&-conditions">Terms & Conditions</Link>
+        <Link href="/privacy-policy">Privacy Policy</Link>
+        <Link href="/terms-&-conditions">Terms & Conditions</Link>
       </div>
     </footer>
   );

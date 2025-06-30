@@ -1,7 +1,6 @@
 // /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { config } from "@/config/env-config";
 import { getAccessToken } from "./getAccessToken";
 
 export interface FetchResponse {
@@ -54,7 +53,7 @@ export const myFetch = async (
   };
 
   try {
-    const response = await fetch(`${config.BASE_URL}${url}`, {
+    const response = await fetch(`${process.env.BASE_URL}${url}`, {
       method,
       headers: reqHeaders,
       ...(hasBody && { body: isFormData ? body : JSON.stringify(body) }),

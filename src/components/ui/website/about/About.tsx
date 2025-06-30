@@ -3,6 +3,7 @@ import icon1 from "@/assets/icons/about-icon-1.svg";
 import icon2 from "@/assets/icons/about-icon-2.svg";
 import icon3 from "@/assets/icons/about-icon-3.svg";
 import FillButton from "@/components/shared/FillButton";
+import Link from "next/link";
 
 const About = () => {
   return (
@@ -68,7 +69,9 @@ const About = () => {
           </div>
         </div>
         <div className="grid justify-center py-6">
-          <FillButton className="uppercase md:px-20">Sell Now</FillButton>
+          <Link href={`/sell-now`}>
+            <FillButton className="uppercase md:px-20">Sell Now</FillButton>
+          </Link>
         </div>
       </section>
     </div>

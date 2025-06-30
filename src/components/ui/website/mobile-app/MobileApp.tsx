@@ -1,6 +1,7 @@
 import FillButton from "@/components/shared/FillButton";
 import image from "@/assets/images/our-app.svg";
 import Image from "next/image";
+import Link from "next/link";
 
 const MobileApp = () => {
   return (
@@ -17,7 +18,9 @@ const MobileApp = () => {
             Thanks for your patience as we craft an app just for you.
           </p>
           <div className="mt-6 lg:mt-10 hidden lg:block">
-            <FillButton className="uppercase">Sell Now</FillButton>
+            <Link href={"/sell-now"}>
+              <FillButton className="uppercase">Sell Now</FillButton>
+            </Link>
           </div>
         </div>
         <figure className="">

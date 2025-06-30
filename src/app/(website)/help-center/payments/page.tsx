@@ -1,6 +1,12 @@
 import BackButton from "@/components/shared/BackButton";
+import { myFetch } from "@/helpers/myFetch";
 
-const ShippingPage = () => {
+const PaymentPage = async () => {
+  const res = await myFetch(`/cms/payments`, {
+    cache: "no-store",
+  });
+  const content = res?.data?.content;
+
   return (
     <div>
       <section className="flex items-center gap-6">
@@ -11,23 +17,12 @@ const ShippingPage = () => {
       </section>
 
       {/* content section */}
-      <section className="grid gap-6 py-4">
-        <p>
-          Payment collection is arranged at the discretion of the buyer and
-          seller. Once your item is sold, please communicate with the buyer to
-          discuss payment options. As the seller, it is your responsibility to
-          arrange for payment collection according to your preferred method.
-        </p>
-        <p>
-          Presently, re-wears function solely as a platform for listing and
-          purchasing items, while the responsibility for payment collection lies
-          with the seller. However, we are actively working on implementing this
-          feature in the near future. Please bear with us as we strive to
-          enhance your experience on our platform.
-        </p>
-      </section>
+      <article
+        dangerouslySetInnerHTML={{ __html: content }}
+        className="prose lg:prose-lg"
+      ></article>
     </div>
   );
 };
 
-export default ShippingPage;
+export default PaymentPage;
