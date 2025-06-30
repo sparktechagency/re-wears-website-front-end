@@ -1,3 +1,5 @@
+"use client";
+
 import icon from "@/assets/icons/bell-notification.svg";
 import Image from "next/image";
 import Label from "../Label";
@@ -7,6 +9,7 @@ import { IMAGE_URL } from "@/config/env-config";
 import { io } from "socket.io-client";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
+import { myFetch } from "@/helpers/myFetch";
 
 const Notifications = ({
   profile,
@@ -33,6 +36,21 @@ const Notifications = ({
     };
   }, [socket, profile?._id]);
 
+  // read notification
+  const handleReadNotification = async (id: string) => {
+    try {
+      const res = await myFetch(`/notification/update-notification/${id}`, {
+        method: "PATCH",
+        body: { read: true },
+      });
+      if (res?.success) {
+        revalidateTags(["notifications"]);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <section className="max-w-[350px] max-h-[500px] font-poppins">
       {/* show empty page when no notification found */}
@@ -50,7 +68,11 @@ const Notifications = ({
       <div>
         <ul>
           {notificationsData?.map((item: any, idx: number) => (
-            <li key={idx} className="flex gap-4 py-2 border-b">
+            <li
+              key={idx}
+              className="flex gap-4 py-2 border-b"
+              onClick={() => handleReadNotification(item?._id)}
+            >
               {item?.sender && (
                 <Link href={`/profile?id=${item?.sender?._id}`}>
                   <Image
