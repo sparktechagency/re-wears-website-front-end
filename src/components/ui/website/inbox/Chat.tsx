@@ -31,8 +31,6 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
 
-  console.log(chatsData);
-
   // Fetch partner data
   useEffect(() => {
     const fetchPartner = async () => {
@@ -201,6 +199,17 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
     setIsChatVisible(false);
   };
 
+  // show not found message if no rooms are available
+  if (!chatsData || !(chatsData?.length > 0)) {
+    return (
+      <div className="flex items-center justify-center h-[calc(100vh-100px)]">
+        <p className="text-secondary text-[18px] font-bold">
+          No messages found
+        </p>
+      </div>
+    );
+  }
+
   return (
     <section className="h-full relative">
       {/* header */}
@@ -359,8 +368,20 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
                     </p>
                     {item?.offer?.offerStatus === "pending" ? (
                       <>
-                        <FillButton onClick={() => handleUpdateOffer(item?.offer?._id, 'accepted')}>Accept</FillButton >
-                        <OutlineButton onClick={() => handleUpdateOffer(item?.offer?._id, 'declined')}>Decline</OutlineButton>
+                        <FillButton
+                          onClick={() =>
+                            handleUpdateOffer(item?.offer?._id, "accepted")
+                          }
+                        >
+                          Accept
+                        </FillButton>
+                        <OutlineButton
+                          onClick={() =>
+                            handleUpdateOffer(item?.offer?._id, "declined")
+                          }
+                        >
+                          Decline
+                        </OutlineButton>
                       </>
                     ) : item?.offer?.offerStatus === "accepted" ? (
                       <p>Accepted</p>
