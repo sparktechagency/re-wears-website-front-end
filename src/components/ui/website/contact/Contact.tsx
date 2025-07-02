@@ -28,6 +28,7 @@ const Contact = () => {
       console.error(error);
     }
   };
+  
   return (
     <div>
       <form onSubmit={handleSubmit} className="container grid gap-14 my-20">
