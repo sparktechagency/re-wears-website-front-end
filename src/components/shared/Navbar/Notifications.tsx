@@ -18,6 +18,7 @@ const Notifications = ({
   profile?: any;
   notificationsData?: any;
 }) => {
+  console.log(notificationsData);
   // handle live notifications
   const socket = useMemo(() => io(IMAGE_URL), []);
   // socket.on("connect", () => {
@@ -95,7 +96,11 @@ const Notifications = ({
                       {item?.sender?.userName || item?.sender?.firstName}
                     </span>
                   </Link>
-                  <p className="">
+                  <p
+                    className={`${
+                      item?.read ? "text-gray-700" : "font-semibold"
+                    }`}
+                  >
                     <span>
                       {item?.notificationType === "createProduct" &&
                         "has added new item: "}
@@ -114,13 +119,16 @@ const Notifications = ({
                     </Link>
                   </p>
                 </p>
-                <p className="text-[#797979] mt-1">
+                <p
+                  className={`text-xs ${
+                    item?.read ? "text-gray-700" : "font-semibold"
+                  }`}
+                >
                   <span>
                     {formatDistanceToNow(new Date(item?.createdAt), {
-                      // addSuffix: true,
+                      addSuffix: true,
                     })}
                   </span>
-                  ago
                 </p>
               </div>
             </li>
