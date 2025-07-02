@@ -1,6 +1,7 @@
 "use client";
 
 interface TextAreaProps {
+  name?: string;
   rows?: number;
   placeholder: string;
   className?: string;
@@ -9,6 +10,7 @@ interface TextAreaProps {
 }
 
 const TextArea = ({
+  name,
   rows,
   placeholder,
   className,
@@ -17,6 +19,7 @@ const TextArea = ({
 }: TextAreaProps) => {
   return (
     <textarea
+      name={name}
       rows={rows || 4}
       value={value}
       placeholder={placeholder}
