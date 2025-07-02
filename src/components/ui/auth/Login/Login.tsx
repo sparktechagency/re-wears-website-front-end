@@ -9,10 +9,25 @@ import Cookies from "js-cookie";
 
 const Login = () => {
   const [open, setOpen] = useState(false);
+  const [form] = Form.useForm();
+
+  // set auth data to form from localstorage if  exist
+  React.useEffect(() => {
+    const auth =
+      typeof window !== "undefined"
+        ? JSON.parse(localStorage.getItem("auth") || "{}")
+        : {};
+    form.setFieldsValue(auth);
+  }, [form]);
 
   // submit handler
-  const onFinish = async (values: { email: string; password: string }) => {
+  const onFinish = async (values: {
+    email: string;
+    password: string;
+    remember: boolean;
+  }) => {
     toast.loading("Pending...", { id: "login" });
+
     try {
       const res = await myFetch("/auth/login", {
         method: "POST",
@@ -22,6 +37,13 @@ const Login = () => {
         toast.success("Login successful", { id: "login" });
         Cookies.set("accessToken", res?.data?.accessToken);
         Cookies.set("refreshToken", res?.data?.refreshToken);
+        // save login data to local storage
+        if (values.remember) {
+          localStorage.setItem("auth", JSON.stringify(values));
+        } else {
+          localStorage.removeItem("auth");
+        }
+        // redirect to home page
         location.href = "/";
       } else {
         toast.error(res?.message || "Failed to login", { id: "login" });
@@ -37,7 +59,7 @@ const Login = () => {
         {" "}
         or Log In with your Email{" "}
       </p>
-      <Form onFinish={onFinish} layout="vertical">
+      <Form onFinish={onFinish} form={form} layout="vertical">
         <Form.Item
           name="email"
           rules={[

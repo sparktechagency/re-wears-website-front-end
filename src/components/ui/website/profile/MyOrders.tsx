@@ -35,8 +35,6 @@ const MyOrders = ({ orders }: { orders: any }) => {
     updateSearchParams({ orderStatus: null });
   }, []);
 
-  console.log(orders);
-
   const handleStatus = async (id: string) => {
     const res = await myFetch(`/order/${id}`, {
       method: "PATCH",
@@ -119,7 +117,7 @@ const MyOrders = ({ orders }: { orders: any }) => {
               )}
             </Link>
             <div className="grid gap-1">
-              <Link href={""}>
+              <Link href={`/profile?id=${record?.seller?._id}`}>
                 <h3 className="text-sm font-bold text-black">
                   {`@${record?.seller?.userName}` || "Unknown"}
                 </h3>
@@ -142,7 +140,9 @@ const MyOrders = ({ orders }: { orders: any }) => {
           <div className="flex items-center gap-2 font-poppins">
             {record?.status === "Reserved" && (
               <>
-                <Link href={`/inbox?recipient=${record?.seller?._id}`}>
+                <Link
+                  href={`/inbox?recipient=${record?.seller?._id}&product=${record?.product?._id}`}
+                >
                   <FillButton className="text-sm px-4 h-8 !bg-[#D04555] !hover:bg-[#a32937] text-white whitespace-nowrap">
                     Message seller
                   </FillButton>

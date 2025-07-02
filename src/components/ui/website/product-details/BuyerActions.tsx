@@ -149,7 +149,9 @@ const BuyerActions = ({
       >
         Make an offer
       </OutlineButton>
-      <Link href={`/inbox?recipient=${productData?.user?._id}`}>
+      <Link
+        href={`/inbox?recipient=${productData?.user?._id}&product=${productData?._id}`}
+      >
         <OutlineButton className="uppercase w-full">
           Message seller
         </OutlineButton>

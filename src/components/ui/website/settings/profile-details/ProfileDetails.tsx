@@ -55,7 +55,7 @@ const ProfileDetails = ({ profile }: { profile: TUser }) => {
       console.log(res);
       if (res?.success) {
         toast.success("Profile updated successfully", { id: "update-profile" });
-        revalidateTags(["profile"]);
+        revalidateTags(["Profile"]);
       } else {
         toast.error(res?.message || "Something went wrong", {
           id: "update-profile",
