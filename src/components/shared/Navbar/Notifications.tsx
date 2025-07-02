@@ -18,7 +18,6 @@ const Notifications = ({
   profile?: any;
   notificationsData?: any;
 }) => {
-  console.log(notificationsData);
   // handle live notifications
   const socket = useMemo(() => io(IMAGE_URL), []);
   // socket.on("connect", () => {

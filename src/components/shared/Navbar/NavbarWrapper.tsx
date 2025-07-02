@@ -6,7 +6,7 @@ const NavbarWrapper = async () => {
   const categoriesRes = await myFetch("/nav/category", { cache: "no-store" });
 
   const res = await myFetch("/users/profile", {
-    tags: ["profile"],
+    tags: ["Profile"],
     cache: "no-store",
   });
 

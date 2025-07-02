@@ -41,7 +41,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
         });
         setPartnerData(response?.data);
         const profileRes = await myFetch(`/users/profile`, {
-          // fetch profile data
+          tags: ["Profile"],
           cache: "no-store",
         });
         setProfileData(profileRes?.data);
@@ -200,7 +200,7 @@ const Chat = ({ setIsChatVisible }: { setIsChatVisible: any }) => {
   };
 
   // show not found message if no rooms are available
-  if (!chatsData || !(chatsData?.length > 0)) {
+  if (!room) {
     return (
       <div className="flex items-center justify-center h-[calc(100vh-100px)]">
         <p className="text-secondary text-[18px] font-bold">

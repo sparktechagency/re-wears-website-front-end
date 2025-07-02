@@ -30,7 +30,7 @@ const MakeOfferModal = ({
       if (res?.success) {
         toast.success("Offer created successfully", { id: "make-offer" });
         setOpen(false);
-        revalidateTags(["Product"]);
+        revalidateTags(["Product", "chats"]);
       } else {
         toast.error(res?.message || "Something went wrong", {
           id: "make-offer",
